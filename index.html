@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>רביד דר | פורטפוליו</title>
+  <style>
+    @font-face {
+      font-family: 'TheBasics';
+      src: url('thebasics/TheBasics-Regular.otf') format('opentype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'TheBasics';
+      src: url('thebasics/TheBasics-Light.otf') format('opentype');
+      font-weight: 300;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg:  #ffffff;
+      --ink: #111111;
+      --gap: 55px;
+      --header-h: 68px;
+      --label-h: 90px;
+      --img-h: 17vw;
+      --img-w: 14vw;
+      --strip-bottom: 5px;
+    }
+
+    html {
+      font-size: 18px;
+    }
+
+    html, body {
+      width: 100%; height: 100%;
+      overflow: hidden;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'TheBasics', sans-serif;
+      font-weight: 400;
+    }
+
+    /* ─── Header ─── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-h);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 calc(2rem + 20px);
+      z-index: 200;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      direction: ltr;
+    }
+    .nav-title {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .nav-link {
+      cursor: pointer;
+      transition: color 0.2s ease;
+      text-decoration: none;
+      color: var(--ink);
+    }
+    .nav-link:hover {
+      color: #ff00a4;
+    }
+    .nav-active {
+      text-decoration: underline;
+      text-decoration-color: #ff00a4;
+      text-underline-offset: 4px;
+    }
+
+    /* ─── Upper body ─── */
+    .upper {
+      position: fixed;
+      top: var(--header-h);
+      left: 0; right: 0;
+      bottom: calc(var(--img-h) + var(--label-h) + var(--strip-bottom));
+
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 calc(2rem + 20px);
+      z-index: 50;
+    }
+
+    .text-left {
+      max-width: 560px;
+      font-size: 0.78rem;
+      line-height: 1.25;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .text-right {
+      max-width: 400px;
+      font-size: 0.78rem;
+      line-height: 1.25;
+      text-align: left;
+    }
+
+    /* ─── Custom cursor ─── */
+    * { cursor: none !important; }
+    a, button, [role="button"],
+    .nav-link, .inner-back, .bloom-vid-btn, .bloom-progress-wrap { cursor: pointer !important; }
+    .proj-img, .proj-img *,
+    .bloom-vid-2, .bloom-vid-2 video, .bloom-vid-2 img { cursor: default !important; }
+
+    .cursor {
+      position: fixed;
+      width: 32px;
+      height: 32px;
+      border: 2px solid #ff00a4;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 9999;
+      left: 0;
+      top: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      will-change: transform;
+    }
+    .cursor.visible { opacity: 1; }
+    .cursor svg {
+      width: 14px;
+      height: 14px;
+      transition: transform 0.3s ease;
+    }
+    .cursor.reversed svg { transform: rotate(180deg); }
+
+    /* ─── Image strip ─── */
+    .strip-wrapper {
+      position: fixed;
+      left: 0; right: 0;
+      bottom: var(--strip-bottom);
+      height: calc(var(--img-h) + var(--label-h));
+      overflow: visible;
+    }
+
+    .strip {
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+      gap: var(--gap);
+      will-change: transform;
+      /* start from right edge in RTL */
+      padding-right: calc(2rem + 20px);
+      padding-left: calc(2rem + 20px);
+    }
+
+    .proj-col {
+      width: var(--img-w);
+      flex-shrink: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .proj-img {
+      flex: 1;
+      border: 0.25px solid var(--ink);
+      position: relative;
+      overflow: hidden;
+      transform: translateY(-20px);
+    }
+
+    .proj-img img,
+    .proj-img video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      will-change: opacity;
+      transform: translateZ(0);
+    }
+
+    .proj-img video {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .proj-img .hover-img {
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .proj-img:hover video,
+    .proj-img:hover .hover-img {
+      opacity: 1;
+    }
+
+    .proj-img:hover > img:not(.hover-img) {
+      opacity: 0;
+    }
+
+    .proj-img img {
+      transition: opacity 0.3s ease;
+    }
+
+    /* ─── Click: force back to image 1 ─── */
+    .proj-img.clicking .hover-img,
+    .proj-img.clicking video {
+      opacity: 0 !important;
+      transition: none !important;
+    }
+    .proj-img.clicking > img:not(.hover-img) {
+      opacity: 1 !important;
+      transition: none !important;
+    }
+
+    /* ─── Inner page ─── */
+    .inner-page {
+      position: fixed;
+      inset: 0;
+      top: var(--header-h);
+      background: #fff;
+      z-index: 150;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s ease;
+      will-change: opacity;
+      cursor: auto;
+      display: flex;
+      direction: ltr;
+      overflow: hidden;
+    }
+    .inner-page.visible {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    /* Left: scroll container — overflow visible so img2 isn't clipped */
+    .inner-left {
+      width: 48vw;
+      height: 100%;
+      flex-shrink: 0;
+      position: relative;
+    }
+
+    /* inner track — scrolled via transform */
+    .inner-track {
+      padding: 3rem 0 10rem 3vw;
+      will-change: transform;
+      position: relative;
+    }
+
+    .inner-img-wrap {
+      width: 26vw;
+      height: 55vh;
+      overflow: hidden;
+    }
+    .inner-img-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 65%;
+    }
+
+    /* Image 2 (1760) — absolute within track */
+    .inner-img-peek {
+      position: absolute;
+      left: calc(26vw + 130px);
+      top: calc(55vh * 0.4 + 3rem + 210px);
+      width: 20vw;
+      height: 44vh;
+      overflow: hidden;
+    }
+    .inner-img-peek img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 20%;
+      transform: scale(1.12);
+      transform-origin: center;
+    }
+
+    .inner-img-3 {
+      margin-top: 200px;
+      width: 26vw;
+      height: 55vh;
+      overflow: hidden;
+    }
+    .inner-img-3 img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .inner-vid-4 {
+      margin-top: 30px;
+      width: 26vw;
+      height: 36vh;
+      overflow: hidden;
+    }
+    .inner-vid-4 video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .bloom-vid-2 {
+      margin-top: 60px;
+      width: 44vw;
+      position: relative;
+      cursor: default;
+    }
+    .bloom-vid-2 video {
+      width: 100%;
+      height: 56vh;
+      object-fit: cover;
+      display: block;
+    }
+    .bloom-vid-2 video::-webkit-media-controls,
+    .bloom-vid-2 video::-webkit-media-controls-overlay-play-button,
+    .bloom-vid-2 video::-webkit-media-controls-panel { display: none !important; }
+
+    .bloom-vid-controls {
+      position: absolute;
+      bottom: 0;
+      left: 0; right: 0;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      background: rgba(255,255,255,0.5);
+      cursor: auto;
+    }
+    .bloom-vid-btn {
+      font-size: 0.72rem;
+      font-weight: 400;
+      font-family: 'TheBasics', sans-serif;
+      cursor: pointer;
+      flex-shrink: 0;
+      width: 30px;
+    }
+    .bloom-progress-wrap {
+      flex: 1;
+      height: 5px;
+      background: #ddd;
+      position: relative;
+      cursor: pointer;
+      border-radius: 2px;
+    }
+    .bloom-progress-bar {
+      height: 100%;
+      background: var(--ink);
+      width: 0%;
+      transition: width 0.1s linear;
+      border-radius: 2px;
+    }
+    .bloom-time {
+      font-size: 0.65rem;
+      font-weight: 300;
+      font-family: 'TheBasics', sans-serif;
+      flex-shrink: 0;
+      opacity: 0.6;
+    }
+
+    .inner-img-5 {
+      margin-top: 30px;
+      margin-left: calc(26vw + 130px - 3vw);
+      width: 20vw;
+      height: 44vh;
+      overflow: hidden;
+    }
+    .inner-img-5 img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .inner-back {
+      font-size: 0.78rem;
+      font-weight: 400;
+      cursor: pointer;
+      letter-spacing: 0.04em;
+      opacity: 0.5;
+    }
+    .inner-back:hover { opacity: 1; }
+
+    /* Right: fixed */
+    .inner-right {
+      flex: 1;
+      position: relative;
+      padding: 3rem calc(2rem + 20px) 3rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.4rem;
+      direction: rtl;
+    }
+
+    .inner-title {
+      font-size: 1.6rem;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    .inner-desc {
+      font-size: 0.78rem;
+      font-weight: 400;
+      line-height: 1.4;
+      max-width: 340px;
+    }
+
+    .inner-tools {
+      position: absolute;
+      top: calc(50% + 27.5vh);
+      right: calc(2rem + 20px);
+      font-size: 0.78rem;
+      font-weight: 400;
+      font-family: 'TheBasics', sans-serif;
+      color: #ff00a4;
+    }
+
+    /* ─── Flying image ─── */
+    .fly-img {
+      position: fixed;
+      z-index: 180;
+      object-fit: cover;
+      object-position: center 65%;
+      pointer-events: none;
+      transition: left 0.45s cubic-bezier(0.4,0,0.2,1),
+                  top 0.45s cubic-bezier(0.4,0,0.2,1),
+                  width 0.45s cubic-bezier(0.4,0,0.2,1),
+                  height 0.45s cubic-bezier(0.4,0,0.2,1),
+                  transform 0.45s cubic-bezier(0.4,0,0.2,1);
+    }
+
+    .proj-label {
+      height: var(--label-h);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: flex-start;
+      padding: 0.4rem 0 0;
+      flex-shrink: 0;
+    }
+
+    .proj-num {
+      font-size: 0.78rem;
+      line-height: 1.3;
+      font-weight: 400;
+    }
+
+    .proj-name {
+      font-size: 0.78rem;
+      line-height: 1.3;
+      font-weight: 300;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header: direction ltr so left=left, right=right -->
+  <header>
+    <a class="nav-link" href="about.html">עלי</a>
+    <span class="nav-title">רביד דר | פורטפוליו</span>
+    <a class="nav-link nav-active" href="index.html">פרויקטים</a>
+  </header>
+
+  <!-- Custom cursor -->
+  <div class="cursor" id="cursor">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#ff00a4" stroke-width="2">
+      <path d="M12 5v14M5 12l7 7 7-7"/>
+    </svg>
+  </div>
+
+  <!-- Upper area -->
+  <div class="upper">
+
+    <div class="text-left">
+      היי! אני רביד דר והגעתם לפורטפוליו שלי.<br>
+      נדלג על החלק המביך ופשוט תגללו לראות מה אני עושה
+    </div>
+
+    <div class="text-right">
+      <span>בדיוק סיימתי את התואר לתקשורת חזותית, ועכשיו אני מחפשת ליצור פרויקטים שמשלבים קריאייטיב, מיתוג, וידיאו וטכנולוגיה</span>
+    </div>
+
+  </div>
+
+  <!-- Image strip + labels scroll together -->
+  <div class="strip-wrapper">
+    <div class="strip" id="strip">
+
+      <div class="proj-col">
+        <div class="proj-img"></div>
+        <div class="proj-label">
+          <span class="proj-num">01</span>
+          <span class="proj-name">פרויקט גמר | תורה שבמרחב</span>
+        </div>
+      </div>
+
+      <div class="proj-col">
+        <div class="proj-img">
+          <img src="בלומינג ריוט/u7589337271_httpss.mj.runqBDvOm2qWnc_httpss.mj.runDuUjlZZpkOI_ed558678-3959-4ca3-9c66-a615eeb38662_1.png" alt="blooming riot">
+          <video src="בלומינג ריוט/בלומינג ריוט לויקס.mp4" muted loop playsinline preload="auto"></video>
+        </div>
+        <div class="proj-label">
+          <span class="proj-num">02</span>
+          <span class="proj-name">blooming riot</span>
+        </div>
+      </div>
+
+      <div class="proj-col">
+        <div class="proj-img"></div>
+        <div class="proj-label">
+          <span class="proj-num">03</span>
+          <span class="proj-name">קריאייטיב</span>
+        </div>
+      </div>
+
+      <div class="proj-col">
+        <div class="proj-img">
+          <img src="בין קודש לחול/נעליים1.png" alt="בין קודש לחול" style="object-position: bottom;">
+          <video src="בין קודש לחול/ערימת גלויות_3.mp4" muted loop playsinline preload="auto"></video>
+        </div>
+        <div class="proj-label">
+          <span class="proj-num">04</span>
+          <span class="proj-name">בין קודש לחול</span>
+        </div>
+      </div>
+
+      <div class="proj-col">
+        <div class="proj-img">
+          <img src="מה שנשאר מאחור/42039B12-26FD-4060-9F85-BAADA14EEE14.JPG" alt="מה שנשאר מאחור" style="object-fit: cover; object-position: center 65%;">
+          <img src="מה שנשאר מאחור/IMG_1728.jpg" alt="מה שנשאר מאחור 2" class="hover-img">
+        </div>
+        <div class="proj-label">
+          <span class="proj-num">05</span>
+          <span class="proj-name">מה שנשאר מאחור</span>
+        </div>
+      </div>
+
+      <div class="proj-col">
+        <div class="proj-img"></div>
+        <div class="proj-label">
+          <span class="proj-num">06</span>
+          <span class="proj-name">חממת מעצבות | פינלן</span>
+        </div>
+      </div>
+
+      <div class="proj-col">
+        <div class="proj-img">
+          <img src="בית גלים/תמונה לפורטפוליו 1_web.jpg" alt="פסטיבל ביתגלים" style="object-position: center 70%;">
+          <img src="בית גלים/תמונה לפורטפוליו 2_web.jpg" alt="פסטיבל ביתגלים 2" class="hover-img" style="object-position: center 70%;">
+        </div>
+        <div class="proj-label">
+          <span class="proj-num">07</span>
+          <span class="proj-name">פסטיבל בית<span style="display:inline-block;width:6px"></span>גלים</span>
+        </div>
+      </div>
+
+      <div class="proj-col">
+        <div class="proj-img">
+          <img src="שימור תרבות/תמונה סטטית.png" alt="שימור תרבות" style="object-position: center 10%;">
+          <video src="שימור תרבות/חדששש.mov" muted loop playsinline preload="auto" style="object-position: center calc(50% + 13px);"></video>
+        </div>
+        <div class="proj-label">
+          <span class="proj-num">08</span>
+          <span class="proj-name">שימור תרבות</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Inner page: blooming riot -->
+  <div class="inner-page" id="inner-bloom">
+    <div class="inner-left">
+      <div class="inner-track" id="innerTrackBloom">
+        <div class="inner-img-wrap">
+          <img src="בלומינג ריוט/u7589337271_httpss.mj.runqBDvOm2qWnc_httpss.mj.runDuUjlZZpkOI_ed558678-3959-4ca3-9c66-a615eeb38662_1.png" alt="blooming riot">
+        </div>
+        <div class="bloom-vid-2" id="bloomVidWrap">
+          <video src="בלומינג ריוט/סרטון מלא.mp4" playsinline preload="auto" id="bloomVid"></video>
+          <img id="bloomPoster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;">
+          <div class="bloom-vid-controls">
+            <span class="bloom-vid-btn" id="bloomBtn">▶</span>
+            <div class="bloom-progress-wrap" id="bloomProgressWrap">
+              <div class="bloom-progress-bar" id="bloomBar"></div>
+            </div>
+            <span class="bloom-time" id="bloomTime">-0:00</span>
+            <span class="bloom-vid-btn" id="bloomMute">
+              <svg id="bloomMuteIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="bloomWave" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div class="inner-img-3">
+          <img src="בלומינג ריוט/u7589337271_httpss.mj.runDOsdVqlnOWg_a_wide-angle_hyper-reali_51430205-fe82-47b3-89f8-48f3d67364a5_3.png" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="inner-right">
+      <span class="inner-back" id="inner-back-bloom">← חזרה</span>
+      <div class="inner-title">blooming riot</div>
+      <div class="inner-desc">פרויקט מיתוג למוצר קונספטואלי שנוצר במסגרת הלימודים, בהנחיית חזאית הטרנדים נטלי יצחקוב.<br><br>יחד עם שתי סטודנטיות נוספות פיתחנו את השפה החזותית של Blooming Riot - מותג קונספטואלי של אגרטלי זכוכית פיסוליים, הבוחן את המתח שבין שקיפות, עיוות ורגש. כל התוצרים נוצרו באמצעות כלי בינה מלאכותית.</div>
+      <div class="inner-tools">Midjourney, Kling, After effects, Framer</div>
+    </div>
+  </div>
+
+  <!-- Inner page: מה שנשאר מאחור -->
+  <div class="inner-page" id="inner-mah">
+    <div class="inner-left">
+      <div class="inner-track" id="innerTrack">
+        <div class="inner-img-wrap">
+          <img src="מה שנשאר מאחור/42039B12-26FD-4060-9F85-BAADA14EEE14.JPG" alt="מה שנשאר מאחור">
+        </div>
+        <div class="inner-img-peek">
+          <img src="מה שנשאר מאחור/IMG_1760.jpg" alt="">
+        </div>
+        <div class="inner-img-3">
+          <img src="מה שנשאר מאחור/IMG_1728.jpg" alt="">
+        </div>
+        <div class="inner-vid-4">
+          <video src="מה שנשאר מאחור/IMG_1875.mov" muted loop playsinline autoplay></video>
+        </div>
+        <div class="inner-img-5">
+          <img src="מה שנשאר מאחור/IMG_1906.jpg" alt="">
+        </div>
+      </div>
+    </div>
+    <div class="inner-right">
+      <span id="inner-back" class="inner-back">← חזרה</span>
+      <div class="inner-title">מה שנשאר מאחור</div>
+      <div class="inner-desc">פרויקט שעוצב במסגרת הלימודים ועוסק בנושא הגירה. עיצבתי חוברת שמלווה תערוכה בשם "מה שנשאר מאחור", העוסקת בדברים שלא נכנסים למזוודה כשעוזבים מקום.<br><br>כשעוזבים בית, לא כל מה שחשוב באמת אפשר לקחת איתנו. חפצים, רגעים, ריחות וטעמים שנשארים מאחור נושאים איתם זיכרונות ורגשות, ומספרים על המקום שהיה פעם בית.</div>
+      <div class="inner-tools">InDesign, Photoshop</div>
+    </div>
+  </div>
+
+  <script>
+    const strip  = document.getElementById('strip');
+    const cursor = document.getElementById('cursor');
+
+    /* ── Horizontal scroll ── */
+    let current = 0, target = 0, maxScroll = 0;
+
+    function calcMax() {
+      const style  = getComputedStyle(strip);
+      const cols   = strip.querySelectorAll('.proj-col');
+      const colW   = cols.length ? cols[0].offsetWidth : 0;
+      const gap    = parseFloat(style.gap)          || 0;
+      const pr     = parseFloat(style.paddingRight) || 0;
+      const pl     = parseFloat(style.paddingLeft)  || 0;
+      const total  = pr + colW * cols.length + gap * (cols.length - 1) + pl;
+      maxScroll = Math.max(0, total - strip.parentElement.offsetWidth);
+    }
+    calcMax();
+    window.addEventListener('resize', calcMax);
+
+    window.addEventListener('wheel', (e) => {
+      if (innerPage.classList.contains('visible')) return;
+      e.preventDefault();
+      target += e.deltaY * 1.5;
+      target = Math.max(0, Math.min(target, maxScroll));
+    }, { passive: false });
+
+    let ty = 0;
+    window.addEventListener('touchstart', e => { ty = e.touches[0].clientY; });
+    window.addEventListener('touchmove', e => {
+      e.preventDefault();
+      const dy = ty - e.touches[0].clientY;
+      target += dy * 2;
+      target = Math.max(0, Math.min(target, maxScroll));
+      ty = e.touches[0].clientY;
+    }, { passive: false });
+
+    /* ── Project click: blooming riot ── */
+    const proj02el      = document.querySelector('.proj-col:nth-child(2) .proj-img');
+    const innerBloom    = document.getElementById('inner-bloom');
+    const innerBackBloom = document.getElementById('inner-back-bloom');
+    const innerTrackBloom = document.getElementById('innerTrackBloom');
+    let bloomScrollY = 0, bloomScrollTarget = 0, bloomMaxScroll = 0;
+
+    proj02el.style.cursor = 'pointer';
+
+    const preloadBloom = new Image();
+    preloadBloom.src = "בלומינג ריוט/u7589337271_httpss.mj.runqBDvOm2qWnc_httpss.mj.runDuUjlZZpkOI_ed558678-3959-4ca3-9c66-a615eeb38662_1.png";
+
+    proj02el.addEventListener('click', () => {
+      proj02el.classList.add('clicking');
+      const rect = proj02el.getBoundingClientRect();
+      const fly = document.createElement('img');
+      fly.src = preloadBloom.src;
+      fly.className = 'fly-img';
+      fly.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;`;
+      document.body.appendChild(fly);
+      fly.offsetHeight;
+      fly.style.left = '3vw'; fly.style.top = '50%';
+      fly.style.transform = 'translateY(-50%)';
+      fly.style.width = '26vw'; fly.style.height = '55vh';
+      setTimeout(() => {
+        innerBloom.classList.add('visible');
+        cursor.classList.remove('visible');
+        fly.remove();
+        proj02el.classList.remove('clicking');
+        bloomVid.muted = true;
+        bloomVid.currentTime = 2;
+        bloomVid.addEventListener('seeked', () => {
+          capturePoster();
+          bloomVid.currentTime = 0;
+          bloomVid.muted = false;
+          bloomMute.textContent = '🔊';
+        }, { once: true });
+      }, 460);
+    });
+
+    innerBackBloom.addEventListener('click', () => {
+      innerBloom.classList.remove('visible');
+      bloomScrollY = 0; bloomScrollTarget = 0;
+      innerTrackBloom.style.transform = '';
+    });
+
+    innerBloom.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      bloomScrollTarget += e.deltaY;
+      bloomMaxScroll = Math.max(0, innerTrackBloom.offsetHeight - innerBloom.offsetHeight);
+      bloomScrollTarget = Math.max(0, Math.min(bloomScrollTarget, bloomMaxScroll));
+    }, { passive: false });
+
+    /* ── Blooming riot video player ── */
+    const bloomVid  = document.getElementById('bloomVid');
+    const bloomBtn  = document.getElementById('bloomBtn');
+    const bloomBar  = document.getElementById('bloomBar');
+    const bloomTime = document.getElementById('bloomTime');
+    const bloomProgressWrap = document.getElementById('bloomProgressWrap');
+
+    function formatTime(s) {
+      const m = Math.floor(s / 60);
+      const sec = Math.floor(s % 60);
+      return m + ':' + String(sec).padStart(2, '0');
+    }
+
+    const bloomMute = document.getElementById('bloomMute');
+
+    bloomVid.preload = 'auto';
+    const bloomPoster = document.getElementById('bloomPoster');
+    let bloomPosterCaptured = false;
+
+    function capturePoster() {
+      if (bloomPosterCaptured) return;
+      const canvas = document.createElement('canvas');
+      canvas.width = bloomVid.videoWidth;
+      canvas.height = bloomVid.videoHeight;
+      canvas.getContext('2d').drawImage(bloomVid, 0, 0);
+      canvas.toBlob(blob => {
+        bloomPoster.src = URL.createObjectURL(blob);
+        bloomPoster.style.display = 'block';
+        bloomPosterCaptured = true;
+      }, 'image/jpeg', 0.9);
+    }
+
+    const bloomVidWrap = document.getElementById('bloomVidWrap');
+    bloomVidWrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+    bloomVidWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+
+    bloomVid.addEventListener('click', toggleBloom);
+    bloomBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleBloom(); });
+
+    function toggleBloom() {
+      if (bloomVid.paused) {
+        bloomPoster.style.display = 'none';
+        bloomVid.muted = false;
+        bloomWave.style.display = '';
+        bloomVid.currentTime = 0;
+        bloomVid.play();
+        bloomBtn.textContent = '⏸';
+      } else {
+        bloomVid.pause();
+        bloomBtn.textContent = '▶';
+      }
+    }
+
+    const bloomWave = document.getElementById('bloomWave');
+    bloomMute.addEventListener('click', (e) => {
+      e.stopPropagation();
+      bloomVid.muted = !bloomVid.muted;
+      bloomWave.style.display = bloomVid.muted ? 'none' : '';
+    });
+
+    bloomVid.addEventListener('timeupdate', () => {
+      const pct = (bloomVid.currentTime / bloomVid.duration) * 100 || 0;
+      bloomBar.style.width = pct + '%';
+      const remaining = bloomVid.duration - bloomVid.currentTime;
+      bloomTime.textContent = '-' + formatTime(remaining || 0);
+    });
+
+    bloomProgressWrap.addEventListener('click', (e) => {
+      const rect = bloomProgressWrap.getBoundingClientRect();
+      const pct = (e.clientX - rect.left) / rect.width;
+      bloomVid.currentTime = pct * bloomVid.duration;
+    });
+
+    (function bloomTick() {
+      if (innerBloom.classList.contains('visible')) {
+        bloomScrollY += (bloomScrollTarget - bloomScrollY) * 0.1;
+        innerTrackBloom.style.transform = `translateY(-${bloomScrollY}px)`;
+      }
+      requestAnimationFrame(bloomTick);
+    })();
+
+    /* ── Project click: מה שנשאר מאחור ── */
+    const proj05el  = document.querySelector('.proj-col:nth-child(5) .proj-img');
+    const innerPage = document.getElementById('inner-mah');
+    const innerBack = document.getElementById('inner-back');
+
+    proj05el.style.cursor = 'pointer';
+
+    // Preload inner image
+    const preloadImg = new Image();
+    preloadImg.src = 'מה שנשאר מאחור/42039B12-26FD-4060-9F85-BAADA14EEE14.JPG';
+
+    proj05el.addEventListener('click', () => {
+      proj05el.classList.add('clicking');
+
+      // Use the already-loaded img as fly source
+      const rect = proj05el.getBoundingClientRect();
+      const fly = document.createElement('img');
+      fly.src = preloadImg.src;
+      fly.className = 'fly-img';
+      fly.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;`;
+      document.body.appendChild(fly);
+
+      fly.offsetHeight;
+      fly.style.left      = '3vw';
+      fly.style.top       = '50%';
+      fly.style.transform = 'translateY(-50%)';
+      fly.style.width     = '26vw';
+      fly.style.height    = '55vh';
+
+      setTimeout(() => {
+        innerPage.classList.add('visible');
+        cursor.classList.remove('visible');
+        fly.remove();
+        proj05el.classList.remove('clicking');
+      }, 460);
+    });
+
+    const innerTrack = document.getElementById('innerTrack');
+    let innerScrollY = 0, innerScrollTarget = 0, innerMaxScroll = 0;
+
+    function calcInnerMax() {
+      innerMaxScroll = Math.max(0, innerTrack.offsetHeight - innerPage.offsetHeight);
+    }
+
+    innerBack.addEventListener('click', () => {
+      innerPage.classList.remove('visible');
+      innerScrollY = 0; innerScrollTarget = 0;
+      innerTrack.style.transform = '';
+    });
+
+    /* ── Inner page: scroll left half from anywhere ── */
+    innerPage.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      innerScrollTarget += e.deltaY;
+      innerScrollTarget = Math.max(0, Math.min(innerScrollTarget, innerMaxScroll));
+    }, { passive: false });
+
+    (function innerTick() {
+      if (innerPage.classList.contains('visible')) {
+        calcInnerMax();
+        innerScrollY += (innerScrollTarget - innerScrollY) * 0.1;
+        innerTrack.style.transform = `translateY(-${innerScrollY}px)`;
+      }
+      requestAnimationFrame(innerTick);
+    })();
+
+    /* ── Video hover ── */
+    document.querySelectorAll('.proj-img').forEach(el => {
+      const vid = el.querySelector('video');
+      if (!vid) return;
+      const startTime = el.closest('.proj-col')?.querySelector('.proj-name')?.textContent.includes('קודש') ? 0.5 : 0;
+      vid.currentTime = startTime;
+      vid.load();
+      el.addEventListener('mouseenter', () => { vid.currentTime = startTime; vid.play(); });
+      el.addEventListener('mouseleave', () => { vid.pause(); vid.currentTime = startTime; });
+    });
+
+    /* ── Custom cursor ── */
+    const interactiveSelector = 'a, button, [role="button"], .nav-link, .inner-back, .bloom-vid-btn, .bloom-progress-wrap, input, select, .proj-img, .bloom-vid-2';
+
+    window.addEventListener('mousemove', e => {
+      cursor.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
+      const over = document.elementFromPoint(e.clientX, e.clientY);
+      const isInteractive = over && over.closest(interactiveSelector);
+      cursor.classList.toggle('visible', !isInteractive);
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => cursor.classList.remove('visible'));
+
+    /* ── Tick ── */
+    (function tick() {
+      const diff = target - current;
+      if (Math.abs(diff) > 0.1) {
+        current += diff * 0.1;
+        strip.style.transform = `translateX(${current}px)`;
+      }
+      if (current >= maxScroll - 5) {
+        cursor.classList.add('reversed');
+      } else {
+        cursor.classList.remove('reversed');
+      }
+      requestAnimationFrame(tick);
+    })();
+  </script>
+
+</body>
+</html>
