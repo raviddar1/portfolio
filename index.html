@@ -238,6 +238,11 @@
       visibility: visible;
       pointer-events: all;
     }
+    .inner-page.measuring {
+      visibility: visible;
+      opacity: 0;
+      pointer-events: none;
+    }
 
     /* Left: scroll container — overflow visible so img2 isn't clipped */
     .inner-left {
@@ -270,7 +275,7 @@
     .inner-img-peek {
       position: absolute;
       left: calc(26vw + 130px);
-      top: calc(55vh * 0.4 + 3rem + 210px);
+      top: calc(55vh * 0.4 + 3rem + 230px);
       width: 20vw;
       height: 44vh;
       overflow: hidden;
@@ -285,7 +290,7 @@
     }
 
     .inner-img-3 {
-      margin-top: 200px;
+      margin-top: 260px;
       width: 26vw;
       height: 55vh;
       overflow: hidden;
@@ -300,13 +305,13 @@
     .inner-vid-4 {
       margin-top: 30px;
       width: 26vw;
-      height: 36vh;
+      height: 40vh;
       overflow: hidden;
     }
     .inner-vid-4 video {
       width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
+      display: block;
     }
 
     .bloom-vid-2 {
@@ -368,7 +373,7 @@
     }
 
     .inner-img-5 {
-      margin-top: 30px;
+      margin-top: -30px;
       margin-left: calc(26vw + 130px - 3vw);
       width: 20vw;
       height: 44vh;
@@ -389,6 +394,17 @@
       opacity: 0.7;
     }
     .inner-back:hover { opacity: 1; }
+
+    .inner-next {
+      font-size: 1rem;
+      font-weight: 400;
+      cursor: pointer;
+      color: #111;
+      opacity: 0.7;
+      display: block;
+      margin-top: 60px;
+    }
+    .inner-next:hover { opacity: 1; }
 
     /* Right: fixed */
     .inner-right {
@@ -524,7 +540,7 @@
       <div class="proj-col">
         <div class="proj-img">
           <img src="בין קודש לחול/נעליים1.png" alt="בין קודש לחול" style="object-position: bottom;">
-          <video src="בין קודש לחול/ערימת גלויות_3.mp4" muted loop playsinline preload="auto"></video>
+          <video src="בין קודש לחול/ערימת גלויות לבן.mp4" muted loop playsinline preload="auto" style="transform:scale(1.15) translateZ(0);"></video>
         </div>
         <div class="proj-label">
           <span class="proj-num">04</span>
@@ -579,7 +595,7 @@
   <!-- Inner page: blooming riot -->
   <div class="inner-page" id="inner-bloom">
     <div class="inner-left">
-      <div class="inner-track" id="innerTrackBloom" style="min-height: calc(3rem + 55vh + 60px + 56vh + 16px + 56vh + 60px + 136px + 55vh + 20px + 26vh + 220px + 26vh + 20px + 62vh + 50px);">
+      <div class="inner-track" id="innerTrackBloom" style="min-height: calc(3rem + 55vh + 60px + 56vh + 16px + 56vh + 60px + 136px + 55vh + 20px + 26vh + 140px + 26vh - 10px + 62vh + 50px);">
         <div class="inner-img-wrap">
           <img src="בלומינג ריוט/u7589337271_httpss.mj.runqBDvOm2qWnc_httpss.mj.runDuUjlZZpkOI_ed558678-3959-4ca3-9c66-a615eeb38662_1.png" alt="blooming riot">
         </div>
@@ -624,18 +640,19 @@
         <div class="bloom-img-below" style="position:absolute;left:calc(26vw + 130px);top:calc(3rem + 55vh + 60px + 56vh + 16px + 56vh + 60px + 136px);width:26vw;height:55vh;overflow:hidden;">
           <img src="בלומינג ריוט/אגרטלים מרחוק יותר.png" alt="" style="width:100%;height:100%;object-fit:cover;">
         </div>
-        <div class="bloom-img-3" style="position:absolute;left:3vw;top:calc(3rem + 55vh + 60px + 56vh + 16px + 56vh + 60px + 136px + 55vh - 15px);width:26vw;height:26vh;overflow:hidden;">
+        <div class="bloom-img-3" style="position:absolute;left:3vw;top:calc(3rem + 55vh + 60px + 56vh + 16px + 56vh + 60px + 136px + 55vh - 15px - 50px);width:26vw;height:26vh;overflow:hidden;">
           <video src="בלומינג ריוט/דבורה.mp4" muted loop playsinline autoplay style="width:100%;height:100%;object-fit:cover;"></video>
         </div>
-        <div style="position:absolute;left:3vw;top:calc(3rem + 55vh + 60px + 56vh + 16px + 56vh + 60px + 136px + 55vh - 15px + 26vh + 50px);width:26vw;height:26vh;overflow:hidden;">
+        <div style="position:absolute;left:3vw;top:calc(3rem + 55vh + 60px + 56vh + 16px + 56vh + 60px + 136px + 55vh - 15px + 26vh);width:26vw;height:26vh;overflow:hidden;">
           <img src="בלומינג ריוט/u7589337271_httpss.mj.run1LdGnXJ9BtY_a_hyper-realistic_portra_c17dbc43-8928-416c-a6df-5849ea251326_1.png" alt="" style="width:100%;height:100%;object-fit:cover;">
         </div>
-        <div style="position:absolute;left:calc(26vw + 130px);top:calc(3rem + 55vh + 60px + 56vh + 16px + 56vh + 60px + 136px + 55vh + 20px + 26vh + 220px);width:26vw;height:26vh;overflow:hidden;">
+        <div style="position:absolute;left:calc(26vw + 130px);top:calc(3rem + 55vh + 60px + 56vh + 16px + 56vh + 60px + 136px + 55vh + 20px + 26vh + 140px);width:26vw;height:26vh;overflow:hidden;">
           <video src="בלומינג ריוט/דגים.mp4" muted loop playsinline autoplay style="width:100%;height:100%;object-fit:cover;"></video>
         </div>
-        <div style="position:absolute;left:3vw;top:calc(3rem + 55vh + 60px + 56vh + 16px + 56vh + 60px + 136px + 55vh + 20px + 26vh + 220px + 26vh + 20px);width:26vw;height:62vh;overflow:hidden;">
+        <div style="position:absolute;left:3vw;top:calc(3rem + 55vh + 60px + 56vh + 16px + 56vh + 60px + 136px + 55vh + 20px + 26vh + 140px + 26vh - 10px);width:26vw;height:56vh;overflow:hidden;">
           <img src="בלומינג ריוט/u7589337271_a_surreal_hyper-realistic_wide_shot_of_a_vast_fie_98d2e6fd-e049-418a-824b-ff3a96af119c_0.png" alt="" style="width:100%;height:100%;object-fit:cover;">
         </div>
+        <span class="inner-next" id="inner-next-bloom" style="position:absolute;bottom:3rem;left:3vw;z-index:10;">←</span>
       </div>
     </div>
     <div class="inner-right">
@@ -649,7 +666,7 @@
   <!-- Inner page: פסטיבל ביתגלים -->
   <div class="inner-page" id="inner-bitgalim">
     <div class="inner-left">
-      <div class="inner-track" id="innerTrackBitgalim" style="min-height: calc(100vh + 200px);">
+      <div class="inner-track" id="innerTrackBitgalim" style="min-height: calc(100vh + 200px);padding-bottom:3rem;">
         <!-- 3 images side by side at top -->
         <div style="display:flex;gap:15px;padding-top:3rem;">
           <div style="width:18vw;flex-shrink:0;">
@@ -663,26 +680,44 @@
           </div>
         </div>
 
-        <div id="bitgalimVidWrap" style="margin-top:50px;width:24vw;position:relative;cursor:default;">
-          <video src="בית גלים/בניית פונט סופי 2.MP4" playsinline preload="auto" id="bitgalimVid" style="width:100%;height:auto;display:block;"></video>
+        <div id="bitgalimVidWrap" style="margin-top:50px;width:24vw;position:relative;cursor:default;overflow:hidden;">
+          <video src="בית גלים/בניית פונט סופי 2.MP4" playsinline preload="auto" autoplay loop muted id="bitgalimVid" style="width:100%;height:auto;display:block;margin-top:-50px;"></video>
+        </div>
+        <div style="width:24vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">עיצוב פונטים</div>
+        <div style="margin-top:-60px;margin-left:calc(23vw + 130px);width:20vw;overflow:visible;">
+          <img src="בית גלים/2.jpg" alt="" style="width:100%;height:auto;display:block;">
+        </div>
+
+        <div style="margin-top:-50px;width:26vw;">
+          <img src="בית גלים/1.jpg" alt="" style="width:100%;height:auto;display:block;">
+        </div>
+        <div style="margin-top:30px;width:26vw;">
+          <img src="בית גלים/4.jpg" alt="" style="width:100%;height:auto;display:block;">
+        </div>
+
+        <div id="moshanVidWrap" style="margin-top:-40px;margin-left:calc(23vw + 130px);width:20vw;position:relative;cursor:default;">
+          <video src="בית גלים/מושן הכי סופי.mp4" playsinline preload="auto" id="moshanVid" style="width:100%;height:auto;display:block;"></video>
           <div class="bloom-vid-controls">
-            <span class="bloom-vid-btn" id="bitgalimBtn">▶</span>
-            <div class="bloom-progress-wrap" id="bitgalimProgressWrap">
-              <div class="bloom-progress-bar" id="bitgalimBar"></div>
+            <span class="bloom-vid-btn" id="moshanBtn">▶</span>
+            <div class="bloom-progress-wrap" id="moshanProgressWrap">
+              <div class="bloom-progress-bar" id="moshanBar"></div>
             </div>
-            <span class="bloom-time" id="bitgalimTime">-0:00</span>
-            <span class="bloom-vid-btn" id="bitgalimMute">
-              <svg id="bitgalimMuteIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+            <span class="bloom-time" id="moshanTime">-0:00</span>
+            <span class="bloom-vid-btn" id="moshanMute">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
                 <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-                <path id="bitgalimWave" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                <path id="moshanWave" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
               </svg>
             </span>
           </div>
         </div>
-        <div style="width:24vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">עיצוב פונטים</div>
-        <div style="margin-top:50px;margin-left:calc(23vw + 130px);width:20vw;overflow:visible;">
-          <img src="בית גלים/2.png" alt="" style="width:100%;height:auto;display:block;transform:rotate(-90deg) scale(1.5);transform-origin:center;transform-box:fill-box;">
+        <div style="width:20vw;margin-left:calc(23vw + 130px);text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">Motion Design</div>
+
+        <div style="margin-top:-50px;width:26vw;">
+          <img src="בית גלים/מרצ.png" alt="" style="width:100%;height:auto;display:block;">
         </div>
+        <div style="width:26vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">מרצ'נדייז</div>
+        <span class="inner-next" id="inner-next-bitgalim">←</span>
 
       </div>
     </div>
@@ -697,22 +732,32 @@
   <!-- Inner page: מה שנשאר מאחור -->
   <div class="inner-page" id="inner-mah">
     <div class="inner-left">
-      <div class="inner-track" id="innerTrack">
+      <div class="inner-track" id="innerTrack" style="padding-bottom:3rem;">
         <div class="inner-img-wrap">
           <img src="מה שנשאר מאחור/42039B12-26FD-4060-9F85-BAADA14EEE14.JPG" alt="מה שנשאר מאחור">
         </div>
         <div class="inner-img-peek">
-          <img src="מה שנשאר מאחור/IMG_1760.jpg" alt="">
+          <video src="מה שנשאר מאחור/דפדוף קרוב.mov" muted loop playsinline autoplay style="width:100%;height:100%;object-fit:cover;"></video>
         </div>
         <div class="inner-img-3">
           <img src="מה שנשאר מאחור/IMG_1728.jpg" alt="">
         </div>
-        <div class="inner-vid-4">
-          <video src="מה שנשאר מאחור/IMG_1875.mov" muted loop playsinline autoplay></video>
+        <div class="inner-vid-4" id="mahVidWrap">
+          <img src="מה שנשאר מאחור/IMG_1760.jpg" alt="" style="width:100%;height:100%;object-fit:cover;object-position:center 40%;">
         </div>
         <div class="inner-img-5">
-          <img src="מה שנשאר מאחור/IMG_1906.jpg" alt="">
+          <video src="מה שנשאר מאחור/סרטון חדש 1.mov" muted loop playsinline autoplay style="width:100%;height:100%;object-fit:cover;"></video>
         </div>
+        <div style="margin-top:30px;margin-left:calc(26vw + 130px - 3vw);width:20vw;height:30vh;overflow:hidden;">
+          <img src="מה שנשאר מאחור/IMG_1906.jpg" alt="" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div style="margin-top:-10px;width:26vw;height:35vh;overflow:hidden;">
+          <img src="מה שנשאר מאחור/IMG_1903.jpg" alt="" style="width:100%;height:100%;object-fit:cover;">
+        </div>
+        <div style="margin-top:30px;width:26vw;">
+          <video src="מה שנשאר מאחור/סרטון חדש 2.mov" muted loop playsinline autoplay style="width:100%;height:auto;display:block;"></video>
+        </div>
+        <span class="inner-next" id="inner-next-mah">←</span>
       </div>
     </div>
     <div class="inner-right">
@@ -720,6 +765,50 @@
       <div class="inner-title">מה שנשאר מאחור</div>
       <div class="inner-desc">פרויקט שעוצב במסגרת הלימודים ועוסק בנושא הגירה. עיצבתי חוברת שמלווה תערוכה בשם "מה שנשאר מאחור", העוסקת בדברים שלא נכנסים למזוודה כשעוזבים מקום.<br><br>כשעוזבים בית, לא כל מה שחשוב באמת אפשר לקחת איתנו. חפצים, רגעים, ריחות וטעמים שנשארים מאחור נושאים איתם זיכרונות ורגשות, ומספרים על המקום שהיה פעם בית.</div>
       <div class="inner-tools">InDesign, Photoshop</div>
+    </div>
+  </div>
+
+  <!-- Inner page: בין קודש לחול -->
+  <div class="inner-page" id="inner-kodesh">
+    <div class="inner-left">
+      <div class="inner-track" id="innerTrackKodesh" style="padding-bottom:3rem;">
+        <div id="kodeshVidWrap" style="margin-top:3rem;width:44vw;position:relative;cursor:default;">
+          <video src="בין קודש לחול/ערימת גלויות לבן.mp4" playsinline preload="auto" autoplay loop muted id="kodeshVid" style="width:100%;height:auto;display:block;"></video>
+        </div>
+        <div id="kodeshFullVidWrap" style="margin-top:50px;width:44vw;position:relative;cursor:default;">
+          <video src="בין קודש לחול/בין קודש לחול סרטון מלא.mov" playsinline preload="auto" id="kodeshFullVid" style="width:100%;height:auto;display:block;"></video>
+          <div class="bloom-vid-controls">
+            <span class="bloom-vid-btn" id="kodeshFullBtn">▶</span>
+            <div class="bloom-progress-wrap" id="kodeshFullProgressWrap">
+              <div class="bloom-progress-bar" id="kodeshFullBar"></div>
+            </div>
+            <span class="bloom-time" id="kodeshFullTime">-0:00</span>
+            <span class="bloom-vid-btn" id="kodeshFullMute">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="kodeshFullWave" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div style="width:44vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">גלילת אתר. קישור לאתר המלא- <a href="https://editor.p5js.org/raviddar1/full/Ng8r5QBhf" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;">בואו להציץ</a></div>
+        <div style="margin-top:50px;margin-left:calc(23vw + 130px);width:34vw;">
+          <img src="בין קודש לחול/לבן.png" alt="" style="width:100%;height:auto;display:block;">
+        </div>
+        <div style="margin-top:30px;margin-left:calc(23vw + 130px);width:34vw;">
+          <img src="בין קודש לחול/שחור.png" alt="" style="width:100%;height:auto;display:block;">
+        </div>
+        <div style="margin-top:0px;width:44vw;overflow:hidden;margin-left:-70px;transform:translateY(-40px);margin-bottom:-140px;clip-path:inset(70px 70px 100px 70px);">
+          <video src="בין קודש לחול/גלויה מסתובבת לבן.mp4" muted loop playsinline autoplay style="width:calc(100% + 40px);height:auto;display:block;margin:-20px;"></video>
+        </div>
+        <span class="inner-next" id="inner-next-kodesh">←</span>
+      </div>
+    </div>
+    <div class="inner-right">
+      <span class="inner-back" id="inner-back-kodesh">→</span>
+      <div class="inner-title">בין קודש לחול</div>
+      <div class="inner-desc">פרויקט אינטראקטיבי שנוצר במסגרת הלימודים. הפרויקט בוחן את המתח בין שתי קהילות הנתפסות לעיתים כרחוקות זו מזו בחברה הישראלית - החברה החרדית והקהילה הגאה. מתוך נקודת מבט אישית, הוא עוסק בחיים שבין מסגרות מוגדרות לביטוי עצמי, ובוחן כיצד שפה חזותית יוצרת תחושת שייכות ומעצבת זהות.</div>
+      <div class="inner-tools">P5, Figma</div>
     </div>
   </div>
 
@@ -794,10 +883,10 @@
       fly.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;`;
       document.body.appendChild(fly);
       fly.offsetHeight;
-      innerBitgalim.style.visibility = 'visible';
+      innerBitgalim.classList.add('measuring');
       const targetImg = innerBitgalim.querySelector('.inner-left img');
       const tRect = targetImg.getBoundingClientRect();
-      innerBitgalim.style.visibility = '';
+      innerBitgalim.classList.remove('measuring');
       fly.style.left = tRect.left + 'px';
       fly.style.top = tRect.top + 'px';
       fly.style.transform = '';
@@ -805,6 +894,7 @@
       fly.style.height = tRect.height + 'px';
       setTimeout(() => {
         innerBitgalim.classList.add('visible');
+        requestAnimationFrame(applyBitgalimCrop);
         cursor.classList.remove('visible');
         proj07el.classList.remove('clicking');
         setTimeout(() => fly.remove(), 200);
@@ -834,52 +924,68 @@
       requestAnimationFrame(bitgalimTick);
     })();
 
-    /* ── Bitgalim video player ── */
+    /* ── Bitgalim video (autoplay loop muted, cropped 20px top+bottom) ── */
     const bitgalimVid = document.getElementById('bitgalimVid');
-    const bitgalimBtn = document.getElementById('bitgalimBtn');
-    const bitgalimBar = document.getElementById('bitgalimBar');
-    const bitgalimTime = document.getElementById('bitgalimTime');
-    const bitgalimProgressWrap = document.getElementById('bitgalimProgressWrap');
-    const bitgalimWave = document.getElementById('bitgalimWave');
-    const bitgalimMute = document.getElementById('bitgalimMute');
     const bitgalimVidWrap = document.getElementById('bitgalimVidWrap');
+
+    function applyBitgalimCrop() {
+      const h = bitgalimVid.offsetHeight;
+      if (!h) return;
+      bitgalimVidWrap.style.height = (h - 100) + 'px';
+    }
+    bitgalimVid.addEventListener('loadedmetadata', applyBitgalimCrop, { once: true });
+    window.addEventListener('resize', applyBitgalimCrop);
+
 
     bitgalimVidWrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
     bitgalimVidWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
-    bitgalimVid.addEventListener('click', toggleBitgalim);
-    bitgalimBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleBitgalim(); });
 
-    function toggleBitgalim() {
-      if (bitgalimVid.paused) {
-        bitgalimVid.muted = false;
-        bitgalimWave.style.display = '';
-        bitgalimVid.play();
-        bitgalimBtn.textContent = '⏸';
+    innerBackBitgalim.addEventListener('click', () => { bitgalimVid.pause(); moshanVid.pause(); moshanBtn.textContent = '▶'; });
+
+    /* ── Moshan video player ── */
+    const moshanVid = document.getElementById('moshanVid');
+    const moshanBtn = document.getElementById('moshanBtn');
+    const moshanBar = document.getElementById('moshanBar');
+    const moshanTime = document.getElementById('moshanTime');
+    const moshanProgressWrap = document.getElementById('moshanProgressWrap');
+    const moshanWave = document.getElementById('moshanWave');
+    const moshanMute = document.getElementById('moshanMute');
+    const moshanVidWrap = document.getElementById('moshanVidWrap');
+
+    moshanVidWrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+    moshanVidWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+    moshanVid.addEventListener('click', toggleMoshan);
+    moshanBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleMoshan(); });
+
+    function toggleMoshan() {
+      if (moshanVid.paused) {
+        moshanVid.muted = false;
+        moshanWave.style.display = '';
+        moshanVid.play();
+        moshanBtn.textContent = '⏸';
       } else {
-        bitgalimVid.pause();
-        bitgalimBtn.textContent = '▶';
+        moshanVid.pause();
+        moshanBtn.textContent = '▶';
       }
     }
 
-    bitgalimMute.addEventListener('click', (e) => {
+    moshanMute.addEventListener('click', (e) => {
       e.stopPropagation();
-      bitgalimVid.muted = !bitgalimVid.muted;
-      bitgalimWave.style.display = bitgalimVid.muted ? 'none' : '';
+      moshanVid.muted = !moshanVid.muted;
+      moshanWave.style.display = moshanVid.muted ? 'none' : '';
     });
 
-    bitgalimVid.addEventListener('timeupdate', () => {
-      const pct = (bitgalimVid.currentTime / bitgalimVid.duration) * 100 || 0;
-      bitgalimBar.style.width = pct + '%';
-      bitgalimTime.textContent = '-' + formatTime((bitgalimVid.duration - bitgalimVid.currentTime) || 0);
+    moshanVid.addEventListener('timeupdate', () => {
+      const pct = (moshanVid.currentTime / moshanVid.duration) * 100 || 0;
+      moshanBar.style.width = pct + '%';
+      moshanTime.textContent = '-' + formatTime((moshanVid.duration - moshanVid.currentTime) || 0);
     });
 
-    bitgalimProgressWrap.addEventListener('click', (e) => {
+    moshanProgressWrap.addEventListener('click', (e) => {
       e.stopPropagation();
-      const rect = bitgalimProgressWrap.getBoundingClientRect();
-      bitgalimVid.currentTime = ((e.clientX - rect.left) / rect.width) * bitgalimVid.duration;
+      const rect = moshanProgressWrap.getBoundingClientRect();
+      moshanVid.currentTime = ((e.clientX - rect.left) / rect.width) * moshanVid.duration;
     });
-
-    innerBackBitgalim.addEventListener('click', () => { bitgalimVid.pause(); bitgalimBtn.textContent = '▶'; });
 
     /* ── Preload inner page images ── */
     [
@@ -909,15 +1015,16 @@
       fly.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;`;
       document.body.appendChild(fly);
       fly.offsetHeight;
-      innerBloom.style.visibility = 'visible';
+      innerBloom.classList.add('measuring');
       const bloomTargetImg = innerBloom.querySelector('.inner-left img');
       const bRect = bloomTargetImg.getBoundingClientRect();
-      innerBloom.style.visibility = '';
+      innerBloom.classList.remove('measuring');
       fly.style.left = bRect.left + 'px';
       fly.style.top = bRect.top + 'px';
       fly.style.transform = '';
       fly.style.width = bRect.width + 'px';
       fly.style.height = bRect.height + 'px';
+      fly.style.objectPosition = getComputedStyle(bloomTargetImg).objectPosition;
       setTimeout(() => {
         innerBloom.classList.add('visible');
         cursor.classList.remove('visible');
@@ -1113,16 +1220,17 @@
       fly.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;`;
       document.body.appendChild(fly);
 
-      innerPage.style.visibility = 'visible';
+      innerPage.classList.add('measuring');
       const mahTargetImg = innerPage.querySelector('.inner-img-wrap img');
       const mRect = mahTargetImg.getBoundingClientRect();
-      innerPage.style.visibility = '';
+      innerPage.classList.remove('measuring');
       fly.offsetHeight;
       fly.style.left      = mRect.left + 'px';
       fly.style.top       = mRect.top + 'px';
       fly.style.transform = '';
       fly.style.width     = mRect.width + 'px';
       fly.style.height    = mRect.height + 'px';
+      fly.style.objectPosition = getComputedStyle(mahTargetImg).objectPosition;
 
       setTimeout(() => {
         innerPage.classList.add('visible');
@@ -1146,6 +1254,153 @@
       current = savedScroll; target = savedScroll;
       strip.style.transform = `translateX(${current}px)`;
     });
+
+    /* ── Next project arrows ── */
+    document.getElementById('inner-next-bloom').addEventListener('click', () => {
+      innerBloom.classList.remove('visible');
+      bloomScrollY = 0; bloomScrollTarget = 0;
+      innerTrackBloom.style.transform = '';
+      innerBitgalim.classList.add('visible');
+      bitgalimScrollY = 0; bitgalimScrollTarget = 0;
+      requestAnimationFrame(applyBitgalimCrop);
+    });
+
+    document.getElementById('inner-next-bitgalim').addEventListener('click', () => {
+      innerBitgalim.classList.remove('visible');
+      bitgalimScrollY = 0; bitgalimScrollTarget = 0;
+      innerTrackBitgalim.style.transform = '';
+      moshanVid.pause(); moshanBtn.textContent = '▶';
+      innerPage.classList.add('visible');
+      innerScrollY = 0; innerScrollTarget = 0;
+    });
+
+    document.getElementById('inner-next-mah').addEventListener('click', () => {
+      innerPage.classList.remove('visible');
+      innerScrollY = 0; innerScrollTarget = 0;
+      innerTrack.style.transform = '';
+      innerKodesh.classList.add('visible');
+    });
+
+    /* ── בין קודש לחול ── */
+    const innerKodesh = document.getElementById('inner-kodesh');
+    const innerBackKodesh = document.getElementById('inner-back-kodesh');
+    const kodeshVid = document.getElementById('kodeshVid');
+    const kodeshVidWrap = document.getElementById('kodeshVidWrap');
+    const proj04el = document.querySelector('.proj-col:nth-child(4) .proj-img');
+
+    proj04el.style.cursor = 'pointer';
+
+    proj04el.addEventListener('click', () => {
+      savedScroll = current;
+      const rect = proj04el.getBoundingClientRect();
+      const fly = document.createElement('canvas');
+      fly.className = 'fly-img';
+      fly.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;`;
+      const hoverVid = proj04el.querySelector('video');
+      fly.width = hoverVid.videoWidth || rect.width;
+      fly.height = hoverVid.videoHeight || rect.height;
+      fly.getContext('2d').drawImage(hoverVid, 0, 0, fly.width, fly.height);
+      document.body.appendChild(fly);
+      innerKodesh.classList.add('measuring');
+      const kTarget = innerKodesh.querySelector('#kodeshVidWrap');
+      const kRect = kTarget.getBoundingClientRect();
+      innerKodesh.classList.remove('measuring');
+      fly.offsetHeight;
+      fly.style.left = kRect.left + 'px';
+      fly.style.top = kRect.top + 'px';
+      fly.style.width = kRect.width + 'px';
+      fly.style.height = kRect.height + 'px';
+      setTimeout(() => {
+        innerKodesh.classList.add('visible');
+        cursor.classList.remove('visible');
+        setTimeout(() => fly.remove(), 200);
+        kodeshVid.currentTime = 0;
+        kodeshVid.play();
+        kodeshBtn.textContent = '⏸';
+      }, 460);
+    });
+
+    /* ── Kodesh full video ── */
+    const kodeshFullVid = document.getElementById('kodeshFullVid');
+    const kodeshFullBtn = document.getElementById('kodeshFullBtn');
+    const kodeshFullBar = document.getElementById('kodeshFullBar');
+    const kodeshFullTime = document.getElementById('kodeshFullTime');
+    const kodeshFullProgressWrap = document.getElementById('kodeshFullProgressWrap');
+    const kodeshFullWave = document.getElementById('kodeshFullWave');
+    const kodeshFullMute = document.getElementById('kodeshFullMute');
+    const kodeshFullVidWrap = document.getElementById('kodeshFullVidWrap');
+
+    kodeshFullVidWrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+    kodeshFullVidWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+    kodeshFullVid.addEventListener('click', toggleKodeshFull);
+    kodeshFullBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleKodeshFull(); });
+
+    function toggleKodeshFull() {
+      if (kodeshFullVid.paused) {
+        kodeshFullVid.muted = false;
+        kodeshFullWave.style.display = '';
+        kodeshFullVid.play();
+        kodeshFullBtn.textContent = '⏸';
+      } else {
+        kodeshFullVid.pause();
+        kodeshFullBtn.textContent = '▶';
+      }
+    }
+
+    kodeshFullMute.addEventListener('click', (e) => {
+      e.stopPropagation();
+      kodeshFullVid.muted = !kodeshFullVid.muted;
+      kodeshFullWave.style.display = kodeshFullVid.muted ? 'none' : '';
+    });
+
+    kodeshFullVid.addEventListener('timeupdate', () => {
+      const pct = (kodeshFullVid.currentTime / kodeshFullVid.duration) * 100 || 0;
+      kodeshFullBar.style.width = pct + '%';
+      kodeshFullTime.textContent = '-' + formatTime((kodeshFullVid.duration - kodeshFullVid.currentTime) || 0);
+    });
+
+    kodeshFullProgressWrap.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const rect = kodeshFullProgressWrap.getBoundingClientRect();
+      kodeshFullVid.currentTime = ((e.clientX - rect.left) / rect.width) * kodeshFullVid.duration;
+    });
+
+    innerBackKodesh.addEventListener('click', () => {
+      innerKodesh.classList.remove('visible');
+      kodeshScrollY = 0; kodeshScrollTarget = 0;
+      innerTrackKodesh.style.transform = '';
+      kodeshFullVid.pause();
+      kodeshFullBtn.textContent = '▶';
+      current = savedScroll; target = savedScroll;
+      strip.style.transform = `translateX(${current}px)`;
+      cursor.classList.add('visible');
+    });
+
+    document.getElementById('inner-next-kodesh').addEventListener('click', () => {
+      innerKodesh.classList.remove('visible');
+      kodeshScrollY = 0; kodeshScrollTarget = 0;
+      innerTrackKodesh.style.transform = '';
+      innerBloom.classList.add('visible');
+      bloomScrollY = 0; bloomScrollTarget = 0;
+    });
+
+    const innerTrackKodesh = document.getElementById('innerTrackKodesh');
+    let kodeshScrollY = 0, kodeshScrollTarget = 0;
+
+    innerKodesh.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      kodeshScrollTarget += e.deltaY;
+      const max = Math.max(0, innerTrackKodesh.offsetHeight - innerKodesh.offsetHeight);
+      kodeshScrollTarget = Math.max(0, Math.min(kodeshScrollTarget, max));
+    }, { passive: false });
+
+    (function kodeshTick() {
+      if (innerKodesh.classList.contains('visible')) {
+        kodeshScrollY += (kodeshScrollTarget - kodeshScrollY) * 0.1;
+        innerTrackKodesh.style.transform = `translateY(-${kodeshScrollY}px)`;
+      }
+      requestAnimationFrame(kodeshTick);
+    })();
 
     /* ── Inner page: scroll left half from anywhere ── */
     innerPage.addEventListener('wheel', (e) => {
