@@ -67,6 +67,7 @@
       transition: color 0.2s ease;
       text-decoration: none;
       color: var(--ink);
+      letter-spacing: -0.08em;
     }
     .nav-link:hover {
       color: #ff00a4;
@@ -110,7 +111,7 @@
     /* ─── Custom cursor ─── */
     * { cursor: none !important; }
     a, button, [role="button"],
-    .nav-link, .inner-back, .bloom-vid-btn, .bloom-progress-wrap { cursor: pointer !important; }
+    .nav-link, .inner-back, .bloom-vid-btn, .bloom-progress-wrap, .bloom-progress-wrap * { cursor: pointer !important; }
     .proj-img, .proj-img *,
     .bloom-vid-2, .bloom-vid-2 video, .bloom-vid-2 img { cursor: default !important; }
 
@@ -169,7 +170,7 @@
 
     .proj-img {
       flex: 1;
-      border: 0.25px solid var(--ink);
+      border: 0.25px solid transparent;
       position: relative;
       overflow: hidden;
       transform: translateY(-20px);
@@ -199,6 +200,9 @@
     .proj-img:hover video,
     .proj-img:hover .hover-img {
       opacity: 1;
+    }
+    .proj-img:hover .finlan-border {
+      opacity: 0;
     }
 
     .proj-img:hover > img:not(.hover-img) {
@@ -340,6 +344,7 @@
       padding: 8px 10px;
       background: rgba(255,255,255,0.5);
       cursor: auto;
+      z-index: 2;
     }
     .bloom-vid-btn {
       font-size: 0.72rem;
@@ -356,6 +361,9 @@
       position: relative;
       cursor: pointer;
       border-radius: 2px;
+      padding: 6px 0;
+      margin: -6px 0;
+      box-sizing: content-box;
     }
     .bloom-progress-bar {
       height: 100%;
@@ -456,15 +464,16 @@
     .proj-label {
       height: var(--label-h);
       display: flex;
-      flex-direction: column;
-      align-items: flex-start;
+      flex-direction: row;
+      align-items: baseline;
       justify-content: flex-start;
+      gap: 1.1em;
       padding: 0.4rem 0 0;
       flex-shrink: 0;
     }
 
     .proj-num {
-      font-size: 0.78rem;
+      font-size: 0.67rem;
       line-height: 1.3;
       font-weight: 400;
     }
@@ -472,7 +481,7 @@
     .proj-name {
       font-size: 0.78rem;
       line-height: 1.3;
-      font-weight: 300;
+      font-weight: 400;
     }
   </style>
 </head>
@@ -480,8 +489,8 @@
 
   <!-- Header: direction ltr so left=left, right=right -->
   <header>
-    <a class="nav-link" href="about.html">עלי</a>
-    <span class="nav-title">רביד דר | פורטפוליו</span>
+    <a class="nav-link" href="about.html">עליי</a>
+    <span class="nav-title" style="font-size:20px;letter-spacing:-0.08em;">רבידר</span>
     <a class="nav-link nav-active" href="index.html">פרויקטים</a>
   </header>
 
@@ -511,7 +520,9 @@
     <div class="strip" id="strip">
 
       <div class="proj-col">
-        <div class="proj-img"></div>
+        <div class="proj-img">
+          <video src="תורה שבמרחב/IMG_3014.MOV" muted loop playsinline preload="auto" autoplay style="object-fit:cover;opacity:1;"></video>
+        </div>
         <div class="proj-label">
           <span class="proj-num">01</span>
           <span class="proj-name">פרויקט גמר | תורה שבמרחב</span>
@@ -519,18 +530,22 @@
       </div>
 
       <div class="proj-col">
-        <div class="proj-img">
-          <img src="בלומינג ריוט/u7589337271_httpss.mj.runqBDvOm2qWnc_httpss.mj.runDuUjlZZpkOI_ed558678-3959-4ca3-9c66-a615eeb38662_1.png" alt="blooming riot">
-          <video src="בלומינג ריוט/בלומינג ריוט לויקס.mp4" muted loop playsinline preload="auto"></video>
+        <div class="proj-img" id="finlanHomeImg">
+          <img src="פינלן/פינלן ראשית.png" alt="פינלן">
+          <img src="פינלן/מוקאפ כרטיסי ביקור copy.jpg" alt="פינלן כרטיס ביקור" class="hover-img">
+          <div class="finlan-border" style="position:absolute;inset:0;border:1px solid #DB1F1F;pointer-events:none;z-index:5;"></div>
         </div>
         <div class="proj-label">
           <span class="proj-num">02</span>
-          <span class="proj-name">blooming riot</span>
+          <span class="proj-name">חממת מעצבות | פינלן</span>
         </div>
       </div>
 
       <div class="proj-col">
-        <div class="proj-img"></div>
+        <div class="proj-img">
+          <img src="קריאייטיב/תמונה פרה.png" alt="קריאייטיב">
+          <video src="קריאייטיב/tnuva_final.mp4" muted playsinline preload="auto" id="kreativHoverVid"></video>
+        </div>
         <div class="proj-label">
           <span class="proj-num">03</span>
           <span class="proj-name">קריאייטיב</span>
@@ -560,10 +575,13 @@
       </div>
 
       <div class="proj-col">
-        <div class="proj-img"></div>
+        <div class="proj-img">
+          <img src="בלומינג ריוט/u7589337271_httpss.mj.runqBDvOm2qWnc_httpss.mj.runDuUjlZZpkOI_ed558678-3959-4ca3-9c66-a615eeb38662_1.png" alt="blooming riot">
+          <video src="בלומינג ריוט/בלומינג ריוט לויקס.mp4" muted loop playsinline preload="auto"></video>
+        </div>
         <div class="proj-label">
           <span class="proj-num">06</span>
-          <span class="proj-name">חממת מעצבות | פינלן</span>
+          <span class="proj-name">blooming riot</span>
         </div>
       </div>
 
@@ -581,7 +599,7 @@
       <div class="proj-col">
         <div class="proj-img">
           <img src="שימור תרבות/תמונה סטטית.png" alt="שימור תרבות" style="object-position: center 10%;">
-          <video src="שימור תרבות/חדששש.mov" muted loop playsinline preload="auto" style="object-fit:cover;transform:translateY(3%);"></video>
+          <video src="שימור תרבות/מלא.mov" muted loop playsinline preload="auto" style="object-fit:cover;transform:scale(1.12) translateY(3%);"></video>
         </div>
         <div class="proj-label">
           <span class="proj-num">08</span>
@@ -791,7 +809,7 @@
             </span>
           </div>
         </div>
-        <div style="width:44vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">גלילת אתר. קישור לאתר המלא- <a href="https://editor.p5js.org/raviddar1/full/Ng8r5QBhf" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;">בואו להציץ</a></div>
+        <div style="width:44vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">גלילת אתר. <a href="https://editor.p5js.org/raviddar1/full/Ng8r5QBhf" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;">בואו להציץ</a></div>
         <div style="margin-top:50px;margin-left:calc(23vw + 130px);width:34vw;">
           <img src="בין קודש לחול/לבן.png" alt="" style="width:100%;height:auto;display:block;">
         </div>
@@ -809,6 +827,167 @@
       <div class="inner-title">בין קודש לחול</div>
       <div class="inner-desc">פרויקט אינטראקטיבי שנוצר במסגרת הלימודים. הפרויקט בוחן את המתח בין שתי קהילות הנתפסות לעיתים כרחוקות זו מזו בחברה הישראלית - החברה החרדית והקהילה הגאה. מתוך נקודת מבט אישית, הוא עוסק בחיים שבין מסגרות מוגדרות לביטוי עצמי, ובוחן כיצד שפה חזותית יוצרת תחושת שייכות ומעצבת זהות.</div>
       <div class="inner-tools">P5, Figma</div>
+    </div>
+  </div>
+
+  <!-- Inner page: תורה שבמרחב -->
+  <div class="inner-page" id="inner-torah">
+    <div class="inner-left">
+      <div class="inner-track" id="innerTrackTorah" style="padding-bottom:3rem;">
+        <div id="torahVidWrap" style="width:26vw;position:relative;cursor:default;">
+          <video src="תורה שבמרחב/IMG_3014.MOV" playsinline preload="auto" autoplay loop muted id="torahVid" style="width:100%;height:auto;display:block;"></video>
+        </div>
+        <span class="inner-next" id="inner-next-torah">←</span>
+      </div>
+    </div>
+    <div class="inner-right">
+      <span class="inner-back" id="inner-back-torah">→</span>
+      <div class="inner-title">תורה שבמרחב</div>
+      <div class="inner-desc"></div>
+      <div class="inner-tools"></div>
+    </div>
+  </div>
+
+  <!-- Inner page: פינלן -->
+  <div class="inner-page" id="inner-finlan">
+    <div class="inner-left">
+      <div class="inner-track" id="innerTrackFinlan" style="padding-bottom:3rem;">
+        <div class="inner-img-wrap" id="finlanFirstImg">
+          <img src="פינלן/פינלן ראשית.png" alt="פינלן">
+        </div>
+        <div style="margin-top:120px;width:26vw;">
+          <img src="פינלן/לוגו+כסא.png" alt="לוגו כיסא" style="width:100%;height:auto;display:block;">
+        </div>
+        <div style="margin-top:120px;width:26vw;">
+          <img src="פינלן/פונט.png" alt="פונט" style="width:100%;height:auto;display:block;">
+        </div>
+        <div style="margin-top:-80px;margin-left:calc(26vw + 60px);width:30vw;">
+          <img src="פינלן/כיסא.png" alt="כיסא" style="width:100%;height:auto;display:block;">
+        </div>
+        <div style="margin-top:40px;width:30vw;">
+          <img src="פינלן/צבעוניות.png" alt="צבעוניות" style="width:100%;height:auto;display:block;">
+        </div>
+        <div style="margin-top:40px;width:30vw;">
+          <img src="פינלן/משאית.png" alt="משאית" style="width:100%;height:auto;display:block;">
+        </div>
+        <div style="margin-top:-80px;margin-left:calc(36vw + 60px);width:20vw;">
+          <img src="פינלן/מוקאפ כרטיסי ביקור copy.jpg" alt="כרטיס ביקור" style="width:100%;height:auto;display:block;">
+        </div>
+        <div style="margin-top:40px;margin-left:calc(36vw + 60px);width:20vw;">
+          <img src="פינלן/סושיאל.png" alt="סושיאל" style="width:100%;height:auto;display:block;">
+        </div>
+        <div style="margin-top:-40px;width:26vw;overflow:hidden;">
+          <img src="פינלן/מרצ.png" alt="מרצ" style="width:100%;height:auto;display:block;transform:scale(1.12);transform-origin:center;">
+        </div>
+        <span class="inner-next" id="inner-next-finlan">←</span>
+      </div>
+    </div>
+    <div class="inner-right">
+      <span class="inner-back" id="inner-back-finlan">→</span>
+      <div class="inner-title">פינלן</div>
+      <div class="inner-desc">פרויקט מיתוג שנוצר במסגרת קורס המצוינות "חממת מעצבות", בהנחיית רינת הדר ואלה בן עמרם.<br><br>החממה היא תוכנית ייחודית ל-20 סטודנטיות מצטיינות, שבמסגרתה עובדים מול לקוחות אמיתיים בליווי צמוד של המרצות. במסגרת התוכנית, יחד עם סטודנטית נוספת, הובלתי את תהליך המיתוג מחדש של Finlan - עסק להשכרת ציוד לאירועים. לאחר מחקר ושיחות אפיון עם הלקוח, פיתחנו שפה חזותית חדשה, צעירה, רעננה ומזמינה, המשקפת את ערכי המותג ואת קהל היעד שלו.</div>
+      <div class="inner-tools">Figma, Adobe Illustrator, Adobe Firefly</div>
+    </div>
+  </div>
+
+  <!-- Inner page: קריאייטיב -->
+  <div class="inner-page" id="inner-kreativ">
+    <div class="inner-left">
+      <div class="inner-track" id="innerTrackKreativ" style="padding-top:1rem;padding-bottom:3rem;">
+        <div id="kreativVidWrap" style="width:44vw;position:relative;cursor:default;">
+          <video src="קריאייטיב/tnuva_final.mp4" playsinline preload="auto" id="kreativVid" style="width:100%;height:56vh;object-fit:cover;display:block;"></video>
+          <img id="kreativPoster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:1;">
+
+          <div class="bloom-vid-controls">
+            <span class="bloom-vid-btn" id="kreativBtn">▶</span>
+            <div class="bloom-progress-wrap" id="kreativProgressWrap">
+              <div class="bloom-progress-bar" id="kreativBar"></div>
+            </div>
+            <span class="bloom-time" id="kreativTime">-0:00</span>
+            <span class="bloom-vid-btn" id="kreativMute">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="kreativWave" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div style="width:44vw;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:24px;direction:rtl;text-align:right;">פרויקט עצמאי שנוצר כתגובה לשיח הציבורי שעורר סערה בעקבות התבטאותה של יעל פוליאקוב, שטענה כי נשים שמנות "מנצלות את השומן של עצמן כדי לקבל אהבה" והשוותה אותן לפרות.<br><br>הפרויקט כולל סרטון פרסומת קונספטואלי (Spec Ad) עבור תנובה, שנוצר באמצעות כלי בינה מלאכותית ותוכנות עריכה. הפרסומת אינה הופקה מטעם תנובה ואינה קשורה למותג.<br><br>תאהבו את עצמכן בכל מידה. 🩷</div>
+
+        <div id="kreativVidWrap2" style="margin-top:60px;width:44vw;position:relative;cursor:default;">
+          <video src="קריאייטיב/סרטון דוקי סופי.mp4" playsinline preload="auto" id="kreativVid2" style="width:100%;height:56vh;object-fit:cover;display:block;"></video>
+          <img id="kreativPoster2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:1;">
+          <div class="bloom-vid-controls">
+            <span class="bloom-vid-btn" id="kreativBtn2">▶</span>
+            <div class="bloom-progress-wrap" id="kreativProgressWrap2">
+              <div class="bloom-progress-bar" id="kreativBar2"></div>
+            </div>
+            <span class="bloom-time" id="kreativTime2">-0:00</span>
+            <span class="bloom-vid-btn" id="kreativMute2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="kreativWave2" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div style="width:44vw;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:24px;direction:rtl;text-align:right;">פרויקט שנוצר במסגרת הלימודים בקורס מיתוג.<br><br>במסגרת הפרויקט פיתחתי את DUCHI - מותג בירות קונספטואלי בהשראת משפחת מדיצ'י האיטלקית. מתוך מחשבה על חיבור בין עולמות מנוגדים, לקחתי את הבירה - מוצר המזוהה עם ברים וחיי לילה - והעברתי אותה אל עולם הארמונות, האצולה והיוקרה. כחלק מהפרויקט יצרתי סרטון תדמית המדמה קמפיין פרסום למותג, באמצעות כלי בינה מלאכותית ותהליך עריכה.</div>
+
+        <div id="kreativVidWrap3" style="margin-top:60px;width:44vw;position:relative;cursor:default;">
+          <video src="קריאייטיב/סרטון סופי יחסמ.mp4" playsinline preload="auto" id="kreativVid3" style="width:100%;height:56vh;object-fit:cover;display:block;"></video>
+          <img id="kreativPoster3" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:1;">
+          <div class="bloom-vid-controls">
+            <span class="bloom-vid-btn" id="kreativBtn3">▶</span>
+            <div class="bloom-progress-wrap" id="kreativProgressWrap3">
+              <div class="bloom-progress-bar" id="kreativBar3"></div>
+            </div>
+            <span class="bloom-time" id="kreativTime3">-0:00</span>
+            <span class="bloom-vid-btn" id="kreativMute3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="kreativWave3" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div style="width:44vw;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:24px;direction:rtl;text-align:right;">פרויקט שנוצר במסגרת שירות המילואים עבור יחס"ם צנחנים 5226, כחלק מקמפיין לגיוס תרומות ליחידה.<br><br>חומרי הגלם צולמו על ידי דובר צה"ל, ואני יצרתי את המבנה הסיפורי של הסרטון באמצעות עריכה ועיצוב סאונד. מטרת הסרטון הייתה להעביר את רוח היחידה, לחזק את החיבור הרגשי אליה ולעודד תמיכה בפעילותה.</div>
+
+        <span class="inner-next" id="inner-next-kreativ">←</span>
+      </div>
+    </div>
+    <div class="inner-right">
+      <span class="inner-back" id="inner-back-kreativ">→</span>
+      <div class="inner-title">קריאייטיב</div>
+      <div class="inner-desc">אוסף פרויקטים שנוצרו במסגרת הלימודים וביוזמות אישיות, העוסקים בקריאייטיב, קונספט וסטוריטלינג.</div>
+      <div class="inner-tools">Midjourney, Adobe After Effects, Adobe Firefly, Adobe Premiere Pro</div>
+    </div>
+  </div>
+
+  <!-- Inner page: שימור תרבות -->
+  <div class="inner-page" id="inner-shimur">
+    <div class="inner-left">
+      <div class="inner-track" id="innerTrackShimur" style="padding-top:1rem;padding-bottom:0;">
+        <div id="shimurVidWrap" style="margin-top:0;width:26vw;position:relative;cursor:default;">
+          <video src="שימור תרבות/מלא.mov" playsinline preload="auto" autoplay loop muted id="shimurVid" style="width:100%;height:auto;display:block;"></video>
+        </div>
+        <div style="width:26vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">סרטון מלא, <a href="https://editor.p5js.org/raviddar1/full/wfNZ9nTbS" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;">בואו להציץ</a></div>
+        <div style="margin-top:50px;width:26vw;">
+          <img src="שימור תרבות/פאסה בלאק.png" alt="" style="width:100%;height:auto;display:block;">
+        </div>
+        <div style="margin-top:-80px;margin-left:calc(26vw + 60px);width:26vw;">
+          <img src="שימור תרבות/גזעי.png" alt="" style="width:100%;height:auto;display:block;">
+        </div>
+        <div style="margin-top:-60px;width:26vw;">
+          <img src="שימור תרבות/ליגה.png" alt="" style="width:100%;height:auto;display:block;">
+        </div>
+        <span class="inner-next" id="inner-next-shimur" style="margin-top:10px;">←</span>
+      </div>
+    </div>
+    <div class="inner-right">
+      <span class="inner-back" id="inner-back-shimur">→</span>
+      <div class="inner-title">שימור תרבות</div>
+      <div class="inner-desc">פרויקט אינטראקטיבי שנוצר במסגרת הלימודים, העוסק בהחייאת מילות סלנג עבריות שנשכחו.<br><br>מילים שבעבר היו חלק בלתי נפרד מהשפה היומיומית נשמעות כיום משעשעות, מוזרות או לא מוכרות. הפרויקט מזמין קהל צעיר לגלות אותן מחדש בדרך משחקית וסקרנית.<br><br>כל אחת מהמילים עוצבה כחוויה תלת־ממדית באמצעות SketchUp, בשילוב טקסטורות, השתקפויות ואנימציה שנוצרה באמצעות קוד. בנוסף, בעזרת כלי בינה מלאכותית שוחזר קולו של שדר הספורט יורם ארבל, המעניק לפרויקט נופך נוסטלגי והומוריסטי.</div>
+      <div class="inner-tools">SketchUp, P5</div>
     </div>
   </div>
 
@@ -833,9 +1012,9 @@
     window.addEventListener('resize', calcMax);
 
     window.addEventListener('wheel', (e) => {
-      if (innerPage.classList.contains('visible')) return;
+      if (document.querySelector('.inner-page.visible')) return;
       e.preventDefault();
-      target += e.deltaY * 1.5;
+      target += (e.deltaY - e.deltaX) * 1.5;
       target = Math.max(0, Math.min(target, maxScroll));
     }, { passive: false });
 
@@ -850,7 +1029,7 @@
     }, { passive: false });
 
     /* ── Project click: blooming riot ── */
-    const proj02el      = document.querySelector('.proj-col:nth-child(2) .proj-img');
+    const proj02el      = document.querySelector('.proj-col:nth-child(6) .proj-img');
     const innerBloom    = document.getElementById('inner-bloom');
     const innerBackBloom = document.getElementById('inner-back-bloom');
     const innerTrackBloom = document.getElementById('innerTrackBloom');
@@ -905,6 +1084,7 @@
       innerBitgalim.classList.remove('visible');
       bitgalimScrollY = 0; bitgalimScrollTarget = 0;
       innerTrackBitgalim.style.transform = '';
+      pauseReset(moshanVid, moshanBtn);
       current = savedScroll; target = savedScroll;
       strip.style.transform = `translateX(${current}px)`;
     });
@@ -920,6 +1100,7 @@
       if (innerBitgalim.classList.contains('visible')) {
         bitgalimScrollY += (bitgalimScrollTarget - bitgalimScrollY) * 0.1;
         innerTrackBitgalim.style.transform = `translateY(-${bitgalimScrollY}px)`;
+        if (!moshanVid.paused && !isInView(moshanVid, innerBitgalim)) { moshanVid.pause(); moshanBtn.textContent = '▶'; }
       }
       requestAnimationFrame(bitgalimTick);
     })();
@@ -981,11 +1162,6 @@
       moshanTime.textContent = '-' + formatTime((moshanVid.duration - moshanVid.currentTime) || 0);
     });
 
-    moshanProgressWrap.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const rect = moshanProgressWrap.getBoundingClientRect();
-      moshanVid.currentTime = ((e.clientX - rect.left) / rect.width) * moshanVid.duration;
-    });
 
     /* ── Preload inner page images ── */
     [
@@ -1051,6 +1227,7 @@
       innerBloom.classList.remove('visible');
       bloomScrollY = 0; bloomScrollTarget = 0;
       innerTrackBloom.style.transform = '';
+      pauseReset(bloomVid, bloomBtn); pauseReset(bloomVid2, bloomBtn2);
       current = savedScroll; target = savedScroll;
       strip.style.transform = `translateX(${current}px)`;
     });
@@ -1082,7 +1259,10 @@
     let bloomPosterCaptured = false;
 
     function capturePoster() {
-      if (bloomPosterCaptured) return;
+      if (bloomPosterCaptured) {
+        bloomPoster.style.display = 'block';
+        return;
+      }
       const canvas = document.createElement('canvas');
       canvas.width = bloomVid.videoWidth;
       canvas.height = bloomVid.videoHeight;
@@ -1103,10 +1283,11 @@
 
     function toggleBloom() {
       if (bloomVid.paused) {
+        const fromStart = bloomPoster.style.display !== 'none';
         bloomPoster.style.display = 'none';
         bloomVid.muted = false;
         bloomWave.style.display = '';
-        bloomVid.currentTime = 0;
+        if (fromStart) bloomVid.currentTime = 0;
         bloomVid.play();
         bloomBtn.textContent = '⏸';
       } else {
@@ -1129,16 +1310,13 @@
       bloomTime.textContent = '-' + formatTime(remaining || 0);
     });
 
-    bloomProgressWrap.addEventListener('click', (e) => {
-      const rect = bloomProgressWrap.getBoundingClientRect();
-      const pct = (e.clientX - rect.left) / rect.width;
-      bloomVid.currentTime = pct * bloomVid.duration;
-    });
 
     (function bloomTick() {
       if (innerBloom.classList.contains('visible')) {
         bloomScrollY += (bloomScrollTarget - bloomScrollY) * 0.1;
         innerTrackBloom.style.transform = `translateY(-${bloomScrollY}px)`;
+        if (!bloomVid.paused && !isInView(bloomVid, innerBloom)) bloomVid.pause();
+        if (!bloomVid2.paused && !isInView(bloomVid2, innerBloom)) bloomVid2.pause();
       }
       requestAnimationFrame(bloomTick);
     })();
@@ -1167,7 +1345,6 @@
         bloomPoster2.style.display = 'none';
         bloomVid2.muted = false;
         bloomWave2.style.display = '';
-        bloomVid2.currentTime = 0;
         bloomVid2.play();
         bloomBtn2.textContent = '⏸';
       } else {
@@ -1188,10 +1365,6 @@
       bloomTime2.textContent = '-' + formatTime((bloomVid2.duration - bloomVid2.currentTime) || 0);
     });
 
-    bloomProgressWrap2.addEventListener('click', (e) => {
-      const rect = bloomProgressWrap2.getBoundingClientRect();
-      bloomVid2.currentTime = ((e.clientX - rect.left) / rect.width) * bloomVid2.duration;
-    });
 
     innerBackBloom.addEventListener('click', () => {
       bloomVid2.pause(); bloomBtn2.textContent = '▶';
@@ -1260,6 +1433,7 @@
       innerBloom.classList.remove('visible');
       bloomScrollY = 0; bloomScrollTarget = 0;
       innerTrackBloom.style.transform = '';
+      pauseReset(bloomVid, bloomBtn); pauseReset(bloomVid2, bloomBtn2);
       innerBitgalim.classList.add('visible');
       bitgalimScrollY = 0; bitgalimScrollTarget = 0;
       requestAnimationFrame(applyBitgalimCrop);
@@ -1269,7 +1443,7 @@
       innerBitgalim.classList.remove('visible');
       bitgalimScrollY = 0; bitgalimScrollTarget = 0;
       innerTrackBitgalim.style.transform = '';
-      moshanVid.pause(); moshanBtn.textContent = '▶';
+      pauseReset(moshanVid, moshanBtn);
       innerPage.classList.add('visible');
       innerScrollY = 0; innerScrollTarget = 0;
     });
@@ -1278,7 +1452,8 @@
       innerPage.classList.remove('visible');
       innerScrollY = 0; innerScrollTarget = 0;
       innerTrack.style.transform = '';
-      innerKodesh.classList.add('visible');
+      innerShimur.classList.add('visible');
+      shimurScrollY = 0; shimurScrollTarget = 0;
     });
 
     /* ── בין קודש לחול ── */
@@ -1359,18 +1534,12 @@
       kodeshFullTime.textContent = '-' + formatTime((kodeshFullVid.duration - kodeshFullVid.currentTime) || 0);
     });
 
-    kodeshFullProgressWrap.addEventListener('click', (e) => {
-      e.stopPropagation();
-      const rect = kodeshFullProgressWrap.getBoundingClientRect();
-      kodeshFullVid.currentTime = ((e.clientX - rect.left) / rect.width) * kodeshFullVid.duration;
-    });
 
     innerBackKodesh.addEventListener('click', () => {
       innerKodesh.classList.remove('visible');
       kodeshScrollY = 0; kodeshScrollTarget = 0;
       innerTrackKodesh.style.transform = '';
-      kodeshFullVid.pause();
-      kodeshFullBtn.textContent = '▶';
+      pauseReset(kodeshFullVid, kodeshFullBtn);
       current = savedScroll; target = savedScroll;
       strip.style.transform = `translateX(${current}px)`;
       cursor.classList.add('visible');
@@ -1380,6 +1549,7 @@
       innerKodesh.classList.remove('visible');
       kodeshScrollY = 0; kodeshScrollTarget = 0;
       innerTrackKodesh.style.transform = '';
+      pauseReset(kodeshFullVid, kodeshFullBtn);
       innerBloom.classList.add('visible');
       bloomScrollY = 0; bloomScrollTarget = 0;
     });
@@ -1398,6 +1568,7 @@
       if (innerKodesh.classList.contains('visible')) {
         kodeshScrollY += (kodeshScrollTarget - kodeshScrollY) * 0.1;
         innerTrackKodesh.style.transform = `translateY(-${kodeshScrollY}px)`;
+        if (!kodeshFullVid.paused && !isInView(kodeshFullVid, innerKodesh)) { kodeshFullVid.pause(); kodeshFullBtn.textContent = '▶'; }
       }
       requestAnimationFrame(kodeshTick);
     })();
@@ -1422,7 +1593,9 @@
     document.querySelectorAll('.proj-img').forEach(el => {
       const vid = el.querySelector('video');
       if (!vid) return;
-      const startTime = el.closest('.proj-col')?.querySelector('.proj-name')?.textContent.includes('קודש') ? 0.5 : 0;
+      if (vid.hasAttribute('autoplay')) { vid.play(); return; }
+      const projName = el.closest('.proj-col')?.querySelector('.proj-name')?.textContent || '';
+      const startTime = projName.includes('קודש') ? 0.5 : projName.includes('קריאייטיב') ? 2 : 0;
       vid.currentTime = startTime;
       vid.load();
       el.addEventListener('mouseenter', () => { vid.currentTime = startTime; vid.play(); });
@@ -1430,7 +1603,7 @@
     });
 
     /* ── Custom cursor ── */
-    const interactiveSelector = 'a, button, [role="button"], .nav-link, .inner-back, .bloom-vid-btn, .bloom-progress-wrap, input, select, .proj-img, .bloom-vid-2';
+    const interactiveSelector = 'a, button, [role="button"], .nav-link, .inner-back, .bloom-vid-btn, .bloom-progress-wrap, .bloom-progress-bar, input, select, .proj-img, .bloom-vid-2';
 
     window.addEventListener('mousemove', e => {
       cursor.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
@@ -1439,6 +1612,556 @@
       cursor.classList.toggle('visible', !isInteractive);
     }, { passive: true });
     document.addEventListener('mouseleave', () => cursor.classList.remove('visible'));
+
+    /* ── תורה שבמרחב ── */
+    const innerTorah = document.getElementById('inner-torah');
+    const innerBackTorah = document.getElementById('inner-back-torah');
+    const innerTrackTorah = document.getElementById('innerTrackTorah');
+    const torahVidWrap = document.getElementById('torahVidWrap');
+    const proj01el = document.querySelector('.proj-col:nth-child(1) .proj-img');
+    let torahScrollY = 0, torahScrollTarget = 0, torahMaxScroll = 0;
+
+    proj01el.style.cursor = 'pointer';
+
+    proj01el.addEventListener('click', () => {
+      savedScroll = current;
+      proj01el.classList.add('clicking');
+      const rect = proj01el.getBoundingClientRect();
+      const srcVid = proj01el.querySelector('video');
+      const fly = document.createElement('canvas');
+      fly.className = 'fly-img';
+      fly.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;`;
+      fly.width = srcVid.videoWidth || rect.width;
+      fly.height = srcVid.videoHeight || rect.height;
+      fly.getContext('2d').drawImage(srcVid, 0, 0, fly.width, fly.height);
+      document.body.appendChild(fly);
+      innerTorah.classList.add('measuring');
+      const tRect = torahVidWrap.getBoundingClientRect();
+      innerTorah.classList.remove('measuring');
+      fly.offsetHeight;
+      fly.style.left = tRect.left + 'px';
+      fly.style.top = tRect.top + 'px';
+      fly.style.width = tRect.width + 'px';
+      fly.style.height = tRect.height + 'px';
+      setTimeout(() => {
+        innerTorah.classList.add('visible');
+        cursor.classList.remove('visible');
+        proj01el.classList.remove('clicking');
+        setTimeout(() => fly.remove(), 200);
+      }, 460);
+    });
+
+    innerBackTorah.addEventListener('click', () => {
+      innerTorah.classList.remove('visible');
+      torahScrollY = 0; torahScrollTarget = 0;
+      innerTrackTorah.style.transform = '';
+      current = savedScroll; target = savedScroll;
+      strip.style.transform = `translateX(${current}px)`;
+      cursor.classList.add('visible');
+    });
+
+    innerTorah.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      torahScrollTarget += e.deltaY;
+      torahScrollTarget = Math.max(0, Math.min(torahScrollTarget, torahMaxScroll));
+    }, { passive: false });
+
+    (function torahTick() {
+      if (innerTorah.classList.contains('visible')) {
+        torahMaxScroll = Math.max(0, innerTrackTorah.offsetHeight - innerTorah.offsetHeight);
+        torahScrollTarget = Math.min(torahScrollTarget, torahMaxScroll);
+        torahScrollY += (torahScrollTarget - torahScrollY) * 0.1;
+        innerTrackTorah.style.transform = `translateY(-${torahScrollY}px)`;
+      }
+      requestAnimationFrame(torahTick);
+    })();
+
+    document.getElementById('inner-next-torah').addEventListener('click', () => {
+      innerTorah.classList.remove('visible');
+      torahScrollY = 0; torahScrollTarget = 0;
+      innerTrackTorah.style.transform = '';
+      innerFinlan.classList.add('visible');
+      finlanScrollY = 0; finlanScrollTarget = 0;
+    });
+
+    /* ── פינלן ── */
+    const innerFinlan = document.getElementById('inner-finlan');
+    const innerBackFinlan = document.getElementById('inner-back-finlan');
+    const innerTrackFinlan = document.getElementById('innerTrackFinlan');
+    const proj02finlan = document.getElementById('finlanHomeImg');
+    let finlanScrollY = 0, finlanScrollTarget = 0;
+
+    proj02finlan.style.cursor = 'pointer';
+
+    const preloadFinlan = new Image();
+    preloadFinlan.src = 'פינלן/פינלן ראשית.png';
+
+    proj02finlan.addEventListener('click', () => {
+      savedScroll = current;
+      proj02finlan.classList.add('clicking');
+      const rect = proj02finlan.getBoundingClientRect();
+      const fly = document.createElement('img');
+      fly.src = preloadFinlan.src;
+      fly.className = 'fly-img';
+      fly.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;object-fit:cover;`;
+      document.body.appendChild(fly);
+      innerFinlan.classList.add('measuring');
+      const fTarget = innerFinlan.querySelector('#finlanFirstImg img');
+      const fRect = fTarget.getBoundingClientRect();
+      innerFinlan.classList.remove('measuring');
+      fly.offsetHeight;
+      fly.style.left = fRect.left + 'px';
+      fly.style.top = fRect.top + 'px';
+      fly.style.width = fRect.width + 'px';
+      fly.style.height = fRect.height + 'px';
+      fly.style.objectPosition = getComputedStyle(fTarget).objectPosition;
+      setTimeout(() => {
+        innerFinlan.classList.add('visible');
+        cursor.classList.remove('visible');
+        proj02finlan.classList.remove('clicking');
+        setTimeout(() => fly.remove(), 200);
+      }, 460);
+    });
+
+    innerBackFinlan.addEventListener('click', () => {
+      innerFinlan.classList.remove('visible');
+      finlanScrollY = 0; finlanScrollTarget = 0;
+      innerTrackFinlan.style.transform = '';
+      current = savedScroll; target = savedScroll;
+      strip.style.transform = `translateX(${current}px)`;
+      cursor.classList.add('visible');
+    });
+
+    let finlanMaxScroll = 0;
+
+    innerFinlan.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      finlanScrollTarget += e.deltaY;
+      finlanScrollTarget = Math.max(0, Math.min(finlanScrollTarget, finlanMaxScroll));
+    }, { passive: false });
+
+    (function finlanTick() {
+      if (innerFinlan.classList.contains('visible')) {
+        finlanMaxScroll = Math.max(0, innerTrackFinlan.offsetHeight - innerFinlan.offsetHeight);
+        finlanScrollTarget = Math.min(finlanScrollTarget, finlanMaxScroll);
+        finlanScrollY += (finlanScrollTarget - finlanScrollY) * 0.1;
+        innerTrackFinlan.style.transform = `translateY(-${finlanScrollY}px)`;
+      }
+      requestAnimationFrame(finlanTick);
+    })();
+
+    document.getElementById('inner-next-finlan').addEventListener('click', () => {
+      innerFinlan.classList.remove('visible');
+      finlanScrollY = 0; finlanScrollTarget = 0;
+      innerTrackFinlan.style.transform = '';
+      innerBitgalim.classList.add('visible');
+      bitgalimScrollY = 0; bitgalimScrollTarget = 0;
+      requestAnimationFrame(applyBitgalimCrop);
+    });
+
+    /* ── קריאייטיב ── */
+    const innerKreativ = document.getElementById('inner-kreativ');
+    const innerBackKreativ = document.getElementById('inner-back-kreativ');
+    const innerTrackKreativ = document.getElementById('innerTrackKreativ');
+    const proj03el = document.querySelector('.proj-col:nth-child(3) .proj-img');
+    const kreativHoverVid = document.getElementById('kreativHoverVid');
+    let kreativScrollY = 0, kreativScrollTarget = 0;
+
+    proj03el.style.cursor = 'pointer';
+
+    /* 3-second hover stop */
+    kreativHoverVid.addEventListener('timeupdate', () => {
+      if (kreativHoverVid.currentTime >= 5) { kreativHoverVid.pause(); }
+    });
+
+    const preloadKreativ = new Image();
+    preloadKreativ.src = 'קריאייטיב/תמונה פרה.png';
+
+    proj03el.addEventListener('click', () => {
+      savedScroll = current;
+      proj03el.classList.add('clicking');
+      const rect = proj03el.getBoundingClientRect();
+      const fly = document.createElement('img');
+      fly.src = preloadKreativ.src;
+      fly.className = 'fly-img';
+      fly.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;object-fit:cover;`;
+      document.body.appendChild(fly);
+      innerKreativ.classList.add('measuring');
+      const kTarget = innerKreativ.querySelector('#kreativVidWrap');
+      const kRect = kTarget.getBoundingClientRect();
+      innerKreativ.classList.remove('measuring');
+      fly.offsetHeight;
+      fly.style.left = kRect.left + 'px';
+      fly.style.top = kRect.top + 'px';
+      fly.style.width = kRect.width + 'px';
+      fly.style.height = kRect.height + 'px';
+      setTimeout(() => {
+        innerKreativ.classList.add('visible');
+        cursor.classList.remove('visible');
+        proj03el.classList.remove('clicking');
+        setTimeout(() => fly.remove(), 200);
+        kreativVid.muted = true;
+        kreativVid.currentTime = 0.8;
+        kreativVid.addEventListener('seeked', () => {
+          captureKreativPoster();
+          kreativVid.currentTime = 0;
+          kreativVid.muted = false;
+        }, { once: true });
+      }, 460);
+    });
+
+    innerBackKreativ.addEventListener('click', () => {
+      innerKreativ.classList.remove('visible');
+      kreativScrollY = 0; kreativScrollTarget = 0;
+      innerTrackKreativ.style.transform = '';
+      pauseReset(kreativVid, kreativBtn); pauseReset(kreativVid2, kreativBtn2); pauseReset(kreativVid3, kreativBtn3);
+      kreativPoster.style.display = 'none'; kreativPoster2.style.display = 'none'; kreativPoster3.style.display = 'none';
+      current = savedScroll; target = savedScroll;
+      strip.style.transform = `translateX(${current}px)`;
+      cursor.classList.add('visible');
+    });
+
+    innerKreativ.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      kreativScrollTarget += e.deltaY;
+      const max = Math.max(0, innerTrackKreativ.offsetHeight - innerKreativ.offsetHeight);
+      kreativScrollTarget = Math.max(0, Math.min(kreativScrollTarget, max));
+    }, { passive: false });
+
+    (function kreativTick() {
+      if (innerKreativ.classList.contains('visible')) {
+        kreativScrollY += (kreativScrollTarget - kreativScrollY) * 0.1;
+        innerTrackKreativ.style.transform = `translateY(-${kreativScrollY}px)`;
+        if (!kreativVid.paused && !isInView(kreativVid, innerKreativ)) { kreativVid.pause(); kreativBtn.textContent = '▶'; }
+        if (!kreativVid2.paused && !isInView(kreativVid2, innerKreativ)) { kreativVid2.pause(); kreativBtn2.textContent = '▶'; }
+        if (!kreativVid3.paused && !isInView(kreativVid3, innerKreativ)) { kreativVid3.pause(); kreativBtn3.textContent = '▶'; }
+      }
+      requestAnimationFrame(kreativTick);
+    })();
+
+    /* inner kreativ video player */
+    const kreativVid = document.getElementById('kreativVid');
+    const kreativBtn = document.getElementById('kreativBtn');
+    const kreativBar = document.getElementById('kreativBar');
+    const kreativTime = document.getElementById('kreativTime');
+    const kreativProgressWrap = document.getElementById('kreativProgressWrap');
+    const kreativWave = document.getElementById('kreativWave');
+    const kreativMuteBtn = document.getElementById('kreativMute');
+    const kreativVidWrap = document.getElementById('kreativVidWrap');
+    const kreativPoster = document.getElementById('kreativPoster');
+    let kreativPosterCaptured = false;
+
+    function captureKreativPoster() {
+      if (kreativPosterCaptured) return;
+      const canvas = document.createElement('canvas');
+      canvas.width = kreativVid.videoWidth;
+      canvas.height = kreativVid.videoHeight;
+      canvas.getContext('2d').drawImage(kreativVid, 0, 0);
+      canvas.toBlob(blob => {
+        kreativPoster.src = URL.createObjectURL(blob);
+        kreativPoster.style.display = 'block';
+        kreativPosterCaptured = true;
+      }, 'image/jpeg', 0.9);
+    }
+
+    kreativVidWrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+    kreativVidWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+    kreativVid.addEventListener('click', toggleKreativ);
+    kreativPoster.addEventListener('click', toggleKreativ);
+    kreativBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleKreativ(); });
+
+    function toggleKreativ() {
+      if (kreativVid.paused) {
+        kreativPoster.style.display = 'none';
+        kreativVid.muted = false;
+        kreativWave.style.display = '';
+        kreativVid.play();
+        kreativBtn.textContent = '⏸';
+      } else {
+        kreativVid.pause();
+        kreativBtn.textContent = '▶';
+      }
+    }
+
+    kreativMuteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      kreativVid.muted = !kreativVid.muted;
+      kreativWave.style.display = kreativVid.muted ? 'none' : '';
+    });
+
+    kreativVid.addEventListener('timeupdate', () => {
+      const pct = (kreativVid.currentTime / kreativVid.duration) * 100 || 0;
+      kreativBar.style.width = pct + '%';
+      kreativTime.textContent = '-' + formatTime((kreativVid.duration - kreativVid.currentTime) || 0);
+    });
+
+
+    /* kreativ video 2 (דוקי סופי) */
+    const kreativVid2 = document.getElementById('kreativVid2');
+    const kreativBtn2 = document.getElementById('kreativBtn2');
+    const kreativBar2 = document.getElementById('kreativBar2');
+    const kreativTime2 = document.getElementById('kreativTime2');
+    const kreativProgressWrap2 = document.getElementById('kreativProgressWrap2');
+    const kreativWave2 = document.getElementById('kreativWave2');
+    const kreativMuteBtn2 = document.getElementById('kreativMute2');
+    const kreativVidWrap2 = document.getElementById('kreativVidWrap2');
+    const kreativPoster2 = document.getElementById('kreativPoster2');
+    let kreativPoster2Captured = false;
+
+    kreativVidWrap2.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+    kreativVidWrap2.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+    kreativVid2.addEventListener('click', toggleKreativ2);
+    kreativPoster2.addEventListener('click', toggleKreativ2);
+    kreativBtn2.addEventListener('click', (e) => { e.stopPropagation(); toggleKreativ2(); });
+
+    function toggleKreativ2() {
+      if (kreativVid2.paused) {
+        kreativPoster2.style.display = 'none';
+        kreativVid2.muted = false;
+        kreativWave2.style.display = '';
+        kreativVid2.play();
+        kreativBtn2.textContent = '⏸';
+      } else {
+        kreativVid2.pause();
+        kreativBtn2.textContent = '▶';
+      }
+    }
+
+    kreativMuteBtn2.addEventListener('click', (e) => {
+      e.stopPropagation();
+      kreativVid2.muted = !kreativVid2.muted;
+      kreativWave2.style.display = kreativVid2.muted ? 'none' : '';
+    });
+
+    kreativVid2.addEventListener('timeupdate', () => {
+      const pct = (kreativVid2.currentTime / kreativVid2.duration) * 100 || 0;
+      kreativBar2.style.width = pct + '%';
+      kreativTime2.textContent = '-' + formatTime((kreativVid2.duration - kreativVid2.currentTime) || 0);
+    });
+
+
+    innerKreativ.addEventListener('visibilityinit2', () => {});
+
+    /* capture poster2 when inner page opens */
+    const origProj03Click = proj03el.addEventListener;
+    kreativVid2.muted = true;
+    kreativVid2.addEventListener('loadedmetadata', () => {
+      kreativVid2.currentTime = 0.8;
+      kreativVid2.addEventListener('seeked', () => {
+        if (kreativPoster2Captured) return;
+        const canvas = document.createElement('canvas');
+        canvas.width = kreativVid2.videoWidth;
+        canvas.height = kreativVid2.videoHeight;
+        canvas.getContext('2d').drawImage(kreativVid2, 0, 0);
+        canvas.toBlob(blob => {
+          kreativPoster2.src = URL.createObjectURL(blob);
+          kreativPoster2.style.display = 'block';
+          kreativPoster2Captured = true;
+          kreativVid2.currentTime = 0;
+          kreativVid2.muted = false;
+        }, 'image/jpeg', 0.9);
+      }, { once: true });
+    }, { once: true });
+
+    /* kreativ video 3 (סופי יחסמ) */
+    const kreativVid3 = document.getElementById('kreativVid3');
+    const kreativBtn3 = document.getElementById('kreativBtn3');
+    const kreativBar3 = document.getElementById('kreativBar3');
+    const kreativTime3 = document.getElementById('kreativTime3');
+    const kreativProgressWrap3 = document.getElementById('kreativProgressWrap3');
+    const kreativWave3 = document.getElementById('kreativWave3');
+    const kreativMuteBtn3 = document.getElementById('kreativMute3');
+    const kreativVidWrap3 = document.getElementById('kreativVidWrap3');
+    const kreativPoster3 = document.getElementById('kreativPoster3');
+    let kreativPoster3Captured = false;
+
+    kreativVidWrap3.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+    kreativVidWrap3.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+    kreativVid3.addEventListener('click', toggleKreativ3);
+    kreativPoster3.addEventListener('click', toggleKreativ3);
+    kreativBtn3.addEventListener('click', (e) => { e.stopPropagation(); toggleKreativ3(); });
+
+    function toggleKreativ3() {
+      if (kreativVid3.paused) {
+        kreativPoster3.style.display = 'none';
+        kreativVid3.muted = false;
+        kreativWave3.style.display = '';
+        kreativVid3.play();
+        kreativBtn3.textContent = '⏸';
+      } else {
+        kreativVid3.pause();
+        kreativBtn3.textContent = '▶';
+      }
+    }
+
+    kreativMuteBtn3.addEventListener('click', (e) => {
+      e.stopPropagation();
+      kreativVid3.muted = !kreativVid3.muted;
+      kreativWave3.style.display = kreativVid3.muted ? 'none' : '';
+    });
+
+    kreativVid3.addEventListener('timeupdate', () => {
+      const pct = (kreativVid3.currentTime / kreativVid3.duration) * 100 || 0;
+      kreativBar3.style.width = pct + '%';
+      kreativTime3.textContent = '-' + formatTime((kreativVid3.duration - kreativVid3.currentTime) || 0);
+    });
+
+
+    kreativVid3.muted = true;
+    kreativVid3.addEventListener('loadedmetadata', () => {
+      kreativVid3.currentTime = 0.8;
+      kreativVid3.addEventListener('seeked', () => {
+        if (kreativPoster3Captured) return;
+        const canvas = document.createElement('canvas');
+        canvas.width = kreativVid3.videoWidth;
+        canvas.height = kreativVid3.videoHeight;
+        canvas.getContext('2d').drawImage(kreativVid3, 0, 0);
+        canvas.toBlob(blob => {
+          kreativPoster3.src = URL.createObjectURL(blob);
+          kreativPoster3.style.display = 'block';
+          kreativPoster3Captured = true;
+          kreativVid3.currentTime = 0;
+          kreativVid3.muted = false;
+        }, 'image/jpeg', 0.9);
+      }, { once: true });
+    }, { once: true });
+
+    document.getElementById('inner-next-kreativ').addEventListener('click', () => {
+      innerKreativ.classList.remove('visible');
+      kreativScrollY = 0; kreativScrollTarget = 0;
+      innerTrackKreativ.style.transform = '';
+      pauseReset(kreativVid, kreativBtn); pauseReset(kreativVid2, kreativBtn2); pauseReset(kreativVid3, kreativBtn3);
+      kreativPoster.style.display = 'none'; kreativPoster2.style.display = 'none'; kreativPoster3.style.display = 'none';
+      innerBitgalim.classList.add('visible');
+      bitgalimScrollY = 0; bitgalimScrollTarget = 0;
+      requestAnimationFrame(applyBitgalimCrop);
+    });
+
+    /* ── שימור תרבות ── */
+    const innerShimur = document.getElementById('inner-shimur');
+    const innerBackShimur = document.getElementById('inner-back-shimur');
+    const innerTrackShimur = document.getElementById('innerTrackShimur');
+    const proj08el = document.querySelector('.proj-col:nth-child(8) .proj-img');
+    let shimurScrollY = 0, shimurScrollTarget = 0;
+
+    proj08el.style.cursor = 'pointer';
+
+    const preloadShimur = new Image();
+    preloadShimur.src = 'שימור תרבות/תמונה סטטית.png';
+
+    proj08el.addEventListener('click', () => {
+      savedScroll = current;
+      proj08el.classList.add('clicking');
+      const rect = proj08el.getBoundingClientRect();
+      const fly = document.createElement('canvas');
+      fly.className = 'fly-img';
+      fly.style.cssText = `left:${rect.left}px;top:${rect.top}px;width:${rect.width}px;height:${rect.height}px;`;
+      const hoverVid = proj08el.querySelector('video');
+      fly.width = hoverVid.videoWidth || rect.width;
+      fly.height = hoverVid.videoHeight || rect.height;
+      fly.getContext('2d').drawImage(hoverVid, 0, 0, fly.width, fly.height);
+      document.body.appendChild(fly);
+      innerShimur.classList.add('measuring');
+      const sTarget = innerShimur.querySelector('#shimurVidWrap');
+      const sRect = sTarget.getBoundingClientRect();
+      innerShimur.classList.remove('measuring');
+      fly.offsetHeight;
+      fly.style.left = sRect.left + 'px';
+      fly.style.top = sRect.top + 'px';
+      fly.style.width = sRect.width + 'px';
+      fly.style.height = sRect.height + 'px';
+      setTimeout(() => {
+        innerShimur.classList.add('visible');
+        cursor.classList.remove('visible');
+        proj08el.classList.remove('clicking');
+        setTimeout(() => fly.remove(), 200);
+      }, 460);
+    });
+
+    innerBackShimur.addEventListener('click', () => {
+      innerShimur.classList.remove('visible');
+      shimurScrollY = 0; shimurScrollTarget = 0;
+      innerTrackShimur.style.transform = '';
+      current = savedScroll; target = savedScroll;
+      strip.style.transform = `translateX(${current}px)`;
+      cursor.classList.add('visible');
+    });
+
+    innerShimur.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      shimurScrollTarget += e.deltaY;
+      const max = Math.max(0, innerTrackShimur.offsetHeight - innerShimur.offsetHeight);
+      shimurScrollTarget = Math.max(0, Math.min(shimurScrollTarget, max));
+    }, { passive: false });
+
+    (function shimurTick() {
+      if (innerShimur.classList.contains('visible')) {
+        shimurScrollY += (shimurScrollTarget - shimurScrollY) * 0.1;
+        innerTrackShimur.style.transform = `translateY(-${shimurScrollY}px)`;
+      }
+      requestAnimationFrame(shimurTick);
+    })();
+
+    const shimurVid = document.getElementById('shimurVid');
+    const shimurVidWrap = document.getElementById('shimurVidWrap');
+
+    shimurVidWrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+    shimurVidWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+
+    document.getElementById('inner-next-shimur').addEventListener('click', () => {
+      innerShimur.classList.remove('visible');
+      shimurScrollY = 0; shimurScrollTarget = 0;
+      innerTrackShimur.style.transform = '';
+      innerKodesh.classList.add('visible');
+      kodeshScrollY = 0; kodeshScrollTarget = 0;
+    });
+
+    /* ── Video visibility helper ── */
+    function isInView(el, page) {
+      const elRect = el.getBoundingClientRect();
+      const pageRect = page.getBoundingClientRect();
+      return elRect.bottom > pageRect.top && elRect.top < pageRect.bottom;
+    }
+
+    function pauseReset(vid, btn) {
+      vid.pause();
+      vid.currentTime = 0;
+      if (btn) btn.textContent = '▶';
+    }
+
+    /* ── Scrub helper (drag to seek) ── */
+    function makeScrubbar(progressWrap, vid) {
+      let dragging = false;
+      function seek(e) {
+        const rect = progressWrap.getBoundingClientRect();
+        const pct = Math.max(0, Math.min(1, (e.clientX - rect.left) / rect.width));
+        if (vid.duration) vid.currentTime = pct * vid.duration;
+      }
+      progressWrap.addEventListener('mousedown', (e) => { e.stopPropagation(); dragging = true; seek(e); });
+      window.addEventListener('mousemove', (e) => { if (dragging) seek(e); });
+      window.addEventListener('mouseup', () => { dragging = false; });
+    }
+
+    makeScrubbar(bloomProgressWrap, bloomVid);
+    makeScrubbar(bloomProgressWrap2, bloomVid2);
+    makeScrubbar(moshanProgressWrap, moshanVid);
+    makeScrubbar(kodeshFullProgressWrap, kodeshFullVid);
+    makeScrubbar(kreativProgressWrap, kreativVid);
+    makeScrubbar(kreativProgressWrap2, kreativVid2);
+    makeScrubbar(kreativProgressWrap3, kreativVid3);
+
+/* ── Align first image top with title ── */
+    document.querySelectorAll('.inner-page').forEach(page => {
+      const title = page.querySelector('.inner-title');
+      const track = page.querySelector('.inner-track');
+      if (!title || !track) return;
+      track.style.paddingTop = '0';
+      page.classList.add('measuring');
+      const titleTop = title.getBoundingClientRect().top;
+      const trackTop = track.getBoundingClientRect().top;
+      page.classList.remove('measuring');
+      track.style.paddingTop = Math.max(0, titleTop - trackTop) + 'px';
+    });
 
     /* ── Tick ── */
     (function tick() {
