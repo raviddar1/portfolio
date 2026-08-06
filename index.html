@@ -345,6 +345,13 @@
       background: rgba(255,255,255,0.5);
       cursor: auto;
       z-index: 2;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .bloom-vid-controls.controls-visible {
+      opacity: 1;
+      pointer-events: all;
     }
     .bloom-vid-btn {
       font-size: 0.72rem;
@@ -369,7 +376,7 @@
       height: 100%;
       background: var(--ink);
       width: 0%;
-      transition: width 0.1s linear;
+      transition: none;
       border-radius: 2px;
     }
     .bloom-time {
@@ -531,9 +538,8 @@
 
       <div class="proj-col">
         <div class="proj-img" id="finlanHomeImg">
-          <img src="פינלן/פינלן ראשית.png" alt="פינלן">
+          <img src="פינלן/כסא חדש.png" alt="פינלן">
           <img src="פינלן/מוקאפ כרטיסי ביקור copy.jpg" alt="פינלן כרטיס ביקור" class="hover-img">
-          <div class="finlan-border" style="position:absolute;inset:0;border:1px solid #DB1F1F;pointer-events:none;z-index:5;"></div>
         </div>
         <div class="proj-label">
           <span class="proj-num">02</span>
@@ -576,7 +582,7 @@
 
       <div class="proj-col">
         <div class="proj-img">
-          <img src="בלומינג ריוט/u7589337271_httpss.mj.runqBDvOm2qWnc_httpss.mj.runDuUjlZZpkOI_ed558678-3959-4ca3-9c66-a615eeb38662_1.png" alt="blooming riot">
+          <video src="בלומינג ריוט/social_u7589337271_httpss.mj.runVLWuvrlj0kc_--ar_193256_--video_1_fd7a155f-84bb-468a-a678-2daa02a24661_0.mp4" muted loop playsinline preload="auto" autoplay style="object-fit:cover;opacity:1;"></video>
           <video src="בלומינג ריוט/בלומינג ריוט לויקס.mp4" muted loop playsinline preload="auto"></video>
         </div>
         <div class="proj-label">
@@ -834,8 +840,65 @@
   <div class="inner-page" id="inner-torah">
     <div class="inner-left">
       <div class="inner-track" id="innerTrackTorah" style="padding-bottom:3rem;">
-        <div id="torahVidWrap" style="width:26vw;position:relative;cursor:default;">
-          <video src="תורה שבמרחב/IMG_3014.MOV" playsinline preload="auto" autoplay loop muted id="torahVid" style="width:100%;height:auto;display:block;"></video>
+        <div id="torahVidWrap" style="width:26vw;height:55vh;overflow:hidden;position:relative;cursor:default;">
+          <video src="תורה שבמרחב/IMG_3014.MOV" playsinline preload="auto" autoplay loop muted id="torahVid" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+        </div>
+        <div style="margin-top:-70px;margin-left:calc(26vw + 60px);width:30vw;">
+          <img src="תורה שבמרחב/פסוקים.png" alt="פסוקים" style="width:100%;height:auto;display:block;">
+        </div>
+        <div id="torahZakafWrap" style="margin-top:0px;width:38vw;position:relative;cursor:default;">
+          <video src="תורה שבמרחב/זקף קטון תופים.mp4" playsinline preload="auto" id="torahZakafVid" style="width:100%;height:auto;display:block;"></video>
+          <div class="bloom-vid-controls">
+            <span class="bloom-vid-btn" id="torahZakafBtn">▶</span>
+            <div class="bloom-progress-wrap" id="torahZakafProgressWrap">
+              <div class="bloom-progress-bar" id="torahZakafBar"></div>
+            </div>
+            <span class="bloom-time" id="torahZakafTime">-0:00</span>
+            <span class="bloom-vid-btn" id="torahZakafMute">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="torahZakafWave" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div style="width:34vw;margin-left:4vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:16px;direction:rtl;position:relative;z-index:1;">כמתופפת, עלתה לי השאלה; אם כבר קיימת מוזיקה בטקסט - למה לא באמת מנגנים אותה?<br>אז בשלב הראשון של הפרויקט תרגמתי כל טעם לצליל תופים, וכך יצרתי מערכת מוזיקלית חדשה המבוססת על טעמי המקרא.</div>
+        <div id="torahIntroWrap" style="margin-top:70px;width:38vw;position:relative;cursor:default;">
+          <video src="תורה שבמרחב/intro best.MP4" playsinline preload="auto" id="torahIntroVid" style="width:100%;height:auto;display:block;"></video>
+          <img id="torahIntroPoster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;cursor:pointer;">
+          <div class="bloom-vid-controls">
+            <span class="bloom-vid-btn" id="torahIntroBtn">▶</span>
+            <div class="bloom-progress-wrap" id="torahIntroProgressWrap">
+              <div class="bloom-progress-bar" id="torahIntroBar"></div>
+            </div>
+            <span class="bloom-time" id="torahIntroTime">-0:00</span>
+            <span class="bloom-vid-btn" id="torahIntroMute">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="torahIntroWave" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div style="width:36vw;margin-left:2vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:16px;direction:rtl;position:relative;z-index:1;">במקביל למחקר המוזיקלי, חקרתי את מושג הסינסתזיה - תופעה שבה המוח יוצר חיבורים בין חושים שונים, כמו צלילים, צבעים וצורות. מתוך המחקר נחשפתי לעבודותיו של וסילי קנדינסקי ולתיאוריית הצבע והצורה שפיתח, שלפיה לכל צליל יש ביטוי חזותי. את העקרונות האלה יישמתי על טעמי המקרא, ויצרתי עבורם שפה גרפית חדשה המתרגמת צליל לצבע, לצורה ולתנועה.</div>
+        <div style="margin-left:calc(26vw + 60px);width:26vw;margin-top:40px;">
+          <video src="תורה שבמרחב/טעמים לבן.mov" muted playsinline autoplay preload="auto" id="taaminVid" style="width:100%;height:auto;display:block;"></video>
+        </div>
+        <div id="torahC8503Wrap" style="margin-top:40px;margin-left:calc(26vw + 60px);width:18vw;position:relative;cursor:default;">
+          <video src="תורה שבמרחב/C8503_01931646 2.mov" playsinline preload="auto" id="torahC8503Vid" style="width:100%;height:auto;display:block;"></video>
+          <div class="bloom-vid-controls">
+            <span class="bloom-vid-btn" id="torahC8503Btn">▶</span>
+            <div class="bloom-progress-wrap" id="torahC8503ProgressWrap">
+              <div class="bloom-progress-bar" id="torahC8503Bar"></div>
+            </div>
+            <span class="bloom-time" id="torahC8503Time">-0:00</span>
+            <span class="bloom-vid-btn" id="torahC8503Mute">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="torahC8503Wave" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </span>
+          </div>
         </div>
         <span class="inner-next" id="inner-next-torah">←</span>
       </div>
@@ -843,8 +906,8 @@
     <div class="inner-right">
       <span class="inner-back" id="inner-back-torah">→</span>
       <div class="inner-title">תורה שבמרחב</div>
-      <div class="inner-desc"></div>
-      <div class="inner-tools"></div>
+      <div class="inner-desc">איך אפשר לתרגם מסורת עתיקה לחוויה עכשווית?<br><br>נולדתי למשפחה מעורבת - אבא דתי ואמא חילונית. היום אני כבר לא חיה אורח חיים דתי, אבל דווקא מתוך המעבר בין שני העולמות גיליתי שיש מסורות יפות שכמעט אינן מוכרות מחוץ לעולם הדתי. אחת מהן היא טעמי המקרא.<br><br>טעמי המקרא הם סימנים שנמצאים בטקסט המקראי ומתפקדים כמעין מערכת מוזיקלית. לכל טעם יש תפקיד של עצירה, הדגשה או זרימה, והם למעשה מכתיבים את הקצב והמנגינה של הקריאה.</div>
+      <div class="inner-tools">Claude Code, p5, Figma</div>
     </div>
   </div>
 
@@ -1655,6 +1718,10 @@
       innerTorah.classList.remove('visible');
       torahScrollY = 0; torahScrollTarget = 0;
       innerTrackTorah.style.transform = '';
+      pauseReset(torahZakafVid, torahZakafBtn);
+      pauseReset(torahIntroVid, torahIntroBtn);
+      pauseReset(torahC8503Vid, torahC8503Btn);
+      if (torahIntroPosterCaptured) torahIntroPoster.style.display = 'block';
       current = savedScroll; target = savedScroll;
       strip.style.transform = `translateX(${current}px)`;
       cursor.classList.add('visible');
@@ -1672,14 +1739,133 @@
         torahScrollTarget = Math.min(torahScrollTarget, torahMaxScroll);
         torahScrollY += (torahScrollTarget - torahScrollY) * 0.1;
         innerTrackTorah.style.transform = `translateY(-${torahScrollY}px)`;
+        if (!torahZakafVid.paused && !isInView(torahZakafVid, innerTorah)) { pauseReset(torahZakafVid, torahZakafBtn); }
+        if (!torahIntroVid.paused && !isInView(torahIntroVid, innerTorah)) { pauseReset(torahIntroVid, torahIntroBtn); }
       }
       requestAnimationFrame(torahTick);
     })();
+
+    /* ── Torah זקף קטון תופים player ── */
+    const torahZakafVid = document.getElementById('torahZakafVid');
+    const torahZakafBtn = document.getElementById('torahZakafBtn');
+    const torahZakafBar = document.getElementById('torahZakafBar');
+    const torahZakafTime = document.getElementById('torahZakafTime');
+    const torahZakafProgressWrap = document.getElementById('torahZakafProgressWrap');
+    const torahZakafWave = document.getElementById('torahZakafWave');
+    const torahZakafMute = document.getElementById('torahZakafMute');
+    const torahZakafWrap = document.getElementById('torahZakafWrap');
+
+    torahZakafWrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+    torahZakafWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+    torahZakafVid.addEventListener('click', toggleTorahZakaf);
+    torahZakafBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleTorahZakaf(); });
+
+    function toggleTorahZakaf() {
+      if (torahZakafVid.paused) {
+        torahZakafVid.muted = false;
+        torahZakafWave.style.display = '';
+        torahZakafVid.play();
+        torahZakafBtn.textContent = '⏸';
+      } else {
+        torahZakafVid.pause();
+        torahZakafBtn.textContent = '▶';
+      }
+    }
+
+    torahZakafMute.addEventListener('click', (e) => {
+      e.stopPropagation();
+      torahZakafVid.muted = !torahZakafVid.muted;
+      torahZakafWave.style.display = torahZakafVid.muted ? 'none' : '';
+    });
+
+    torahZakafVid.addEventListener('timeupdate', () => {
+      const pct = (torahZakafVid.currentTime / torahZakafVid.duration) * 100 || 0;
+      torahZakafBar.style.width = pct + '%';
+      torahZakafTime.textContent = '-' + formatTime((torahZakafVid.duration - torahZakafVid.currentTime) || 0);
+    });
+
+    torahZakafProgressWrap.addEventListener('click', (e) => {
+      const rect = torahZakafProgressWrap.getBoundingClientRect();
+      torahZakafVid.currentTime = ((e.clientX - rect.left) / rect.width) * torahZakafVid.duration;
+    });
+
+    /* ── Torah intro best player ── */
+    const torahIntroVid = document.getElementById('torahIntroVid');
+    const torahIntroBtn = document.getElementById('torahIntroBtn');
+    const torahIntroBar = document.getElementById('torahIntroBar');
+    const torahIntroTime = document.getElementById('torahIntroTime');
+    const torahIntroProgressWrap = document.getElementById('torahIntroProgressWrap');
+    const torahIntroWave = document.getElementById('torahIntroWave');
+    const torahIntroMute = document.getElementById('torahIntroMute');
+    const torahIntroWrap = document.getElementById('torahIntroWrap');
+    const torahIntroPoster = document.getElementById('torahIntroPoster');
+    let torahIntroPosterCaptured = false;
+
+    function captureTorahIntroPoster() {
+      if (torahIntroPosterCaptured) { torahIntroPoster.style.display = 'block'; return; }
+      const canvas = document.createElement('canvas');
+      canvas.width = torahIntroVid.videoWidth;
+      canvas.height = torahIntroVid.videoHeight;
+      canvas.getContext('2d').drawImage(torahIntroVid, 0, 0);
+      canvas.toBlob(blob => {
+        torahIntroPoster.src = URL.createObjectURL(blob);
+        torahIntroPoster.style.display = 'block';
+        torahIntroPosterCaptured = true;
+      }, 'image/jpeg', 0.9);
+    }
+
+    torahIntroVid.addEventListener('loadedmetadata', () => {
+      torahIntroVid.currentTime = 10;
+      torahIntroVid.addEventListener('seeked', () => {
+        captureTorahIntroPoster();
+        torahIntroVid.currentTime = 0;
+      }, { once: true });
+    }, { once: true });
+
+    torahIntroWrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+    torahIntroWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+    torahIntroVid.addEventListener('click', toggleTorahIntro);
+    torahIntroPoster.addEventListener('click', toggleTorahIntro);
+    torahIntroBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleTorahIntro(); });
+
+    function toggleTorahIntro() {
+      if (torahIntroVid.paused) {
+        torahIntroPoster.style.display = 'none';
+        torahIntroVid.muted = false;
+        torahIntroWave.style.display = '';
+        torahIntroVid.currentTime = 0;
+        torahIntroVid.play();
+        torahIntroBtn.textContent = '⏸';
+      } else {
+        torahIntroVid.pause();
+        torahIntroBtn.textContent = '▶';
+      }
+    }
+
+    torahIntroMute.addEventListener('click', (e) => {
+      e.stopPropagation();
+      torahIntroVid.muted = !torahIntroVid.muted;
+      torahIntroWave.style.display = torahIntroVid.muted ? 'none' : '';
+    });
+
+    torahIntroVid.addEventListener('timeupdate', () => {
+      const pct = (torahIntroVid.currentTime / torahIntroVid.duration) * 100 || 0;
+      torahIntroBar.style.width = pct + '%';
+      torahIntroTime.textContent = '-' + formatTime((torahIntroVid.duration - torahIntroVid.currentTime) || 0);
+    });
+
+    torahIntroProgressWrap.addEventListener('click', (e) => {
+      const rect = torahIntroProgressWrap.getBoundingClientRect();
+      torahIntroVid.currentTime = ((e.clientX - rect.left) / rect.width) * torahIntroVid.duration;
+    });
 
     document.getElementById('inner-next-torah').addEventListener('click', () => {
       innerTorah.classList.remove('visible');
       torahScrollY = 0; torahScrollTarget = 0;
       innerTrackTorah.style.transform = '';
+      pauseReset(torahZakafVid, torahZakafBtn);
+      pauseReset(torahIntroVid, torahIntroBtn);
+      pauseReset(torahC8503Vid, torahC8503Btn);
       innerFinlan.classList.add('visible');
       finlanScrollY = 0; finlanScrollTarget = 0;
     });
@@ -2117,6 +2303,71 @@
     });
 
     /* ── Video visibility helper ── */
+    /* ── C8503 video player ── */
+    const torahC8503Vid = document.getElementById('torahC8503Vid');
+    const torahC8503Btn = document.getElementById('torahC8503Btn');
+    const torahC8503Bar = document.getElementById('torahC8503Bar');
+    const torahC8503Time = document.getElementById('torahC8503Time');
+    const torahC8503ProgressWrap = document.getElementById('torahC8503ProgressWrap');
+    const torahC8503Wave = document.getElementById('torahC8503Wave');
+    const torahC8503Mute = document.getElementById('torahC8503Mute');
+    const torahC8503Wrap = document.getElementById('torahC8503Wrap');
+
+    torahC8503Wrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+    torahC8503Wrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+    torahC8503Vid.addEventListener('click', toggleTorahC8503);
+    torahC8503Btn.addEventListener('click', (e) => { e.stopPropagation(); toggleTorahC8503(); });
+
+    function toggleTorahC8503() {
+      if (torahC8503Vid.paused) {
+        torahC8503Vid.muted = false;
+        torahC8503Wave.style.display = '';
+        torahC8503Vid.play();
+        torahC8503Btn.textContent = '⏸';
+      } else {
+        torahC8503Vid.pause();
+        torahC8503Btn.textContent = '▶';
+      }
+    }
+
+    torahC8503Mute.addEventListener('click', (e) => {
+      e.stopPropagation();
+      torahC8503Vid.muted = !torahC8503Vid.muted;
+      torahC8503Wave.style.display = torahC8503Vid.muted ? 'none' : '';
+    });
+
+    torahC8503Vid.addEventListener('timeupdate', () => {
+      const pct = (torahC8503Vid.currentTime / torahC8503Vid.duration) * 100 || 0;
+      torahC8503Bar.style.width = pct + '%';
+      torahC8503Time.textContent = '-' + formatTime((torahC8503Vid.duration - torahC8503Vid.currentTime) || 0);
+    });
+
+    makeScrubbar(torahC8503ProgressWrap, torahC8503Vid);
+
+    const torahC8503Observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && torahC8503Vid.paused && torahC8503Vid.currentTime === 0) {
+          torahC8503Vid.muted = false;
+          torahC8503Wave.style.display = '';
+          torahC8503Vid.play().catch(() => {
+            torahC8503Vid.muted = true;
+            torahC8503Vid.play();
+          });
+          torahC8503Btn.textContent = '⏸';
+        }
+      });
+    }, { threshold: 0.5 });
+    torahC8503Observer.observe(torahC8503Vid);
+
+    /* ── טעמים לבן: pause 3s then restart ── */
+    const taaminVid = document.getElementById('taaminVid');
+    taaminVid.addEventListener('ended', () => {
+      setTimeout(() => {
+        taaminVid.currentTime = 0;
+        taaminVid.play();
+      }, 3000);
+    });
+
     function isInView(el, page) {
       const elRect = el.getBoundingClientRect();
       const pageRect = page.getBoundingClientRect();
@@ -2149,6 +2400,49 @@
     makeScrubbar(kreativProgressWrap, kreativVid);
     makeScrubbar(kreativProgressWrap2, kreativVid2);
     makeScrubbar(kreativProgressWrap3, kreativVid3);
+    makeScrubbar(torahZakafProgressWrap, torahZakafVid);
+    makeScrubbar(torahIntroProgressWrap, torahIntroVid);
+
+    /* ── Video controls: show on hover, hide on leave or 2s inactivity + fullscreen ── */
+    const fullscreenSVG = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"/></svg>`;
+
+    function setupVideoControls(wrapId) {
+      const wrap = document.getElementById(wrapId);
+      if (!wrap) return;
+      const controls = wrap.querySelector('.bloom-vid-controls');
+      if (!controls) return;
+
+      // Add fullscreen button
+      const fsBtn = document.createElement('span');
+      fsBtn.className = 'bloom-vid-btn';
+      fsBtn.style.cssText = 'display:flex;align-items:center;width:auto;';
+      fsBtn.innerHTML = fullscreenSVG;
+      fsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const el = wrap.requestFullscreen ? wrap : wrap.querySelector('video');
+        if (el.requestFullscreen) el.requestFullscreen();
+        else if (el.webkitRequestFullscreen) el.webkitRequestFullscreen();
+      });
+      controls.appendChild(fsBtn);
+
+      // Show/hide logic
+      let hideTimer = null;
+      function show() {
+        controls.classList.add('controls-visible');
+        clearTimeout(hideTimer);
+      }
+      function scheduleHide() {
+        clearTimeout(hideTimer);
+        hideTimer = setTimeout(() => controls.classList.remove('controls-visible'), 2000);
+      }
+      wrap.addEventListener('mouseenter', () => { show(); scheduleHide(); });
+      wrap.addEventListener('mousemove', () => { show(); scheduleHide(); });
+      wrap.addEventListener('mouseleave', () => { clearTimeout(hideTimer); controls.classList.remove('controls-visible'); });
+    }
+
+    ['bloomVidWrap','bloomVidWrap2','moshanVidWrap','kodeshFullVidWrap',
+     'kreativVidWrap','kreativVidWrap2','kreativVidWrap3',
+     'torahZakafWrap','torahIntroWrap'].forEach(setupVideoControls);
 
 /* ── Align first image top with title ── */
     document.querySelectorAll('.inner-page').forEach(page => {
@@ -2162,6 +2456,45 @@
       page.classList.remove('measuring');
       track.style.paddingTop = Math.max(0, titleTop - trackTop) + 'px';
     });
+
+    /* ── All controlled video players ── */
+    const allPlayers = [
+      [bloomVid,       bloomBar,       bloomTime,       bloomBtn],
+      [bloomVid2,      bloomBar2,      bloomTime2,      bloomBtn2],
+      [moshanVid,      moshanBar,      moshanTime,      moshanBtn],
+      [kodeshFullVid,  kodeshFullBar,  kodeshFullTime,  kodeshFullBtn],
+      [kreativVid,     kreativBar,     kreativTime,     kreativBtn],
+      [kreativVid2,    kreativBar2,    kreativTime2,    kreativBtn2],
+      [kreativVid3,    kreativBar3,    kreativTime3,    kreativBtn3],
+      [torahZakafVid,  torahZakafBar,  torahZakafTime,  torahZakafBtn],
+      [torahIntroVid,  torahIntroBar,  torahIntroTime,  torahIntroBtn],
+      [torahC8503Vid,  torahC8503Bar,  torahC8503Time,  torahC8503Btn],
+    ];
+
+    function pauseAllExcept(exceptVid) {
+      for (const [vid, , , btn] of allPlayers) {
+        if (vid !== exceptVid && !vid.paused) {
+          vid.pause();
+          if (btn) btn.textContent = '▶';
+        }
+      }
+    }
+
+    for (const [vid] of allPlayers) {
+      vid.addEventListener('play', () => pauseAllExcept(vid));
+    }
+
+    /* ── Smooth progress bars (60fps) ── */
+    (function progressTick() {
+      const players = allPlayers;
+      for (const [vid, bar, timeEl] of players) {
+        if (!vid.paused && vid.duration) {
+          bar.style.width = (vid.currentTime / vid.duration * 100) + '%';
+          timeEl.textContent = '-' + formatTime(vid.duration - vid.currentTime);
+        }
+      }
+      requestAnimationFrame(progressTick);
+    })();
 
     /* ── Tick ── */
     (function tick() {
