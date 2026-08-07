@@ -4,6 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>רביד דר | פורטפוליו</title>
+  <link rel="preload" as="video" href="תורה שבמרחב/סרטון 1.mp4" type="video/mp4">
   <style>
     @font-face {
       font-family: 'TheBasics';
@@ -22,7 +23,7 @@
       --bg:  #ffffff;
       --ink: #111111;
       --gap: 55px;
-      --header-h: 68px;
+      --header-h: 0px;
       --label-h: 90px;
       --img-h: 17vw;
       --img-w: 14vw;
@@ -46,16 +47,19 @@
     header {
       position: fixed;
       top: 0; left: 0; right: 0;
-      height: var(--header-h);
+      height: auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: 0 calc(2rem + 20px);
+      padding: 16px calc(2rem + 20px);
       z-index: 200;
       font-size: 0.78rem;
       letter-spacing: 0.04em;
       direction: ltr;
+      background: transparent;
+      pointer-events: none;
     }
+    header a, header span { pointer-events: all; }
     .nav-title {
       position: absolute;
       left: 50%;
@@ -81,7 +85,7 @@
     /* ─── Upper body ─── */
     .upper {
       position: fixed;
-      top: var(--header-h);
+      top: 0;
       left: 0; right: 0;
       bottom: calc(var(--img-h) + var(--label-h) + var(--strip-bottom));
 
@@ -334,6 +338,26 @@
     .bloom-vid-2 video::-webkit-media-controls-overlay-play-button,
     .bloom-vid-2 video::-webkit-media-controls-panel { display: none !important; }
 
+    .play-overlay {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 54px;
+      height: 54px;
+      border: 2px solid rgba(255,255,255,0.85);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      z-index: 1;
+      transition: opacity 0.2s;
+    }
+    .play-overlay svg {
+      margin-left: 4px;
+    }
+
     .bloom-vid-controls {
       position: absolute;
       bottom: 0;
@@ -425,7 +449,7 @@
     .inner-right {
       flex: 1;
       position: relative;
-      padding: 3rem calc(2rem + 20px) 3rem 2rem;
+      padding: calc(3rem + 30px) calc(2rem + 20px) 3rem 2rem;
       display: flex;
       flex-direction: column;
       gap: 1.4rem;
@@ -434,7 +458,7 @@
 
     .inner-title {
       font-size: 1.6rem;
-      font-weight: 400;
+      font-weight: 300;
       line-height: 1.2;
     }
 
@@ -442,7 +466,7 @@
       font-size: 0.78rem;
       font-weight: 400;
       line-height: 1.4;
-      max-width: 340px;
+      max-width: 370px;
     }
 
     .inner-tools {
@@ -528,7 +552,8 @@
 
       <div class="proj-col">
         <div class="proj-img">
-          <video src="תורה שבמרחב/IMG_3014.MOV" muted loop playsinline preload="auto" autoplay style="object-fit:cover;opacity:1;"></video>
+          <video src="תורה שבמרחב/סרטון 1.mp4" muted loop playsinline preload="auto" autoplay poster="תורה שבמרחב/torah_poster.jpg" style="object-fit:cover;opacity:1;"></video>
+          <img src="תורה שבמרחב/פסוקים.png" alt="פסוקים" class="hover-img" style="object-fit:cover;object-position:right center;">
         </div>
         <div class="proj-label">
           <span class="proj-num">01</span>
@@ -582,7 +607,7 @@
 
       <div class="proj-col">
         <div class="proj-img">
-          <video src="בלומינג ריוט/social_u7589337271_httpss.mj.runVLWuvrlj0kc_--ar_193256_--video_1_fd7a155f-84bb-468a-a678-2daa02a24661_0.mp4" muted loop playsinline preload="auto" autoplay style="object-fit:cover;opacity:1;"></video>
+          <video src="בלומינג ריוט/social_u7589337271_httpss.mj.runVLWuvrlj0kc_--ar_193256_--video_1_fd7a155f-84bb-468a-a678-2daa02a24661_0.mp4" muted loop playsinline preload="auto" autoplay poster="בלומינג ריוט/bloom_poster.jpg" style="object-fit:cover;opacity:1;"></video>
           <video src="בלומינג ריוט/בלומינג ריוט לויקס.mp4" muted loop playsinline preload="auto"></video>
         </div>
         <div class="proj-label">
@@ -707,7 +732,7 @@
         <div id="bitgalimVidWrap" style="margin-top:50px;width:24vw;position:relative;cursor:default;overflow:hidden;">
           <video src="בית גלים/בניית פונט סופי 2.MP4" playsinline preload="auto" autoplay loop muted id="bitgalimVid" style="width:100%;height:auto;display:block;margin-top:-50px;"></video>
         </div>
-        <div style="width:24vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">עיצוב פונטים</div>
+        <div style="width:24vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:31px;direction:rtl;">עיצוב פונטים</div>
         <div style="margin-top:-60px;margin-left:calc(23vw + 130px);width:20vw;overflow:visible;">
           <img src="בית גלים/2.jpg" alt="" style="width:100%;height:auto;display:block;">
         </div>
@@ -735,12 +760,12 @@
             </span>
           </div>
         </div>
-        <div style="width:20vw;margin-left:calc(23vw + 130px);text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">Motion Design</div>
+        <div style="width:20vw;margin-left:calc(23vw + 130px);text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:31px;direction:rtl;">Motion Design</div>
 
         <div style="margin-top:-50px;width:26vw;">
           <img src="בית גלים/מרצ.png" alt="" style="width:100%;height:auto;display:block;">
         </div>
-        <div style="width:26vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">מרצ'נדייז</div>
+        <div style="width:26vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:31px;direction:rtl;">מרצ'נדייז</div>
         <span class="inner-next" id="inner-next-bitgalim">←</span>
 
       </div>
@@ -815,7 +840,7 @@
             </span>
           </div>
         </div>
-        <div style="width:44vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">גלילת אתר. <a href="https://editor.p5js.org/raviddar1/full/Ng8r5QBhf" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;">בואו להציץ</a></div>
+        <div style="width:44vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:31px;direction:rtl;">גלילת אתר. <a href="https://editor.p5js.org/raviddar1/full/Ng8r5QBhf" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;">בואו להציץ</a></div>
         <div style="margin-top:50px;margin-left:calc(23vw + 130px);width:34vw;">
           <img src="בין קודש לחול/לבן.png" alt="" style="width:100%;height:auto;display:block;">
         </div>
@@ -839,9 +864,9 @@
   <!-- Inner page: תורה שבמרחב -->
   <div class="inner-page" id="inner-torah">
     <div class="inner-left">
-      <div class="inner-track" id="innerTrackTorah" style="padding-bottom:3rem;">
+      <div class="inner-track" id="innerTrackTorah" style="padding-bottom:8rem;">
         <div id="torahVidWrap" style="width:26vw;height:55vh;overflow:hidden;position:relative;cursor:default;">
-          <video src="תורה שבמרחב/IMG_3014.MOV" playsinline preload="auto" autoplay loop muted id="torahVid" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
+          <video src="תורה שבמרחב/סרטון 1.mp4" playsinline preload="auto" autoplay loop muted id="torahVid" style="width:100%;height:100%;object-fit:cover;display:block;"></video>
         </div>
         <div style="margin-top:-70px;margin-left:calc(26vw + 60px);width:30vw;">
           <img src="תורה שבמרחב/פסוקים.png" alt="פסוקים" style="width:100%;height:auto;display:block;">
@@ -862,7 +887,7 @@
             </span>
           </div>
         </div>
-        <div style="width:34vw;margin-left:4vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:16px;direction:rtl;position:relative;z-index:1;">כמתופפת, עלתה לי השאלה; אם כבר קיימת מוזיקה בטקסט - למה לא באמת מנגנים אותה?<br>אז בשלב הראשון של הפרויקט תרגמתי כל טעם לצליל תופים, וכך יצרתי מערכת מוזיקלית חדשה המבוססת על טעמי המקרא.</div>
+        <div style="width:38vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:31px;direction:rtl;position:relative;z-index:1;">טעמי המקרא הם סימנים המופיעים בטקסט המקראי ומכתיבים את קצב ומנגינת הקריאה. לכל טעם תפקיד משלו, וביחד הם יוצרים מערכת מוזיקלית. כמתופפת, חשבתי; אם כבר יש בהם קצב, הדגשות וזרימה, למה לא באמת מנגנים אותם? לכן, בתור התחלה תרגמתי כל טעם לתיפוף, ויצרתי מערכת מוזיקלית חדשה המבוססת על טעמי המקרא.</div>
         <div id="torahIntroWrap" style="margin-top:70px;width:38vw;position:relative;cursor:default;">
           <video src="תורה שבמרחב/intro best.MP4" playsinline preload="auto" id="torahIntroVid" style="width:100%;height:auto;display:block;"></video>
           <img id="torahIntroPoster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;cursor:pointer;">
@@ -880,12 +905,12 @@
             </span>
           </div>
         </div>
-        <div style="width:36vw;margin-left:2vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:16px;direction:rtl;position:relative;z-index:1;">במקביל למחקר המוזיקלי, חקרתי את מושג הסינסתזיה - תופעה שבה המוח יוצר חיבורים בין חושים שונים, כמו צלילים, צבעים וצורות. מתוך המחקר נחשפתי לעבודותיו של וסילי קנדינסקי ולתיאוריית הצבע והצורה שפיתח, שלפיה לכל צליל יש ביטוי חזותי. את העקרונות האלה יישמתי על טעמי המקרא, ויצרתי עבורם שפה גרפית חדשה המתרגמת צליל לצבע, לצורה ולתנועה.</div>
+        <div style="width:38vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:31px;direction:rtl;position:relative;z-index:1;">במקביל למחקר המוזיקלי, חקרתי את המושג ״סינסתזיה״; תופעה שבה המוח יוצר חיבורים בין חושים שונים, כמו צלילים, צבעים וצורות. מתוך המחקר נחשפתי לתיאוריית הצבע והצורה של קנדינסקי, לפיה לכל צליל יש צבע וצורה, ואותה יישמתי על טעמי המקרא ויצרתי עבורם שפה גרפית חדשה המתרגמת צליל לצבע, צורה ולתנועה.</div>
         <div style="margin-left:calc(26vw + 60px);width:26vw;margin-top:40px;">
           <video src="תורה שבמרחב/טעמים לבן.mov" muted playsinline autoplay preload="auto" id="taaminVid" style="width:100%;height:auto;display:block;"></video>
         </div>
-        <div id="torahC8503Wrap" style="margin-top:40px;margin-left:calc(26vw + 60px);width:18vw;position:relative;cursor:default;">
-          <video src="תורה שבמרחב/C8503_01931646 2.mov" playsinline preload="auto" id="torahC8503Vid" style="width:100%;height:auto;display:block;"></video>
+        <div id="torahC8503Wrap" style="margin-top:40px;margin-left:calc(22.5vw + 150px);width:21.5vw;position:relative;cursor:default;">
+          <video src="תורה שבמרחב/פסוקים טעמים.mov" playsinline preload="auto" loop id="torahC8503Vid" style="width:100%;height:auto;display:block;"></video>
           <div class="bloom-vid-controls">
             <span class="bloom-vid-btn" id="torahC8503Btn">▶</span>
             <div class="bloom-progress-wrap" id="torahC8503ProgressWrap">
@@ -900,13 +925,60 @@
             </span>
           </div>
         </div>
-        <span class="inner-next" id="inner-next-torah">←</span>
+        <div id="torahNigunWrap" style="margin-top:-50px;width:28vw;position:relative;cursor:default;">
+          <video src="תורה שבמרחב/פד חדש.mov" playsinline preload="auto" autoplay muted loop id="torahNigunVid" style="width:100%;height:auto;display:block;"></video>
+          <div class="bloom-vid-controls">
+            <span class="bloom-vid-btn" id="torahNigunBtn">▶</span>
+            <div class="bloom-progress-wrap" id="torahNigunProgressWrap">
+              <div class="bloom-progress-bar" id="torahNigunBar"></div>
+            </div>
+            <span class="bloom-time" id="torahNigunTime">-0:00</span>
+            <span class="bloom-vid-btn" id="torahNigunMute">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="torahNigunWave" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div style="width:28vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:31px;direction:rtl;">המטרה הייתה לאפשר לכל אחד לחוות את טעמי המקרא דרך משחק, גם ללא ידע מוזיקלי. לכן יצרתי ממשק אינטראקטיבי המחובר למקלדת שליטה, מידי פד, שמאפשר לנגן, לחקור ולהתנסות. המשתמש יכול לעבור בין נוסחים שונים, לשלוט בשמע של החזן והתופים ולשחק בשפה החזותית.</div>
+        <div id="nigunAudWrap" style="margin-top:-135px;margin-left:calc(28vw + 60px);width:21.5vw;overflow:hidden;position:relative;cursor:default;">
+          <video src="תורה שבמרחב/ניגון עם שמע.MOV" playsinline preload="auto" id="nigunAudVid" style="width:100%;height:auto;display:block;margin-top:-140px;margin-bottom:-50px;"></video>
+          <div class="bloom-vid-controls">
+            <span class="bloom-vid-btn" id="nigunAudBtn">▶</span>
+            <div class="bloom-progress-wrap" id="nigunAudProgressWrap">
+              <div class="bloom-progress-bar" id="nigunAudBar"></div>
+            </div>
+            <span class="bloom-time" id="nigunAudTime">-0:00</span>
+            <span class="bloom-vid-btn" id="nigunAudMute">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="nigunAudWave" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </span>
+          </div>
+        </div>
+        <div style="margin-top:-40px;width:28vw;overflow:hidden;">
+          <video src="תורה שבמרחב/IMG_2915.MOV" muted loop playsinline autoplay preload="auto" style="width:100%;height:auto;display:block;margin-top:-100px;margin-bottom:-80px;"></video>
+        </div>
+        <div style="margin-top:30px;width:28vw;overflow:hidden;">
+          <img src="תורה שבמרחב/FullSizeRender.JPG" alt="" style="width:100%;height:auto;display:block;margin-top:-230px;margin-bottom:-200px;">
+        </div>
+        <div style="width:28vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.6;margin-top:31px;direction:rtl;">
+          <span id="torahChromeMsg" style="display:none;color:#ff00a4;">הקישור הועתק - פתחי בכרום</span>
+          <a id="torahChromeLink" href="https://taam-one.vercel.app/" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;" onclick="openInChrome(event)">בואו להציץ, לפתיחה בכרום</a><br>
+          החוויה המלאה של הפרויקט מיועדת לשימוש באמצעות מידי פד. ניתן להתנסות בגרסה חלקית באמצעות המקלדת; אותיות במקלדת - נגינת הטעמים | חיצים - ניווט | סלאש - מעבר בין לייט לדארק מוד.
+        </div>
+        <div style="margin-top:-40px;margin-left:calc(26vw + 60px);width:26vw;overflow:hidden;">
+          <video src="תורה שבמרחב/IMG_2913 2.MOV" muted loop playsinline autoplay preload="auto" style="width:100%;height:auto;display:block;margin-top:-200px;margin-bottom:-50px;"></video>
+        </div>
+        <span class="inner-next" id="inner-next-torah" style="display:block;margin-top:80px;">←</span>
       </div>
     </div>
     <div class="inner-right">
       <span class="inner-back" id="inner-back-torah">→</span>
-      <div class="inner-title">תורה שבמרחב</div>
-      <div class="inner-desc">איך אפשר לתרגם מסורת עתיקה לחוויה עכשווית?<br><br>נולדתי למשפחה מעורבת - אבא דתי ואמא חילונית. היום אני כבר לא חיה אורח חיים דתי, אבל דווקא מתוך המעבר בין שני העולמות גיליתי שיש מסורות יפות שכמעט אינן מוכרות מחוץ לעולם הדתי. אחת מהן היא טעמי המקרא.<br><br>טעמי המקרא הם סימנים שנמצאים בטקסט המקראי ומתפקדים כמעין מערכת מוזיקלית. לכל טעם יש תפקיד של עצירה, הדגשה או זרימה, והם למעשה מכתיבים את הקצב והמנגינה של הקריאה.</div>
+      <div class="inner-title">פרויקט גמר | תורה שבמרחב</div>
+      <div class="inner-desc">איך אפשר לתרגם מסורת עתיקה לחוויה עכשווית?<br><br>נולדתי למשפחה מעורבת - אבא דתי ואמא חילונית. היום אני כבר לא חיה אורח חיים דתי, אבל דווקא מתוך המעבר בין שני העולמות גיליתי שיש דברים יפים בדת שכמעט אינם מוכרים מחוצה לה. אחד מהם הוא טעמי המקרא.<br>הפרויקט מחבר בין מסורת, מוזיקה ועיצוב, ומציע דרך חדשה לראות, לשמוע ולנגן את טעמי המקרא כחוויה אינטראקטיבית.<br><br>בנוסף לתערוכת הבוגרים של בית הספר לעיצוב של אונ׳ חיפה, הפרויקט הוצג בתערוכה האימרסיבית ״yes future״ בתל אביב.</div>
       <div class="inner-tools">Claude Code, p5, Figma</div>
     </div>
   </div>
@@ -956,7 +1028,7 @@
   <!-- Inner page: קריאייטיב -->
   <div class="inner-page" id="inner-kreativ">
     <div class="inner-left">
-      <div class="inner-track" id="innerTrackKreativ" style="padding-top:1rem;padding-bottom:3rem;">
+      <div class="inner-track" id="innerTrackKreativ" style="padding-bottom:3rem;">
         <div id="kreativVidWrap" style="width:44vw;position:relative;cursor:default;">
           <video src="קריאייטיב/tnuva_final.mp4" playsinline preload="auto" id="kreativVid" style="width:100%;height:56vh;object-fit:cover;display:block;"></video>
           <img id="kreativPoster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:1;">
@@ -1029,11 +1101,11 @@
   <!-- Inner page: שימור תרבות -->
   <div class="inner-page" id="inner-shimur">
     <div class="inner-left">
-      <div class="inner-track" id="innerTrackShimur" style="padding-top:1rem;padding-bottom:0;">
+      <div class="inner-track" id="innerTrackShimur" style="padding-bottom:0;">
         <div id="shimurVidWrap" style="margin-top:0;width:26vw;position:relative;cursor:default;">
           <video src="שימור תרבות/מלא.mov" playsinline preload="auto" autoplay loop muted id="shimurVid" style="width:100%;height:auto;display:block;"></video>
         </div>
-        <div style="width:26vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:16px;direction:rtl;">סרטון מלא, <a href="https://editor.p5js.org/raviddar1/full/wfNZ9nTbS" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;">בואו להציץ</a></div>
+        <div style="width:26vw;text-align:right;font-family:'TheBasics',sans-serif;font-size:0.78rem;font-weight:400;margin-top:31px;direction:rtl;">סרטון מלא, <a href="https://editor.p5js.org/raviddar1/full/wfNZ9nTbS" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;">בואו להציץ</a></div>
         <div style="margin-top:50px;width:26vw;">
           <img src="שימור תרבות/פאסה בלאק.png" alt="" style="width:100%;height:auto;display:block;">
         </div>
@@ -1721,6 +1793,8 @@
       pauseReset(torahZakafVid, torahZakafBtn);
       pauseReset(torahIntroVid, torahIntroBtn);
       pauseReset(torahC8503Vid, torahC8503Btn);
+      pauseReset(torahNigunVid, torahNigunBtn);
+      pauseReset(nigunAudVid, nigunAudBtn);
       if (torahIntroPosterCaptured) torahIntroPoster.style.display = 'block';
       current = savedScroll; target = savedScroll;
       strip.style.transform = `translateX(${current}px)`;
@@ -1830,10 +1904,11 @@
 
     function toggleTorahIntro() {
       if (torahIntroVid.paused) {
+        const fromStart = torahIntroPoster.style.display !== 'none';
         torahIntroPoster.style.display = 'none';
         torahIntroVid.muted = false;
         torahIntroWave.style.display = '';
-        torahIntroVid.currentTime = 0;
+        if (fromStart) torahIntroVid.currentTime = 0;
         torahIntroVid.play();
         torahIntroBtn.textContent = '⏸';
       } else {
@@ -1866,6 +1941,7 @@
       pauseReset(torahZakafVid, torahZakafBtn);
       pauseReset(torahIntroVid, torahIntroBtn);
       pauseReset(torahC8503Vid, torahC8503Btn);
+      pauseReset(torahNigunVid, torahNigunBtn);
       innerFinlan.classList.add('visible');
       finlanScrollY = 0; finlanScrollTarget = 0;
     });
@@ -2359,6 +2435,89 @@
     }, { threshold: 0.5 });
     torahC8503Observer.observe(torahC8503Vid);
 
+    /* ── ניגון עם שמע player ── */
+    const torahNigunVid = document.getElementById('torahNigunVid');
+    const torahNigunBtn = document.getElementById('torahNigunBtn');
+    const torahNigunBar = document.getElementById('torahNigunBar');
+    const torahNigunTime = document.getElementById('torahNigunTime');
+    const torahNigunProgressWrap = document.getElementById('torahNigunProgressWrap');
+    const torahNigunWave = document.getElementById('torahNigunWave');
+    const torahNigunMute = document.getElementById('torahNigunMute');
+    const torahNigunWrap = document.getElementById('torahNigunWrap');
+
+    torahNigunWrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+    torahNigunWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+    torahNigunVid.addEventListener('click', toggleTorahNigun);
+    torahNigunBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleTorahNigun(); });
+
+    function toggleTorahNigun() {
+      if (torahNigunVid.paused) {
+        torahNigunVid.muted = false;
+        torahNigunWave.style.display = '';
+        torahNigunVid.play();
+        torahNigunBtn.textContent = '⏸';
+      } else {
+        torahNigunVid.pause();
+        torahNigunBtn.textContent = '▶';
+      }
+    }
+
+    torahNigunMute.addEventListener('click', (e) => {
+      e.stopPropagation();
+      torahNigunVid.muted = !torahNigunVid.muted;
+      torahNigunWave.style.display = torahNigunVid.muted ? 'none' : '';
+    });
+
+    makeScrubbar(torahNigunProgressWrap, torahNigunVid);
+
+    /* ── ניגון עם שמע (right side) player ── */
+    const nigunAudVid = document.getElementById('nigunAudVid');
+    const nigunAudBtn = document.getElementById('nigunAudBtn');
+    const nigunAudBar = document.getElementById('nigunAudBar');
+    const nigunAudTime = document.getElementById('nigunAudTime');
+    const nigunAudProgressWrap = document.getElementById('nigunAudProgressWrap');
+    const nigunAudWave = document.getElementById('nigunAudWave');
+    const nigunAudMute = document.getElementById('nigunAudMute');
+    const nigunAudWrap = document.getElementById('nigunAudWrap');
+
+    nigunAudWrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+    nigunAudWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+    nigunAudVid.addEventListener('click', toggleNigunAud);
+    nigunAudBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleNigunAud(); });
+
+    function toggleNigunAud() {
+      if (nigunAudVid.paused) {
+        nigunAudVid.muted = false;
+        nigunAudWave.style.display = '';
+        nigunAudVid.play();
+        nigunAudBtn.textContent = '⏸';
+      } else {
+        nigunAudVid.pause();
+        nigunAudBtn.textContent = '▶';
+      }
+    }
+
+    nigunAudMute.addEventListener('click', (e) => {
+      e.stopPropagation();
+      nigunAudVid.muted = !nigunAudVid.muted;
+      nigunAudWave.style.display = nigunAudVid.muted ? 'none' : '';
+    });
+
+    makeScrubbar(nigunAudProgressWrap, nigunAudVid);
+
+    /* ── Open in Chrome ── */
+    function openInChrome(e) {
+      const url = 'https://taam-one.vercel.app/';
+      const isChrome = /Chrome/.test(navigator.userAgent) && /Google Inc/.test(navigator.vendor);
+      if (!isChrome) {
+        e.preventDefault();
+        navigator.clipboard.writeText(url).catch(() => {});
+        const msg = document.getElementById('torahChromeMsg');
+        msg.style.display = 'inline';
+        setTimeout(() => { msg.style.display = 'none'; }, 3000);
+      }
+    }
+
     /* ── טעמים לבן: pause 3s then restart ── */
     const taaminVid = document.getElementById('taaminVid');
     taaminVid.addEventListener('ended', () => {
@@ -2412,6 +2571,18 @@
       const controls = wrap.querySelector('.bloom-vid-controls');
       if (!controls) return;
 
+      // Play overlay
+      const vid = wrap.querySelector('video');
+      const overlay = document.createElement('div');
+      overlay.className = 'play-overlay';
+      overlay.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="rgba(255,255,255,0.9)"><polygon points="6,4 20,12 6,20"/></svg>`;
+      wrap.appendChild(overlay);
+      function updateOverlay() { overlay.style.opacity = vid.paused ? '1' : '0'; }
+      vid.addEventListener('play', updateOverlay);
+      vid.addEventListener('pause', updateOverlay);
+      vid.addEventListener('ended', updateOverlay);
+      updateOverlay();
+
       // Add fullscreen button
       const fsBtn = document.createElement('span');
       fsBtn.className = 'bloom-vid-btn';
@@ -2442,19 +2613,33 @@
 
     ['bloomVidWrap','bloomVidWrap2','moshanVidWrap','kodeshFullVidWrap',
      'kreativVidWrap','kreativVidWrap2','kreativVidWrap3',
-     'torahZakafWrap','torahIntroWrap'].forEach(setupVideoControls);
+     'torahZakafWrap','torahIntroWrap','nigunAudWrap'].forEach(setupVideoControls);
 
 /* ── Align first image top with title ── */
-    document.querySelectorAll('.inner-page').forEach(page => {
+    function alignInnerPage(page) {
       const title = page.querySelector('.inner-title');
       const track = page.querySelector('.inner-track');
       if (!title || !track) return;
       track.style.paddingTop = '0';
-      page.classList.add('measuring');
+      const wasVisible = page.classList.contains('visible');
+      if (!wasVisible) page.classList.add('measuring');
       const titleTop = title.getBoundingClientRect().top;
       const trackTop = track.getBoundingClientRect().top;
-      page.classList.remove('measuring');
+      if (!wasVisible) page.classList.remove('measuring');
       track.style.paddingTop = Math.max(0, titleTop - trackTop) + 'px';
+    }
+    document.querySelectorAll('.inner-page').forEach(alignInnerPage);
+    window.addEventListener('resize', () => document.querySelectorAll('.inner-page').forEach(alignInnerPage));
+
+    const alignObserver = new MutationObserver(mutations => {
+      mutations.forEach(m => {
+        if (m.target.classList.contains('inner-page') && m.target.classList.contains('visible')) {
+          alignInnerPage(m.target);
+        }
+      });
+    });
+    document.querySelectorAll('.inner-page').forEach(page => {
+      alignObserver.observe(page, { attributes: true, attributeFilter: ['class'] });
     });
 
     /* ── All controlled video players ── */
@@ -2469,6 +2654,7 @@
       [torahZakafVid,  torahZakafBar,  torahZakafTime,  torahZakafBtn],
       [torahIntroVid,  torahIntroBar,  torahIntroTime,  torahIntroBtn],
       [torahC8503Vid,  torahC8503Bar,  torahC8503Time,  torahC8503Btn],
+      [nigunAudVid,    nigunAudBar,    nigunAudTime,    nigunAudBtn],
     ];
 
     function pauseAllExcept(exceptVid) {
