@@ -1,10 +1,10 @@
-# Large video files
+# Files over 100MB (GitHub hard limit)
 מה שנשאר מאחור/IMG_1875.mov
+בין קודש לחול/בין קודש לחול סרטון מלא.mov
+
+# Unused raw footage
 מה שנשאר מאחור/IMG_1657.MOV
 מה שנשאר מאחור/IMG_1735.MOV
-בין קודש לחול/בין קודש לחול סרטון מלא.mov
-בלומינג ריוט/סרטון מלא.mp4
-שימור תרבות/מלא.mov
 
 # System
 .DS_Store
