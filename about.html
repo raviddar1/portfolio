@@ -161,11 +161,11 @@
 
       let i = 0;
       function typeLine1() {
-        if (i < line1.length) { line1el.textContent += line1[i++]; setTimeout(typeLine1, 28); }
-        else { br1.style.display = ''; i = 0; setTimeout(typeLine2, 150); }
+        if (i < line1.length) { line1el.textContent += line1[i++]; setTimeout(typeLine1, 18); }
+        else { br1.style.display = ''; i = 0; setTimeout(typeLine2, 100); }
       }
       function typeLine2() {
-        if (i < line2.length) { line2el.textContent += line2[i++]; setTimeout(typeLine2, 18); }
+        if (i < line2.length) { line2el.textContent += line2[i++]; setTimeout(typeLine2, 12); }
         else {
           br2.style.display = '';
           linksEl.innerHTML = '<a href="cv.pdf" target="_blank" style="color:var(--ink);text-decoration:underline;text-underline-offset:3px;cursor:pointer;">[ cv ]</a>';
