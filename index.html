@@ -1659,6 +1659,7 @@
       innerTrackBitgalim.style.transform = '';
       pauseAllAudioVideos();
       innerShimur.classList.add('visible');
+      shimurVid.currentTime = 0; shimurVid.play();
       shimurScrollY = 0; shimurScrollTarget = 0;
     });
 
@@ -2471,6 +2472,8 @@
       fly.style.height = sRect.height + 'px';
       setTimeout(() => {
         innerShimur.classList.add('visible');
+        shimurVid.currentTime = 0;
+        shimurVid.play();
         cursor.classList.remove('visible');
         proj08el.classList.remove('clicking');
         setTimeout(() => fly.remove(), 200);
