@@ -605,7 +605,7 @@
   <div class="upper" style="justify-content:flex-start;align-items:flex-start;padding-top:6rem;">
 
     <div class="text-right" style="transform:translate(-18px, 100px);">
-      <span style="position:absolute;right:-18px;top:-16px;display:block;width:16px;height:16px;background:#EAFF09;"></span><span>היי! אני רביד דר.<br>סיימתי את לימודיי לתקשורת חזותית, ועכשיו אני מחפשת ליצור פרויקטים שמשלבים קריאייטיב, מיתוג ותנועה.</span>
+      <span style="position:absolute;right:-18px;top:-16px;display:block;width:16px;height:16px;background:#EAFF09;"></span><span>היי! אני רביד דר, או רבידר. איך שנוח לכם.<br>סיימתי את לימודיי לתקשורת חזותית, ועכשיו אני מחפשת ליצור פרויקטים שמשלבים קריאייטיב, מיתוג ותנועה.</span>
     </div>
 
   </div>
@@ -2892,37 +2892,6 @@
       requestAnimationFrame(tick);
     })();
 
-    /* ── Typewriter ── */
-    (function() {
-      const el = document.querySelector('.text-right span:last-child');
-      const line1 = 'היי! אני רביד דר, או רבידר. איך שנוח לכם.';
-      const line2 = 'סיימתי את לימודיי לתקשורת חזותית, ועכשיו אני מחפשת ליצור פרויקטים שמשלבים קריאייטיב, מיתוג ותנועה.';
-      el.innerHTML = '';
-      let html = '', i = 0;
-
-      function typeLine1() {
-        if (i < line1.length) {
-          html += line1[i++];
-          el.innerHTML = html;
-          setTimeout(typeLine1, 28);
-        } else {
-          html += '<br>';
-          el.innerHTML = html;
-          i = 0;
-          setTimeout(typeLine2, 120);
-        }
-      }
-
-      function typeLine2() {
-        if (i < line2.length) {
-          html += line2[i++];
-          el.innerHTML = html;
-          setTimeout(typeLine2, 22);
-        }
-      }
-
-      setTimeout(typeLine1, 400);
-    })();
 
     /* ── Align text-right square to פינלן right edge ── */
   </script>
