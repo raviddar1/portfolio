@@ -1825,8 +1825,17 @@
         vid.play();
         if (vids[1]) {
           const hoverVid = vids[1];
-          el.addEventListener('mouseenter', () => hoverVid.play());
-          el.addEventListener('mouseleave', () => { hoverVid.pause(); hoverVid.currentTime = 0; });
+          hoverVid.style.opacity = '0';
+          el.addEventListener('mouseenter', () => {
+            hoverVid.currentTime = 0;
+            hoverVid.play().catch(() => {});
+            hoverVid.style.opacity = '1';
+          });
+          el.addEventListener('mouseleave', () => {
+            hoverVid.pause();
+            hoverVid.currentTime = 0;
+            hoverVid.style.opacity = '0';
+          });
         }
         return;
       }
