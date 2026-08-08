@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>רביד דר | עליי</title>
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><circle cx='50' cy='50' r='50' fill='%23ff00a4'/></svg>">
+  <style>
+    @font-face {
+      font-family: 'TheBasics';
+      src: url('thebasics/TheBasics-Regular.otf') format('opentype');
+      font-weight: 400;
+    }
+    @font-face {
+      font-family: 'TheBasics';
+      src: url('thebasics/TheBasics-Light.otf') format('opentype');
+      font-weight: 300;
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #ffffff;
+      --ink: #111111;
+    }
+
+    html { font-size: 18px; }
+
+    html, body {
+      width: 100%; height: 100%;
+      background: var(--bg);
+      color: var(--ink);
+      font-family: 'TheBasics', sans-serif;
+      font-weight: 400;
+    }
+
+    /* ─── Header ─── */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 28px calc(2rem + 20px);
+      z-index: 200;
+      font-size: 0.78rem;
+      letter-spacing: 0.04em;
+      direction: ltr;
+      background: transparent;
+      pointer-events: none;
+    }
+    header a, header span { pointer-events: all; }
+
+    .nav-title { letter-spacing: -0.08em; }
+
+    .nav-link {
+      cursor: pointer;
+      transition: color 0.2s ease;
+      text-decoration: none;
+      color: var(--ink);
+      letter-spacing: -0.08em;
+    }
+    .nav-link:hover { color: #ff00a4; }
+
+    .nav-active {
+      color: #ff00a4;
+      text-decoration: underline;
+      text-decoration-color: #ff00a4;
+      text-underline-offset: 4px;
+    }
+
+    /* ─── Custom cursor ─── */
+    * { cursor: none !important; }
+    a, button, .nav-link { cursor: pointer !important; }
+
+    .cursor {
+      position: fixed;
+      width: 32px;
+      height: 32px;
+      border: 2px solid #ff00a4;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      left: 0; top: 0;
+      opacity: 0;
+      transition: opacity 0.3s;
+      will-change: transform;
+    }
+    .cursor.visible { opacity: 1; }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div style="display:flex;gap:1.5rem;align-items:center;">
+      <a class="nav-link nav-active" href="about.html">[ עליי ]</a>
+      <a class="nav-link" href="index.html">[ פרויקטים ]</a>
+    </div>
+    <span class="nav-title" style="font-size:20px;">רבידר</span>
+  </header>
+
+  <div class="cursor" id="cursor"></div>
+
+  <div style="
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    padding: 6rem calc(2rem + 20px) 0;
+    pointer-events: none;
+  ">
+    <div style="
+      position: relative;
+      max-width: 470px;
+      text-align: right;
+      font-size: 0.78rem;
+      line-height: 1.25;
+      direction: rtl;
+      transform: translate(-290px, 100px);
+      pointer-events: all;
+    ">
+      <span style="position:absolute;right:-18px;top:-16px;display:block;width:16px;height:16px;background:#EAFF09;"></span>
+      <p>אז כמו שאמרתי מקודם... אני רביד דר, בוגרת המחלקה לתקשורת חזותית באוניברסיטת חיפה (ויצו).</p>
+      <br>
+      <p>בזמני הפנוי אני אוהבת לטייל, לנגן על תופים ולחפש השראה במקומות לא צפויים. אני נמשכת לכל מה שקשור לעיצוב, צבע, טיפוגרפיה וטכנולוגיה, ואוהבת להפוך רעיונות מורכבים לחוויות פשוטות, מדויקות ומהנות. חוץ מזה, מבחינתי כל שעה היא שעה טובה לקפה ומאפה, ואם יש כלבים במשרד - כנראה שכבר ארגיש בבית.</p>
+      <br>
+      <p style="letter-spacing:-0.02em;">
+        <a href="#" style="color:var(--ink);text-decoration:none;cursor:pointer;">[ קורות חיים ]</a>
+        &nbsp;&nbsp;
+        <a href="#" style="color:var(--ink);text-decoration:none;cursor:pointer;">[ cv ]</a>
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const cursor = document.getElementById('cursor');
+    window.addEventListener('mousemove', e => {
+      cursor.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
+      const over = document.elementFromPoint(e.clientX, e.clientY);
+      const isInteractive = over && over.closest('a, button, .nav-link');
+      cursor.classList.toggle('visible', !isInteractive);
+    }, { passive: true });
+    document.addEventListener('mouseleave', () => cursor.classList.remove('visible'));
+  </script>
+
+</body>
+</html>
