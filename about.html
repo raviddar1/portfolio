@@ -76,9 +76,9 @@
 
     .cursor {
       position: fixed;
-      width: 32px;
-      height: 32px;
-      border: 2px solid #ff00a4;
+      width: 22px;
+      height: 22px;
+      background: #ff00a4;
       border-radius: 50%;
       pointer-events: none;
       z-index: 9999;
@@ -97,10 +97,22 @@
       <a class="nav-link nav-active" href="about.html">[ עליי ]</a>
       <a class="nav-link" href="index.html">[ פרויקטים ]</a>
     </div>
-    <span class="nav-title" style="font-size:20px;">רבידר</span>
+    <span class="nav-title" style="font-size:20px;color:#ff00a4;">רבידר</span>
   </header>
 
   <div class="cursor" id="cursor"></div>
+
+  <div style="
+    position: fixed;
+    left: calc(2rem + 20px);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22vw;
+    height: 58vh;
+    overflow: hidden;
+  ">
+    <img src="אני .jpg" alt="רביד דר" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
+  </div>
 
   <div style="
     position: fixed;

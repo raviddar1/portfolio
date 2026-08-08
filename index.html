@@ -586,7 +586,7 @@
       <a class="nav-link" href="about.html">[ עליי ]</a>
       <a class="nav-link nav-active" href="index.html">[ פרויקטים ]</a>
     </div>
-    <span class="nav-title" style="font-size:20px;">רבידר</span>
+    <span class="nav-title" style="font-size:20px;color:#ff00a4;">רבידר</span>
   </header>
 
   <!-- Custom cursor -->
@@ -1669,6 +1669,17 @@
       pauseAllAudioVideos();
       innerBloom.classList.add('visible');
       bloomScrollY = 0; bloomScrollTarget = 0;
+      if (bloomPosterCaptured) {
+        bloomPoster.style.display = 'block';
+      } else {
+        bloomVid.muted = true;
+        bloomVid.currentTime = 2;
+        bloomVid.addEventListener('seeked', () => {
+          capturePoster();
+          bloomVid.currentTime = 0;
+          bloomVid.muted = false;
+        }, { once: true });
+      }
     });
 
     /* ── בין קודש לחול ── */
@@ -2092,6 +2103,44 @@
       pauseAllAudioVideos();
       innerKreativ.classList.add('visible');
       kreativScrollY = 0; kreativScrollTarget = 0;
+      if (kreativPosterCaptured) {
+        kreativPoster.style.display = 'block';
+      } else {
+        kreativVid.muted = true;
+        kreativVid.currentTime = 0.8;
+        kreativVid.addEventListener('seeked', () => {
+          captureKreativPoster();
+          kreativVid.currentTime = 0;
+          kreativVid.muted = false;
+        }, { once: true });
+      }
+      [[kreativVid2, kreativPoster2, 'kreativPoster2Captured'], [kreativVid3, kreativPoster3, 'kreativPoster3Captured']].forEach(([vid, poster]) => {
+        if (poster.src) {
+          poster.style.display = 'block';
+        } else {
+          vid.muted = true;
+          const doCapture = () => {
+            const c = document.createElement('canvas');
+            c.width = vid.videoWidth || 1280; c.height = vid.videoHeight || 720;
+            c.getContext('2d').drawImage(vid, 0, 0);
+            c.toBlob(blob => {
+              if (!blob) return;
+              poster.src = URL.createObjectURL(blob);
+              poster.style.display = 'block';
+              vid.currentTime = 0; vid.muted = false;
+            }, 'image/jpeg', 0.9);
+          };
+          if (vid.readyState >= 2) {
+            vid.currentTime = 0.8;
+            vid.addEventListener('seeked', doCapture, { once: true });
+          } else {
+            vid.addEventListener('loadeddata', () => {
+              vid.currentTime = 0.8;
+              vid.addEventListener('seeked', doCapture, { once: true });
+            }, { once: true });
+          }
+        }
+      });
     });
 
     /* ── קריאייטיב ── */
