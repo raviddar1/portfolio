@@ -135,19 +135,42 @@
       pointer-events: all;
     ">
       <span style="position:absolute;right:-18px;top:-16px;display:block;width:16px;height:16px;background:#EAFF09;"></span>
-      <p>אז כמו שאמרתי מקודם... אני רביד דר, בוגרת המחלקה לתקשורת חזותית באוניברסיטת חיפה (ויצו).</p>
-      <br>
-      <p>בזמני הפנוי אני אוהבת לטייל, לנגן על תופים ולחפש השראה במקומות לא צפויים. אני נמשכת לכל מה שקשור לעיצוב, צבע, טיפוגרפיה וטכנולוגיה, ואוהבת להפוך רעיונות מורכבים לחוויות פשוטות, מדויקות ומהנות. חוץ מזה, מבחינתי כל שעה היא שעה טובה לקפה ומאפה, ואם יש כלבים במשרד - כנראה שכבר ארגיש בבית.</p>
-      <br>
-      <p style="letter-spacing:-0.02em;">
-        <a href="#" style="color:var(--ink);text-decoration:none;cursor:pointer;">[ קורות חיים ]</a>
-        &nbsp;&nbsp;
-        <a href="#" style="color:var(--ink);text-decoration:none;cursor:pointer;">[ cv ]</a>
-      </p>
+      <p id="about-line1"></p>
+      <br id="about-br" style="display:none;">
+      <p id="about-line2"></p>
+      <br id="about-br2" style="display:none;">
+      <p id="about-links" style="letter-spacing:-0.02em;opacity:0;"></p>
     </div>
   </div>
 
   <script>
+    /* ── Typewriter ── */
+    (function() {
+      const line1el = document.getElementById('about-line1');
+      const line2el = document.getElementById('about-line2');
+      const linksEl = document.getElementById('about-links');
+      const br1 = document.getElementById('about-br');
+      const br2 = document.getElementById('about-br2');
+
+      const line1 = 'אז כמו שאמרתי מקודם... אני רביד דר, בוגרת המחלקה לתקשורת חזותית באוניברסיטת חיפה (ויצו).';
+      const line2 = 'בזמני הפנוי אני אוהבת לטייל, לנגן על תופים ולחפש השראה במקומות לא צפויים. אני נמשכת לכל מה שקשור לעיצוב, צבע, טיפוגרפיה וטכנולוגיה, ואוהבת להפוך רעיונות מורכבים לחוויות פשוטות, מדויקות ומהנות. חוץ מזה, מבחינתי כל שעה היא שעה טובה לקפה ומאפה, ואם יש כלבים במשרד - כנראה שכבר ארגיש בבית.';
+
+      let i = 0;
+      function typeLine1() {
+        if (i < line1.length) { line1el.textContent += line1[i++]; setTimeout(typeLine1, 28); }
+        else { br1.style.display = ''; i = 0; setTimeout(typeLine2, 150); }
+      }
+      function typeLine2() {
+        if (i < line2.length) { line2el.textContent += line2[i++]; setTimeout(typeLine2, 18); }
+        else {
+          br2.style.display = '';
+          linksEl.innerHTML = '<a href="#" style="color:var(--ink);text-decoration:none;cursor:pointer;">[ קורות חיים ]</a>&nbsp;&nbsp;<a href="#" style="color:var(--ink);text-decoration:none;cursor:pointer;">[ cv ]</a>';
+          linksEl.style.opacity = '1';
+        }
+      }
+      setTimeout(typeLine1, 400);
+    })();
+
     const cursor = document.getElementById('cursor');
     window.addEventListener('mousemove', e => {
       cursor.style.transform = `translate(calc(${e.clientX}px - 50%), calc(${e.clientY}px - 50%))`;
