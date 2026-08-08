@@ -678,7 +678,7 @@
       <div class="proj-col">
         <div class="proj-img">
           <video src="בלומינג ריוט/social_u7589337271_httpss.mj.runVLWuvrlj0kc_--ar_193256_--video_1_fd7a155f-84bb-468a-a678-2daa02a24661_0.mp4" muted loop playsinline preload="auto" autoplay poster="בלומינג ריוט/bloom_poster.jpg" style="object-fit:cover;opacity:1;"></video>
-          <video src="בלומינג ריוט/בלומינג ריוט לויקס.mp4" muted loop playsinline preload="none"></video>
+          <video src="בלומינג ריוט/בלומינג ריוט לויקס.mp4" muted loop playsinline preload="auto"></video>
         </div>
         <div class="proj-label">
           <div style="display:flex;flex-direction:column;gap:0.2em;">
@@ -1817,9 +1817,18 @@
 
     /* ── Video hover ── */
     document.querySelectorAll('.proj-img').forEach(el => {
-      const vid = el.querySelector('video');
-      if (!vid) return;
-      if (vid.hasAttribute('autoplay')) { vid.play(); return; }
+      const vids = el.querySelectorAll('video');
+      if (!vids.length) return;
+      const vid = vids[0];
+      if (vid.hasAttribute('autoplay')) {
+        vid.play();
+        if (vids[1]) {
+          const hoverVid = vids[1];
+          el.addEventListener('mouseenter', () => hoverVid.play());
+          el.addEventListener('mouseleave', () => { hoverVid.pause(); hoverVid.currentTime = 0; });
+        }
+        return;
+      }
       const projName = el.closest('.proj-col')?.querySelector('.proj-name')?.textContent || '';
       const startTime = projName.includes('קודש') ? 0.5 : projName.includes('קריאייטיב') ? 2 : 0;
       vid.currentTime = startTime;
