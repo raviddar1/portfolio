@@ -93,6 +93,33 @@
       will-change: transform;
     }
     .cursor.visible { opacity: 1; }
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      html { font-size: 16px; }
+      html, body { overflow-y: auto; height: auto; }
+      header { padding: 18px 1rem; }
+      div[style*="left: calc(2rem"] { display: none; }
+      div[style*="position: fixed; top: 50%"] {
+        position: relative !important;
+        width: 60vw !important;
+        height: 40vh !important;
+        margin: 7rem auto 0 !important;
+        left: auto !important; top: auto !important;
+        transform: none !important;
+      }
+      div[style*="padding: 6rem"] {
+        position: relative !important;
+        top: auto !important; left: auto !important; right: auto !important; bottom: auto !important;
+        padding: 1.5rem 1rem !important;
+      }
+      div[style*="transform: translate(-18px"] {
+        transform: none !important;
+        max-width: 90vw !important;
+      }
+    }
+    @media (max-width: 480px) {
+      header { padding: 14px 1rem; }
+    }
   </style>
 </head>
 <body>
