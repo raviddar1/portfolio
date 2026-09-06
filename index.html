@@ -122,7 +122,7 @@
     /* ─── Custom cursor ─── */
     * { cursor: none !important; }
     a, button, [role="button"],
-    .nav-link, .inner-back, .bloom-vid-btn, .bloom-progress-wrap, .bloom-progress-wrap * { cursor: pointer !important; }
+    .nav-link, .inner-back, .inner-next, .bloom-vid-btn, .bloom-progress-wrap, .bloom-progress-wrap * { cursor: pointer !important; }
     .proj-img, .proj-img *,
     .bloom-vid-2, .bloom-vid-2 video, .bloom-vid-2 img { cursor: default !important; }
 
@@ -351,7 +351,7 @@
       transform: translate(-50%, -50%);
       width: 54px;
       height: 54px;
-      border: 2px solid rgba(255,255,255,0.85);
+      border: 2px solid #fff;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -359,6 +359,7 @@
       pointer-events: none;
       z-index: 1;
       transition: opacity 0.2s;
+      mix-blend-mode: difference;
     }
     .play-overlay svg {
       margin-left: 4px;
@@ -436,25 +437,25 @@
       top: calc(3rem + 30px);
       right: calc(2rem + 20px);
       display: inline-block;
-      transform: scaleX(-1);
+      transform: scaleX(-1) scaleY(1.5);
       font-size: 1.8rem;
       font-weight: 300;
       cursor: pointer;
       color: #ff00a4;
-      opacity: 0.7;
     }
-    .inner-back:hover { opacity: 1; }
+    .inner-back:hover { opacity: 0.7; }
 
     .inner-next {
       font-size: 1.8rem;
       font-weight: 300;
       cursor: pointer;
       color: #ff00a4;
-      opacity: 0.7;
-      display: block;
+      display: inline-block;
       margin-top: 60px;
+      transform: scaleY(1.5);
+      transform-origin: top left;
     }
-    .inner-next:hover { opacity: 1; }
+    .inner-next:hover { opacity: 0.7; }
 
     /* Right: fixed */
     .inner-right {
@@ -892,8 +893,8 @@
   <div class="inner-page" id="inner-mah">
     <div class="inner-left">
       <div class="inner-track" id="innerTrack" style="padding-bottom:3rem;">
-        <div class="inner-img-wrap">
-          <img src="מה שנשאר מאחור/42039B12-26FD-4060-9F85-BAADA14EEE14.JPG" alt="מה שנשאר מאחור">
+        <div class="inner-img-wrap" style="aspect-ratio:14/17;overflow:hidden;">
+          <img src="מה שנשאר מאחור/42039B12-26FD-4060-9F85-BAADA14EEE14.JPG" alt="מה שנשאר מאחור" style="width:100%;height:calc(100% + 50px);margin-top:-35px;object-fit:cover;object-position:center 65%;">
         </div>
         <div style="margin-top:60px;width:44vw;">
           <video src="מה שנשאר מאחור/דפדוף קרוב.mp4" muted loop playsinline autoplay style="width:100%;height:auto;display:block;"></video>
@@ -934,31 +935,59 @@
         <div id="kodeshVidWrap" style="width:44vw;position:relative;cursor:default;">
           <video src="בין קודש לחול/ערימת גלויות לבן.mp4" playsinline preload="auto" autoplay loop muted id="kodeshVid" style="width:100%;height:auto;display:block;"></video>
         </div>
-        <div id="kodeshFullVidWrap" style="margin-top:60px;width:44vw;position:relative;cursor:default;">
-          <video src="בין קודש לחול/בין קודש לחול סרטון מלא.mp4" playsinline preload="auto" id="kodeshFullVid" style="width:100%;height:auto;display:block;"></video>
+        <div id="kodeshVidWrap1" style="margin-top:60px;width:44vw;position:relative;cursor:default;overflow:hidden;">
+          <video src="בין קודש לחול/חלק 1 אובייקטים.mp4" playsinline preload="auto" id="kodeshVid1" style="width:100%;height:auto;display:block;margin-top:-17px;margin-bottom:-17px;"></video>
           <div class="bloom-vid-controls">
-            <span class="bloom-vid-btn" id="kodeshFullBtn">▶</span>
-            <div class="bloom-progress-wrap" id="kodeshFullProgressWrap">
-              <div class="bloom-progress-bar" id="kodeshFullBar"></div>
+            <span class="bloom-vid-btn" id="kodeshBtn1">▶</span>
+            <div class="bloom-progress-wrap" id="kodeshProgressWrap1">
+              <div class="bloom-progress-bar" id="kodeshBar1"></div>
             </div>
-            <span class="bloom-time" id="kodeshFullTime">-0:00</span>
-            <span class="bloom-vid-btn" id="kodeshFullMute">
+            <span class="bloom-time" id="kodeshTime1">-0:00</span>
+            <span class="bloom-vid-btn" id="kodeshMute1">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
                 <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-                <path id="kodeshFullWave" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+                <path id="kodeshWave1" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
               </svg>
             </span>
           </div>
         </div>
-        <div style="width:44vw;text-align:right;font-family:'NarkissBlock',sans-serif;font-size:0.78rem;font-weight:400;margin-top:12px;direction:rtl;">גלילת אתר. <a href="https://editor.p5js.org/raviddar1/full/Ng8r5QBhf" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;">בואו להציץ</a></div>
-        <div style="margin-top:60px;width:44vw;">
-          <img src="בין קודש לחול/לבן.png" alt="" style="width:100%;height:auto;display:block;">
+        <div style="width:44vw;text-align:right;font-family:'NarkissBlock',sans-serif;font-size:0.78rem;font-weight:400;margin-top:12px;direction:rtl;">01 | אובייקטים</div>
+        <div id="kodeshVidWrap2" style="margin-top:60px;width:44vw;position:relative;cursor:default;overflow:hidden;">
+          <video src="בין קודש לחול/חלק 2 שפה.mp4" playsinline preload="auto" id="kodeshVid2" style="width:100%;height:auto;display:block;margin-top:-17px;margin-bottom:-17px;"></video>
+          <div class="bloom-vid-controls">
+            <span class="bloom-vid-btn" id="kodeshBtn2">▶</span>
+            <div class="bloom-progress-wrap" id="kodeshProgressWrap2">
+              <div class="bloom-progress-bar" id="kodeshBar2"></div>
+            </div>
+            <span class="bloom-time" id="kodeshTime2">-0:00</span>
+            <span class="bloom-vid-btn" id="kodeshMute2">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="kodeshWave2" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </span>
+          </div>
         </div>
-        <div style="margin-top:60px;width:44vw;">
-          <img src="בין קודש לחול/שחור.png" alt="" style="width:100%;height:auto;display:block;">
+        <div style="width:44vw;text-align:right;font-family:'NarkissBlock',sans-serif;font-size:0.78rem;font-weight:400;margin-top:12px;direction:rtl;">02 | שפה</div>
+        <div id="kodeshVidWrap3" style="margin-top:60px;width:44vw;position:relative;cursor:default;overflow:hidden;">
+          <video src="בין קודש לחול/חלק 3 פטרנים.mp4" playsinline preload="auto" id="kodeshVid3" style="width:100%;height:auto;display:block;margin-top:-17px;margin-bottom:-17px;"></video>
+          <div class="bloom-vid-controls">
+            <span class="bloom-vid-btn" id="kodeshBtn3">▶</span>
+            <div class="bloom-progress-wrap" id="kodeshProgressWrap3">
+              <div class="bloom-progress-bar" id="kodeshBar3"></div>
+            </div>
+            <span class="bloom-time" id="kodeshTime3">-0:00</span>
+            <span class="bloom-vid-btn" id="kodeshMute3">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
+                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
+                <path id="kodeshWave3" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
+              </svg>
+            </span>
+          </div>
         </div>
-        <div style="margin-top:60px;width:44vw;">
-          <video src="בין קודש לחול/גלויה מסתובבת לבן.mp4" muted loop playsinline autoplay style="width:100%;height:auto;display:block;"></video>
+        <div style="width:44vw;text-align:right;font-family:'NarkissBlock',sans-serif;font-size:0.78rem;font-weight:400;margin-top:12px;direction:rtl;">03 | פטרנים</div>
+        <div style="margin-top:60px;width:44vw;overflow:hidden;">
+          <video src="בין קודש לחול/גלויה מסתובבת לבן.mp4" muted loop playsinline autoplay style="width:100%;height:auto;display:block;margin-top:-40px;margin-bottom:-40px;"></video>
         </div>
         <span class="inner-next" id="inner-next-kodesh" style="display:block;margin-top:60px;"><</span>
       </div>
@@ -968,6 +997,7 @@
       <div class="inner-title">בין קודש לחול</div>
       <div class="inner-desc">פרויקט אינטראקטיבי שנוצר במסגרת הלימודים. הפרויקט בוחן את המתח בין שתי קהילות הנתפסות לעיתים כרחוקות זו מזו בחברה הישראלית - החברה החרדית והקהילה הגאה. מתוך נקודת מבט אישית, הוא עוסק בחיים שבין מסגרות מוגדרות לביטוי עצמי, ובוחן כיצד שפה חזותית יוצרת תחושת שייכות ומעצבת זהות.</div>
       <div class="inner-tools">P5, Figma</div>
+      <div style="margin-top:1em;font-family:'NarkissBlock',sans-serif;font-size:0.78rem;font-weight:400;direction:rtl;text-align:right;">גלילת אתר <a href="https://editor.p5js.org/raviddar1/full/Ng8r5QBhf" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;">בואו להציץ</a></div>
     </div>
   </div>
 
@@ -1083,7 +1113,7 @@
     <div class="inner-right">
       <span class="inner-back" id="inner-back-torah">></span>
       <div class="inner-title">פרויקט גמר | תורה שבמרחב</div>
-      <div class="inner-desc">איך אפשר לתרגם מסורת עתיקה לחוויה עכשווית?<br><br>נולדתי למשפחה מעורבת - אבא דתי ואמא חילונית. היום אני כבר לא חיה אורח חיים דתי, אבל דווקא מתוך המעבר בין שני העולמות גיליתי שיש דברים יפים בדת שכמעט אינם מוכרים מחוצה לה. אחד מהם הוא טעמי המקרא.<br>הפרויקט מחבר בין מסורת, מוזיקה ועיצוב, ומציע דרך חדשה לראות, לשמוע ולנגן את טעמי המקרא כחוויה אינטראקטיבית.<br><br>בנוסף לתערוכת הבוגרים של בית הספר לעיצוב של אונ׳ חיפה, הפרויקט הוצג בתערוכה האימרסיבית ״yes future״ בתל אביב, וזכה בפרס אאא לבוגרי ובוגרות תקשורת חזותית.<br><br><span id="torahChromeMsg" style="display:none;color:#ff00a4;">הקישור הועתק - פתחי בכרום</span><a id="torahChromeLink" href="https://taam-one.vercel.app/" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;" onclick="openInChrome(event)">בואו להציץ, לפתיחה בכרום</a><br><br>החוויה המלאה של הפרויקט מיועדת לשימוש באמצעות מידי פד. ניתן להתנסות בגרסה חלקית באמצעות המקלדת; אותיות במקלדת - נגינת הטעמים | חיצים - ניווט | סלאש - מעבר בין לייט לדארק מוד.</div>
+      <div class="inner-desc">איך אפשר לתרגם מסורת עתיקה לחוויה עכשווית?<br><br>נולדתי למשפחה מעורבת - אבא דתי ואמא חילונית. היום אני כבר לא חיה אורח חיים דתי, אבל דווקא מתוך המעבר בין שני העולמות גיליתי שיש דברים יפים בדת שכמעט אינם מוכרים מחוצה לה. אחד מהם הוא טעמי המקרא.<br>הפרויקט מחבר בין מסורת, מוזיקה ועיצוב, ומציע דרך חדשה לראות, לשמוע ולנגן את טעמי המקרא כחוויה אינטראקטיבית.<br><br>החוויה המלאה של הפרויקט מיועדת לשימוש באמצעות מידי פד. ניתן להתנסות בגרסה חלקית באמצעות המקלדת; אותיות במקלדת - נגינת הטעמים | חיצים - ניווט | סלאש - מעבר בין לייט לדארק מוד.<br><br><span id="torahChromeMsg" style="display:none;color:#ff00a4;">הקישור הועתק - פתחי בכרום</span><a id="torahChromeLink" href="https://taam-one.vercel.app/" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;" onclick="openInChrome(event)">בואו להציץ, לפתיחה בכרום</a><br><br>בנוסף לתערוכת הבוגרים של בית הספר לעיצוב של אונ׳ חיפה, הפרויקט הוצג בתערוכה האימרסיבית ״yes future״ בתל אביב, וזכה בפרס אאא לבוגרי ובוגרות תקשורת חזותית.</div>
       <div class="inner-tools">Claude Code, p5, Figma</div>
     </div>
   </div>
@@ -1092,8 +1122,8 @@
   <div class="inner-page" id="inner-finlan">
     <div class="inner-left">
       <div class="inner-track" id="innerTrackFinlan" style="padding-bottom:4rem;">
-        <div class="inner-img-wrap" id="finlanFirstImg">
-          <img src="פינלן/פינלן ראשית.png" alt="פינלן">
+        <div class="inner-img-wrap" id="finlanFirstImg" style="height:44vw;overflow:hidden;">
+          <img src="פינלן/פינלן ראשית.png" alt="פינלן" style="width:100%;height:100%;object-fit:cover;object-position:center 65%;display:block;">
         </div>
         <div style="margin-top:60px;width:44vw;">
           <img src="פינלן/לוגו-כסא.png" alt="לוגו כיסא" style="width:100%;height:auto;display:block;">
@@ -1128,7 +1158,7 @@
     <div class="inner-right">
       <span class="inner-back" id="inner-back-finlan">></span>
       <div class="inner-title">פינלן</div>
-      <div class="inner-desc" style="max-width:310px;">פרויקט מיתוג שנוצר במסגרת קורס המצוינות "חממת מעצבות", בהנחיית רינת הדר ואלה בן עמרם.<br><br>החממה היא תוכנית ייחודית ל-20 סטודנטיות מצטיינות, שבמסגרתה עובדים מול לקוחות אמיתיים בליווי צמוד של המרצות. במסגרת התוכנית, יחד עם סטודנטית נוספת, הובלתי את תהליך המיתוג מחדש של Finlan - עסק להשכרת ציוד לאירועים. לאחר מחקר ושיחות אפיון עם הלקוח, פיתחנו שפה חזותית חדשה, צעירה, רעננה ומזמינה, המשקפת את ערכי המותג ואת קהל היעד שלו.</div>
+      <div class="inner-desc">פרויקט מיתוג שנוצר במסגרת קורס המצוינות "חממת מעצבות", בהנחיית רינת הדר ואלה בן עמרם.<br><br>החממה היא תוכנית ייחודית ל-20 סטודנטיות מצטיינות, שבמסגרתה עובדים מול לקוחות אמיתיים בליווי צמוד של המרצות. במסגרת התוכנית, יחד עם סטודנטית נוספת, הובלתי את תהליך המיתוג מחדש של Finlan - עסק להשכרת ציוד לאירועים. לאחר מחקר ושיחות אפיון עם הלקוח, פיתחנו שפה חזותית חדשה, צעירה, רעננה ומזמינה, המשקפת את ערכי המותג ואת קהל היעד שלו.</div>
       <div class="inner-tools">Figma, Adobe Illustrator, Adobe Firefly</div>
     </div>
   </div>
@@ -1639,8 +1669,9 @@
       document.body.appendChild(fly);
 
       innerPage.classList.add('measuring');
-      const mahTargetImg = innerPage.querySelector('.inner-img-wrap img');
-      const mRect = mahTargetImg.getBoundingClientRect();
+      const mahTargetWrap = innerPage.querySelector('.inner-img-wrap');
+      const mahTargetImg = mahTargetWrap.querySelector('img');
+      const mRect = mahTargetWrap.getBoundingClientRect();
       innerPage.classList.remove('measuring');
       fly.offsetHeight;
       fly.style.left      = mRect.left + 'px';
@@ -1757,44 +1788,43 @@
       }, 460);
     });
 
-    /* ── Kodesh full video ── */
-    const kodeshFullVid = document.getElementById('kodeshFullVid');
-    const kodeshFullBtn = document.getElementById('kodeshFullBtn');
-    const kodeshFullBar = document.getElementById('kodeshFullBar');
-    const kodeshFullTime = document.getElementById('kodeshFullTime');
-    const kodeshFullProgressWrap = document.getElementById('kodeshFullProgressWrap');
-    const kodeshFullWave = document.getElementById('kodeshFullWave');
-    const kodeshFullMute = document.getElementById('kodeshFullMute');
-    const kodeshFullVidWrap = document.getElementById('kodeshFullVidWrap');
-
-    kodeshFullVidWrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
-    kodeshFullVidWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
-    kodeshFullVid.addEventListener('click', toggleKodeshFull);
-    kodeshFullBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleKodeshFull(); });
-
-    function toggleKodeshFull() {
-      if (kodeshFullVid.paused) {
-        kodeshFullVid.muted = false;
-        kodeshFullWave.style.display = '';
-        kodeshFullVid.play();
-        kodeshFullBtn.textContent = '⏸';
-      } else {
-        kodeshFullVid.pause();
-        kodeshFullBtn.textContent = '▶';
+    /* ── Kodesh videos ── */
+    function initKodeshVid(wrapId, vidId, btnId, barId, timeId, progressId, muteId, waveId) {
+      const vid = document.getElementById(vidId);
+      const btn = document.getElementById(btnId);
+      const bar = document.getElementById(barId);
+      const timeEl = document.getElementById(timeId);
+      const progressWrap = document.getElementById(progressId);
+      const mute = document.getElementById(muteId);
+      const wave = document.getElementById(waveId);
+      const wrap = document.getElementById(wrapId);
+      wrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
+      wrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
+      function toggle() {
+        if (vid.paused) { vid.muted = false; wave.style.display = ''; vid.play(); btn.textContent = '⏸'; }
+        else { vid.pause(); btn.textContent = '▶'; }
       }
+      vid.addEventListener('click', toggle);
+      btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
+      mute.addEventListener('click', (e) => {
+        e.stopPropagation();
+        vid.muted = !vid.muted;
+        wave.style.display = vid.muted ? 'none' : '';
+      });
+      vid.addEventListener('timeupdate', () => {
+        const pct = (vid.currentTime / vid.duration) * 100 || 0;
+        bar.style.width = pct + '%';
+        timeEl.textContent = '-' + formatTime((vid.duration - vid.currentTime) || 0);
+      });
+      progressWrap.addEventListener('click', (e) => {
+        const rect = progressWrap.getBoundingClientRect();
+        vid.currentTime = ((e.clientX - rect.left) / rect.width) * vid.duration;
+      });
+      return vid;
     }
-
-    kodeshFullMute.addEventListener('click', (e) => {
-      e.stopPropagation();
-      kodeshFullVid.muted = !kodeshFullVid.muted;
-      kodeshFullWave.style.display = kodeshFullVid.muted ? 'none' : '';
-    });
-
-    kodeshFullVid.addEventListener('timeupdate', () => {
-      const pct = (kodeshFullVid.currentTime / kodeshFullVid.duration) * 100 || 0;
-      kodeshFullBar.style.width = pct + '%';
-      kodeshFullTime.textContent = '-' + formatTime((kodeshFullVid.duration - kodeshFullVid.currentTime) || 0);
-    });
+    const kodeshVid1 = initKodeshVid('kodeshVidWrap1','kodeshVid1','kodeshBtn1','kodeshBar1','kodeshTime1','kodeshProgressWrap1','kodeshMute1','kodeshWave1');
+    const kodeshVid2 = initKodeshVid('kodeshVidWrap2','kodeshVid2','kodeshBtn2','kodeshBar2','kodeshTime2','kodeshProgressWrap2','kodeshMute2','kodeshWave2');
+    const kodeshVid3 = initKodeshVid('kodeshVidWrap3','kodeshVid3','kodeshBtn3','kodeshBar3','kodeshTime3','kodeshProgressWrap3','kodeshMute3','kodeshWave3');
 
 
     innerBackKodesh.addEventListener('click', () => {
@@ -1831,7 +1861,9 @@
       if (innerKodesh.classList.contains('visible')) {
         kodeshScrollY += (kodeshScrollTarget - kodeshScrollY) * 0.1;
         innerTrackKodesh.style.transform = `translateY(-${kodeshScrollY}px)`;
-        if (!kodeshFullVid.paused && !isInView(kodeshFullVid, innerKodesh)) { kodeshFullVid.pause(); kodeshFullBtn.textContent = '▶'; }
+        [kodeshVid1, kodeshVid2, kodeshVid3].forEach((v, i) => {
+          if (!v.paused && !isInView(v, innerKodesh)) { v.pause(); document.getElementById('kodeshBtn'+(i+1)).textContent = '▶'; }
+        });
       }
       requestAnimationFrame(kodeshTick);
     })();
@@ -2059,11 +2091,10 @@
 
     function toggleTorahIntro() {
       if (torahIntroVid.paused) {
-        const fromStart = torahIntroPoster.style.display !== 'none';
         torahIntroPoster.style.display = 'none';
         torahIntroVid.muted = false;
         torahIntroWave.style.display = '';
-        if (fromStart) torahIntroVid.currentTime = 0;
+        torahIntroVid.currentTime = 0;
         torahIntroVid.play();
         torahIntroBtn.textContent = '⏸';
       } else {
@@ -2130,6 +2161,8 @@
       fly.style.height = fRect.height + 'px';
       fly.style.objectPosition = getComputedStyle(fTarget).objectPosition;
       setTimeout(() => {
+        finlanScrollY = 0; finlanScrollTarget = 0;
+        innerTrackFinlan.style.transform = '';
         innerFinlan.classList.add('visible');
         cursor.classList.remove('visible');
         proj02finlan.classList.remove('clicking');
@@ -2756,7 +2789,7 @@
       [
         [bloomVid, bloomBtn], [bloomVid2, bloomBtn2],
         [moshanVid, moshanBtn],
-        [kodeshFullVid, kodeshFullBtn],
+        [kodeshVid1, kodeshBtn1], [kodeshVid2, kodeshBtn2], [kodeshVid3, kodeshBtn3],
         [kreativVid, kreativBtn], [kreativVid2, kreativBtn2], [kreativVid3, kreativBtn3],
         [torahZakafVid, torahZakafBtn], [torahIntroVid, torahIntroBtn],
         [torahC8503Vid, torahC8503Btn], [torahNigunVid, torahNigunBtn],
@@ -2780,7 +2813,9 @@
     makeScrubbar(bloomProgressWrap, bloomVid);
     makeScrubbar(bloomProgressWrap2, bloomVid2);
     makeScrubbar(moshanProgressWrap, moshanVid);
-    makeScrubbar(kodeshFullProgressWrap, kodeshFullVid);
+    makeScrubbar(document.getElementById('kodeshProgressWrap1'), kodeshVid1);
+    makeScrubbar(document.getElementById('kodeshProgressWrap2'), kodeshVid2);
+    makeScrubbar(document.getElementById('kodeshProgressWrap3'), kodeshVid3);
     makeScrubbar(kreativProgressWrap, kreativVid);
     makeScrubbar(kreativProgressWrap2, kreativVid2);
     makeScrubbar(kreativProgressWrap3, kreativVid3);
@@ -2800,7 +2835,7 @@
       const vid = wrap.querySelector('video');
       const overlay = document.createElement('div');
       overlay.className = 'play-overlay';
-      overlay.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="rgba(255,255,255,0.9)"><polygon points="6,4 20,12 6,20"/></svg>`;
+      overlay.innerHTML = `<svg viewBox="0 0 24 24" width="20" height="20" fill="#fff"><polygon points="6,4 20,12 6,20"/></svg>`;
       wrap.appendChild(overlay);
       function updateOverlay() { overlay.style.opacity = vid.paused ? '1' : '0'; }
       vid.addEventListener('play', updateOverlay);
@@ -2842,22 +2877,16 @@
       wrap.addEventListener('mouseleave', () => { clearTimeout(hideTimer); controls.classList.remove('controls-visible'); });
     }
 
-    ['bloomVidWrap','bloomVidWrap2','moshanVidWrap','kodeshFullVidWrap',
+    ['bloomVidWrap','bloomVidWrap2','moshanVidWrap','kodeshVidWrap1','kodeshVidWrap2','kodeshVidWrap3',
      'kreativVidWrap','kreativVidWrap2','kreativVidWrap3',
      'torahZakafWrap','torahIntroWrap','nigunAudWrap'].forEach(setupVideoControls);
 
 /* ── Align first image top with title ── */
     function alignInnerPage(page) {
-      const title = page.querySelector('.inner-title');
+      const right = page.querySelector('.inner-right');
       const track = page.querySelector('.inner-track');
-      if (!title || !track) return;
-      track.style.paddingTop = '0';
-      const wasVisible = page.classList.contains('visible');
-      if (!wasVisible) page.classList.add('measuring');
-      const titleTop = title.getBoundingClientRect().top;
-      const trackTop = track.getBoundingClientRect().top;
-      if (!wasVisible) page.classList.remove('measuring');
-      track.style.paddingTop = Math.max(0, titleTop - trackTop) + 'px';
+      if (!right || !track) return;
+      track.style.paddingTop = getComputedStyle(right).paddingTop;
     }
     document.querySelectorAll('.inner-page').forEach(alignInnerPage);
     window.addEventListener('resize', () => document.querySelectorAll('.inner-page').forEach(alignInnerPage));
@@ -2878,7 +2907,9 @@
       [bloomVid,       bloomBar,       bloomTime,       bloomBtn],
       [bloomVid2,      bloomBar2,      bloomTime2,      bloomBtn2],
       [moshanVid,      moshanBar,      moshanTime,      moshanBtn],
-      [kodeshFullVid,  kodeshFullBar,  kodeshFullTime,  kodeshFullBtn],
+      [kodeshVid1, kodeshBar1, kodeshTime1, kodeshBtn1],
+      [kodeshVid2, kodeshBar2, kodeshTime2, kodeshBtn2],
+      [kodeshVid3, kodeshBar3, kodeshTime3, kodeshBtn3],
       [kreativVid,     kreativBar,     kreativTime,     kreativBtn],
       [kreativVid2,    kreativBar2,    kreativTime2,    kreativBtn2],
       [kreativVid3,    kreativBar3,    kreativTime3,    kreativBtn3],
@@ -3019,6 +3050,57 @@
         });
       });
     });
+
+    /* ── Nav: adapt color to background beneath ── */
+    (function() {
+      const navAbt = document.querySelector('header a[href="about.html"]');
+      if (!navAbt) return;
+      function updateNavColor() {
+        const rect = navAbt.getBoundingClientRect();
+        const x = rect.left + rect.width / 2;
+        const y = rect.top + rect.height / 2;
+        navAbt.style.pointerEvents = 'none';
+        const el = document.elementFromPoint(x, y);
+        navAbt.style.pointerEvents = '';
+        if (!el || el === document.body || el === document.documentElement) { navAbt.style.color = ''; return; }
+        function apply(lum) { navAbt.style.color = lum < 140 ? '#fff' : ''; }
+        if (el.tagName === 'IMG' && el.complete) {
+          try {
+            const c = document.createElement('canvas'); c.width = c.height = 1;
+            const ctx = c.getContext('2d');
+            const er = el.getBoundingClientRect();
+            const sx = Math.max(0, Math.floor((x - er.left) / er.width * (el.naturalWidth || 1)));
+            const sy = Math.max(0, Math.floor((y - er.top) / er.height * (el.naturalHeight || 1)));
+            ctx.drawImage(el, sx, sy, 1, 1, 0, 0, 1, 1);
+            const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+            apply(0.299 * r + 0.587 * g + 0.114 * b); return;
+          } catch(e) {}
+        }
+        if (el.tagName === 'VIDEO') {
+          try {
+            const c = document.createElement('canvas'); c.width = c.height = 1;
+            const ctx = c.getContext('2d');
+            const er = el.getBoundingClientRect();
+            const sx = Math.max(0, Math.floor((x - er.left) / er.width * (el.videoWidth || 1)));
+            const sy = Math.max(0, Math.floor((y - er.top) / er.height * (el.videoHeight || 1)));
+            ctx.drawImage(el, sx, sy, 1, 1, 0, 0, 1, 1);
+            const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+            apply(0.299 * r + 0.587 * g + 0.114 * b); return;
+          } catch(e) {}
+        }
+        let node = el;
+        while (node && node !== document.body) {
+          const bg = getComputedStyle(node).backgroundColor;
+          const m = bg.match(/[\d.]+/g);
+          if (m && m.length >= 3 && parseFloat(m[3] != null ? m[3] : 1) > 0) {
+            apply(0.299 * +m[0] + 0.587 * +m[1] + 0.114 * +m[2]); return;
+          }
+          node = node.parentElement;
+        }
+        navAbt.style.color = '';
+      }
+      setInterval(updateNavColor, 80);
+    })();
   </script>
 </body>
 </html>
