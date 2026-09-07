@@ -610,11 +610,72 @@
       header { padding: 18px 1rem; }
       .upper { padding: 0 1rem !important; }
     }
+  /* ── Intro screen ── */
+  #intro-screen {
+    position: fixed;
+    inset: 0;
+    z-index: 500;
+    background: #fff;
+    cursor: crosshair;
+    opacity: 1;
+    transition: opacity 0.65s ease;
+  }
+  #intro-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+  }
+  #intro-text, #intro-text-left {
+    position: fixed;
+    z-index: 501;
+    pointer-events: none;
+    font-family: 'NarkissBlock', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 400;
+    line-height: 1.25;
+    color: var(--ink);
+    transition: opacity 0.3s;
+  }
+  #intro-text {
+    direction: rtl;
+    text-align: right;
+  }
+  #intro-text-left {
+    direction: rtl;
+    text-align: left;
+  }
+  #intro-draw-cue, #intro-done-cue {
+    position: absolute;
+    bottom: 18vh;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'NarkissBlock', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 400;
+    color: var(--ink);
+    opacity: 0;
+    transition: opacity 0.6s ease;
+    pointer-events: none;
+    direction: rtl;
+    white-space: nowrap;
+    text-align: center;
+  }
   </style>
 </head>
 <body>
 
-  <!-- Header: direction ltr so left=left, right=right -->
+  <!-- Intro screen -->
+  <div id="intro-screen">
+    <canvas id="intro-canvas"></canvas>
+    <div id="intro-draw-cue">ציירו משהו מגניב, לחצו על העכבר כשסיימתם</div>
+    <div id="intro-done-cue">לא רע, גללו כדי לראות את שלי</div>
+  </div>
+  <!-- Intro text — outside overlay so it stays in place -->
+  <div id="intro-text"></div>
+  <!-- backup: <div id="intro-text-left"></div> -->
+
   <header>
     <div style="display:flex;gap:1.5rem;align-items:center;">
       <a class="nav-link" href="about.html">[ עליי ]</a>
@@ -634,15 +695,16 @@
   <div class="upper" style="justify-content:flex-start;align-items:flex-start;padding-top:6rem;">
 
     <div class="text-right" style="transform:translate(-18px, 100px);">
-      <span style="position:absolute;right:-18px;top:-16px;display:block;width:16px;height:16px;background:#EAFF09;"></span><span>היי! אני רביד דר, או רבידר. איך שנוח לכם.<br>סיימתי את לימודיי לתקשורת חזותית, ועכשיו אני מחפשת ליצור פרויקטים שמשלבים קריאייטיב, מיתוג ותנועה.</span>
+      <span style="position:absolute;right:-18px;top:-16px;display:block;width:16px;height:16px;background:#EAFF09;"></span><span>היי! אני רביד דר, או בקיצור רבידר.<br>סיימתי את לימודיי לתקשורת חזותית ועכשיו אני מחפשת ליצור פרויקטים שמשלבים קריאייטיב, מיתוג ותנועה.</span>
     </div>
 
   </div>
 
-  <!-- Left text -->
-  <div style="position:fixed;left:calc(2rem + 20px);top:calc(6rem + 100px);z-index:50;pointer-events:none;font-size:0.78rem;line-height:1.25;direction:rtl;text-align:left;">
+  <!-- Left text (backup — uncomment to restore)
+  <div id="text-left-real" style="position:fixed;left:calc(2rem + 20px);top:calc(6rem + 100px);z-index:50;pointer-events:none;font-size:0.78rem;line-height:1.25;direction:rtl;text-align:left;">
     שבו, התרווחו וגללו למטה,<br>והכי חשוב, שמרו על קשר :)
   </div>
+  -->
 
   <!-- Image strip + labels scroll together -->
   <div class="strip-wrapper">
@@ -922,6 +984,9 @@
         <div style="margin-top:60px;width:44vw;">
           <video src="מה שנשאר מאחור/סרטון חדש 2.mp4" muted loop playsinline autoplay style="width:100%;height:auto;display:block;"></video>
         </div>
+        <div style="margin-top:60px;width:44vw;">
+          <video src="מה שנשאר מאחור/סרטון מלא.mp4" muted loop playsinline autoplay style="width:100%;height:auto;display:block;"></video>
+        </div>
         <span class="inner-next" id="inner-next-mah" style="display:block;margin-top:60px;"><</span>
       </div>
     </div>
@@ -1118,7 +1183,7 @@
     <div class="inner-right">
       <span class="inner-back" id="inner-back-torah">></span>
       <div class="inner-title">פרויקט גמר | תורה שבמרחב</div>
-      <div class="inner-desc">איך אפשר לתרגם מסורת עתיקה לחוויה עכשווית?<br><br>נולדתי למשפחה מעורבת - אבא דתי ואמא חילונית. היום אני כבר לא חיה אורח חיים דתי, אבל דווקא מתוך המעבר בין שני העולמות גיליתי שיש דברים יפים בדת שכמעט אינם מוכרים מחוצה לה. אחד מהם הוא טעמי המקרא.<br>הפרויקט מחבר בין מסורת, מוזיקה ועיצוב, ומציע דרך חדשה לראות, לשמוע ולנגן את טעמי המקרא כחוויה אינטראקטיבית.<br><br>החוויה המלאה של הפרויקט מיועדת לשימוש באמצעות מידי פד. ניתן להתנסות בגרסה חלקית באמצעות המקלדת; אותיות במקלדת - נגינת הטעמים | חיצים - ניווט | סלאש - מעבר בין לייט לדארק מוד.<br><br><span id="torahChromeMsg" style="display:none;color:#ff00a4;">הקישור הועתק - פתחי בכרום</span><a id="torahChromeLink" href="https://taam-one.vercel.app/" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;" onclick="openInChrome(event)">בואו להציץ, לפתיחה בכרום</a><br><br>בנוסף לתערוכת הבוגרים של בית הספר לעיצוב של אונ׳ חיפה, הפרויקט הוצג בתערוכה האימרסיבית ״yes future״ בתל אביב, וזכה בפרס אאא לבוגרי ובוגרות תקשורת חזותית.</div>
+      <div class="inner-desc">איך אפשר לתרגם מסורת עתיקה לחוויה עכשווית?<br><br>נולדתי למשפחה מעורבת - אבא דתי ואמא חילונית, ודווקא בין שני העולמות גיליתי שיש דברים יפים בדת שכמעט אינם מוכרים מחוצה לה. אחד מהם הוא טעמי המקרא.<br>הפרויקט מחבר בין מסורת, מוסיקה ועיצוב, ומציע דרך חדשה לראות, לשמוע ולנגן את טעמי המקרא כחוויה אינטראקטיבית.<br><br>החוויה המלאה של הפרויקט מיועדת לשימוש באמצעות מידי פד. ניתן להתנסות בגרסה חלקית באמצעות המקלדת; אותיות במקלדת - נגינת הטעמים | חיצים - ניווט | סלאש - מעבר בין לייט לדארק מוד.<br><br><span id="torahChromeMsg" style="display:none;color:#ff00a4;">הקישור הועתק - פתחי בכרום</span><a id="torahChromeLink" href="https://taam-one.vercel.app/" target="_blank" style="color:inherit;text-decoration:underline;cursor:pointer;" onclick="openInChrome(event)">בואו להציץ, לפתיחה בכרום</a><br><br>בנוסף לתערוכת הבוגרים של בית הספר לעיצוב של אונ׳ חיפה, הפרויקט הוצג בתערוכה האימרסיבית ״yes future״ בתל אביב, וזכה בפרס אאא לבוגרי ובוגרות תקשורת חזותית.</div>
       <div class="inner-tools">Claude Code, p5, Figma</div>
     </div>
   </div>
@@ -1291,6 +1356,7 @@
     window.addEventListener('resize', calcMax);
 
     window.addEventListener('wheel', (e) => {
+      if (window._stripPaused) return;
       if (document.querySelector('.inner-page.visible')) return;
       e.preventDefault();
       target += (e.deltaY - e.deltaX) * 1.5;
@@ -3060,6 +3126,147 @@
         });
       });
     });
+
+    /* ── Intro screen ── */
+    (function() {
+      const intro = document.getElementById('intro-screen');
+      const canvas = document.getElementById('intro-canvas');
+      const typed = document.getElementById('intro-text');
+      const cue = document.getElementById('intro-draw-cue');
+      const doneCue = document.getElementById('intro-done-cue');
+      const ctx = canvas.getContext('2d');
+      const textRightWrap = document.querySelector('.text-right');
+      const textRightSpan = textRightWrap ? textRightWrap.querySelector('span:last-child') : null;
+      const stripWrap = document.querySelector('.strip-wrapper');
+      /* backup – שבו text:
+      const textLeftReal = document.getElementById('text-left-real');
+      const typedLeft   = document.getElementById('intro-text-left');
+      */
+
+      // Position intro-text over the real .text-right
+      let introSq = null;
+      if (textRightWrap) {
+        const r = textRightWrap.getBoundingClientRect();
+        typed.style.left = r.left + 'px';
+        typed.style.top  = r.top  + 'px';
+        typed.style.width = r.width + 'px';
+        if (textRightSpan) textRightSpan.style.opacity = '0';
+        // Yellow square as a separate fixed element (so typeEl doesn't clear it)
+        introSq = document.createElement('div');
+        introSq.style.cssText = `position:fixed;z-index:501;width:16px;height:16px;background:#EAFF09;left:${r.right + 2}px;top:${r.top - 16}px;`;
+        document.body.appendChild(introSq);
+      }
+      // Hide strip until intro exits
+      if (stripWrap) stripWrap.style.opacity = '0';
+
+      function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+      resize();
+      window.addEventListener('resize', resize);
+      cursor.style.display = 'none';
+
+      // Generic type helper
+      function typeEl(el, text, speed, cb) {
+        let i = 0;
+        el.innerHTML = '';
+        function next() {
+          if (i < text.length) {
+            el.innerHTML += text[i] === '\n' ? '<br>' : text[i];
+            i++;
+            setTimeout(next, speed);
+          } else if (cb) cb();
+        }
+        next();
+      }
+
+      // Type main text → then type cue
+      typeEl(typed, 'היי! אני רביד דר, או בקיצור רבידר.\nסיימתי את לימודיי לתקשורת חזותית ועכשיו אני מחפשת ליצור פרויקטים שמשלבים קריאייטיב, מיתוג ותנועה.', 15, () => {
+        cue.style.opacity = '1';
+        typeEl(cue, 'ציירו משהו מגניב, לחצו על העכבר כשסיימתם', 30);
+      });
+
+      // Drawing
+      ctx.strokeStyle = '#ff00a4';
+      ctx.lineWidth = 1.5;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      let lx = -1, ly = -1, drawingDone = false;
+
+      intro.addEventListener('mousemove', (e) => {
+        if (drawingDone) return;
+        if (lx < 0) { lx = e.clientX; ly = e.clientY; return; }
+        ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(e.clientX, e.clientY); ctx.stroke();
+        lx = e.clientX; ly = e.clientY;
+      });
+      intro.addEventListener('mouseleave', () => { lx = -1; ly = -1; });
+
+      // Click = done drawing → type done message
+      intro.addEventListener('click', () => {
+        if (drawingDone) return;
+        drawingDone = true;
+        intro.style.cursor = 'none';
+        cursor.style.display = '';
+        lx = -1; ly = -1;
+        cue.style.opacity = '0';
+        doneCue.style.opacity = '1';
+        typeEl(doneCue, 'לא רע!\nגללו למטה כדי לראות את שלי', 35);
+      });
+
+      // Exit: intro stays and blocks wheel during fade → then releases to strip
+      let exited = false;
+      function exitIntro() {
+        if (exited) return;
+        exited = true;
+        cursor.style.display = '';
+
+        // Block strip scroll immediately — release only after user's gesture ends
+        window._stripPaused = true;
+        let gestureEnd;
+        const onWheel = () => {
+          clearTimeout(gestureEnd);
+          gestureEnd = setTimeout(() => {
+            window._stripPaused = false;
+            window.removeEventListener('wheel', onWheel);
+          }, 400);
+        };
+        window.addEventListener('wheel', onWheel);
+
+        // 1. Canvas fades (drawing disappears)
+        canvas.style.transition = 'opacity 0.4s';
+        canvas.style.opacity = '0';
+
+        // 2. Intro bg fades
+        setTimeout(() => {
+          intro.style.transition = 'opacity 0.55s ease';
+          intro.style.opacity = '0';
+        }, 350);
+
+        // 3. Strip fades IN simultaneously
+        if (stripWrap) {
+          stripWrap.style.transition = 'opacity 0.7s ease';
+          stripWrap.style.opacity = '1';
+        }
+
+        // 4. Swap overlay text → real text
+        setTimeout(() => {
+          if (textRightSpan) textRightSpan.style.opacity = '1';
+          typed.style.opacity = '0';
+        }, 400);
+
+        // 5. Hide intro after fade
+        setTimeout(() => {
+          intro.style.pointerEvents = 'none';
+          intro.style.display = 'none';
+          typed.style.display = 'none';
+          if (introSq) introSq.style.display = 'none';
+        }, 960);
+      }
+
+      // Wheel stays blocked (preventDefault) until intro is fully gone
+      intro.addEventListener('wheel', (e) => { e.preventDefault(); exitIntro(); }, { passive: false });
+      let ty = 0;
+      intro.addEventListener('touchstart', (e) => { ty = e.touches[0].clientY; }, { passive: true });
+      intro.addEventListener('touchmove', (e) => { if (ty - e.touches[0].clientY > 40) exitIntro(); }, { passive: true });
+    })();
 
     /* ── Nav: adapt color to background beneath ── */
     (function() {
