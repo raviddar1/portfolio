@@ -10,16 +10,22 @@
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="manifest" href="site.webmanifest">
   <meta name="theme-color" content="#ff00a4">
+  <link rel="preload" as="font" type="font/woff2" href="thebasics/TheBasics-Regular.woff2" crossorigin>
+  <link rel="preload" as="font" type="font/woff2" href="thebasics/TheBasics-Light.woff2" crossorigin>
   <style>
     @font-face {
       font-family: 'TheBasics';
-      src: url('thebasics/TheBasics-Regular.otf') format('opentype');
+      src: url('thebasics/TheBasics-Regular.woff2') format('woff2'),
+           url('thebasics/TheBasics-Regular.otf') format('opentype');
       font-weight: 400;
+      font-display: block;
     }
     @font-face {
       font-family: 'TheBasics';
-      src: url('thebasics/TheBasics-Light.otf') format('opentype');
+      src: url('thebasics/TheBasics-Light.woff2') format('woff2'),
+           url('thebasics/TheBasics-Light.otf') format('opentype');
       font-weight: 300;
+      font-display: block;
     }
 
     *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
