@@ -3213,9 +3213,12 @@
 
       // Type main text → then type cue
       const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
+      let drawingEnabled = false;
       typeEl(typed, 'היי! אני רביד דר, או בקיצור רבידר.\nסיימתי את לימודיי לתקשורת חזותית ועכשיו אני מחפשת ליצור פרויקטים שמשלבים קריאייטיב, מיתוג ותנועה.', 15, () => {
         cue.style.opacity = '1';
-        typeEl(cue, isTouchDevice ? 'ציירו משהו מגניב' : 'ציירו משהו מגניב, לחצו על העכבר כשסיימתם', 30);
+        typeEl(cue, isTouchDevice ? 'ציירו משהו מגניב' : 'ציירו משהו מגניב, לחצו על העכבר כשסיימתם', 30, () => {
+          drawingEnabled = true;
+        });
       });
 
       // Drawing
@@ -3226,7 +3229,7 @@
       let lx = -1, ly = -1, drawingDone = false, hasDrawn = false;
 
       intro.addEventListener('mousemove', (e) => {
-        if (drawingDone) return;
+        if (!drawingEnabled || drawingDone) return;
         if (lx < 0) { lx = e.clientX; ly = e.clientY; return; }
         ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(e.clientX, e.clientY); ctx.stroke();
         lx = e.clientX; ly = e.clientY;
@@ -3236,7 +3239,7 @@
 
       // Click = done drawing → type done message
       intro.addEventListener('click', () => {
-        if (drawingDone) return;
+        if (!drawingEnabled || drawingDone) return;
         drawingDone = true;
         intro.style.cursor = 'none';
         cursor.style.display = '';
@@ -3248,13 +3251,13 @@
 
       // Touch drawing
       intro.addEventListener('touchstart', (e) => {
-        if (drawingDone) return;
+        if (!drawingEnabled || drawingDone) return;
         const t = e.touches[0];
         lx = t.clientX; ly = t.clientY;
       }, { passive: true });
 
       intro.addEventListener('touchmove', (e) => {
-        if (drawingDone) return;
+        if (!drawingEnabled || drawingDone) return;
         e.preventDefault();
         const t = e.touches[0];
         if (lx >= 0) {
