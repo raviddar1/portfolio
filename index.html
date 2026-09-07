@@ -641,6 +641,11 @@
       video::-webkit-media-controls-overlay-play-button { display: none !important; }
       /* Remove negative crop margins — they're sized for desktop width */
       .inner-track video { margin-top: 0 !important; margin-bottom: 0 !important; }
+      /* Finlan first image: show full without crop */
+      #finlanFirstImg { height: auto !important; overflow: visible !important; }
+      #finlanFirstImg img { height: auto !important; object-fit: initial !important; }
+      /* Less gap between last image and next-page arrow */
+      .inner-next { margin-top: 20px !important; }
     }
     @media (max-width: 480px) {
       :root { --img-w: 62vw; --img-h: 75vw; --gap: 14px; --label-h: 50px; }
@@ -1157,20 +1162,7 @@
           <video src="תורה שבמרחב/טעמים לבן.mp4" muted playsinline autoplay preload="auto" id="taaminVid" style="width:100%;height:auto;display:block;"></video>
         </div>
         <div id="torahC8503Wrap" style="margin-top:60px;width:44vw;position:relative;cursor:default;overflow:hidden;">
-          <video src="תורה שבמרחב/פסוקים טעמים.mp4" playsinline preload="auto" loop id="torahC8503Vid" style="width:100%;height:auto;display:block;margin-top:-40px;margin-bottom:-40px;"></video>
-          <div class="bloom-vid-controls">
-            <span class="bloom-vid-btn" id="torahC8503Btn">▶</span>
-            <div class="bloom-progress-wrap" id="torahC8503ProgressWrap">
-              <div class="bloom-progress-bar" id="torahC8503Bar"></div>
-            </div>
-            <span class="bloom-time" id="torahC8503Time">-0:00</span>
-            <span class="bloom-vid-btn" id="torahC8503Mute">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" width="14" height="14">
-                <path d="M11 5L6 9H2v6h4l5 4V5z"/>
-                <path id="torahC8503Wave" d="M15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14"/>
-              </svg>
-            </span>
-          </div>
+          <video src="תורה שבמרחב/פסוקים טעמים.mp4" playsinline preload="auto" autoplay muted loop id="torahC8503Vid" style="width:100%;height:auto;display:block;margin-top:-40px;margin-bottom:-40px;"></video>
         </div>
         <div id="torahNigunWrap" style="margin-top:60px;width:44vw;position:relative;cursor:default;overflow:hidden;">
           <video src="תורה שבמרחב/פד חדש.mp4" playsinline preload="auto" autoplay muted loop id="torahNigunVid" style="width:100%;height:auto;display:block;margin-top:-40px;margin-bottom:-40px;"></video>
@@ -2748,59 +2740,6 @@
     /* ── Video visibility helper ── */
     /* ── C8503 video player ── */
     const torahC8503Vid = document.getElementById('torahC8503Vid');
-    const torahC8503Btn = document.getElementById('torahC8503Btn');
-    const torahC8503Bar = document.getElementById('torahC8503Bar');
-    const torahC8503Time = document.getElementById('torahC8503Time');
-    const torahC8503ProgressWrap = document.getElementById('torahC8503ProgressWrap');
-    const torahC8503Wave = document.getElementById('torahC8503Wave');
-    const torahC8503Mute = document.getElementById('torahC8503Mute');
-    const torahC8503Wrap = document.getElementById('torahC8503Wrap');
-
-    torahC8503Wrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
-    torahC8503Wrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
-    torahC8503Vid.addEventListener('click', toggleTorahC8503);
-    torahC8503Btn.addEventListener('click', (e) => { e.stopPropagation(); toggleTorahC8503(); });
-
-    function toggleTorahC8503() {
-      if (torahC8503Vid.paused) {
-        torahC8503Vid.muted = false;
-        torahC8503Wave.style.display = '';
-        torahC8503Vid.play();
-        torahC8503Btn.textContent = '⏸';
-      } else {
-        torahC8503Vid.pause();
-        torahC8503Btn.textContent = '▶';
-      }
-    }
-
-    torahC8503Mute.addEventListener('click', (e) => {
-      e.stopPropagation();
-      torahC8503Vid.muted = !torahC8503Vid.muted;
-      torahC8503Wave.style.display = torahC8503Vid.muted ? 'none' : '';
-    });
-
-    torahC8503Vid.addEventListener('timeupdate', () => {
-      const pct = (torahC8503Vid.currentTime / torahC8503Vid.duration) * 100 || 0;
-      torahC8503Bar.style.width = pct + '%';
-      torahC8503Time.textContent = '-' + formatTime((torahC8503Vid.duration - torahC8503Vid.currentTime) || 0);
-    });
-
-    makeScrubbar(torahC8503ProgressWrap, torahC8503Vid);
-
-    const torahC8503Observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && torahC8503Vid.paused && torahC8503Vid.currentTime === 0) {
-          torahC8503Vid.muted = false;
-          torahC8503Wave.style.display = '';
-          torahC8503Vid.play().catch(() => {
-            torahC8503Vid.muted = true;
-            torahC8503Vid.play();
-          });
-          torahC8503Btn.textContent = '⏸';
-        }
-      });
-    }, { threshold: 0.5 });
-    torahC8503Observer.observe(torahC8503Vid);
 
     /* ── ניגון עם שמע player ── */
     const torahNigunVid = document.getElementById('torahNigunVid');
@@ -2925,7 +2864,7 @@
         [kodeshVid1, kodeshBtn1], [kodeshVid2, kodeshBtn2], [kodeshVid3, kodeshBtn3],
         [kreativVid, kreativBtn], [kreativVid2, kreativBtn2], [kreativVid3, kreativBtn3],
         [torahZakafVid, torahZakafBtn], [torahIntroVid, torahIntroBtn],
-        [torahC8503Vid, torahC8503Btn], [torahNigunVid, torahNigunBtn],
+        [torahNigunVid, torahNigunBtn],
         [nigunAudVid, nigunAudBtn],
       ].forEach(([v, b]) => pauseReset(v, b));
     }
@@ -3048,7 +2987,6 @@
       [kreativVid3,    kreativBar3,    kreativTime3,    kreativBtn3],
       [torahZakafVid,  torahZakafBar,  torahZakafTime,  torahZakafBtn],
       [torahIntroVid,  torahIntroBar,  torahIntroTime,  torahIntroBtn],
-      [torahC8503Vid,  torahC8503Bar,  torahC8503Time,  torahC8503Btn],
       [nigunAudVid,    nigunAudBar,    nigunAudTime,    nigunAudBtn],
     ];
 
