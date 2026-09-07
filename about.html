@@ -123,15 +123,20 @@
         max-width: 90vw !important;
       }
 
-      /* Photo below text, full width */
+      /* Photo below text, full width, no cropping */
       #photo-wrap {
         position: relative !important;
         left: auto !important; top: auto !important;
         transform: none !important;
         width: 100% !important;
-        height: 80vw !important;
+        height: auto !important;
         margin: 0 !important;
-        overflow: hidden !important;
+        overflow: visible !important;
+      }
+      #photo-wrap img {
+        height: auto !important;
+        object-fit: initial !important;
+        object-position: initial !important;
       }
     }
   </style>
@@ -159,7 +164,7 @@
   ">
     <div style="
       position: relative;
-      max-width: 400px;
+      max-width: 470px;
       text-align: right;
       font-size: 0.89rem;
       line-height: 1.25;
@@ -201,8 +206,10 @@
     top: 50%;
     transform: translateY(-50%);
     width: 22vw;
+    height: 58vh;
+    overflow: hidden;
   ">
-    <img src="אני .jpg" alt="רביד דר" style="width:100%;height:auto;display:block;">
+    <img src="אני .jpg" alt="רביד דר" style="width:100%;height:100%;object-fit:cover;object-position:center top;">
     <canvas id="photo-canvas"></canvas>
   </div>
 
