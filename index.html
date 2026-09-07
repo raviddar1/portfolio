@@ -598,7 +598,7 @@
       .inner-left { width: 100%; height: auto; }
       .inner-right {
         flex: none; width: 100%; position: relative;
-        padding: 1.5rem calc(2rem + 20px);
+        padding: 4rem calc(2rem + 20px) 1.5rem;
         border-bottom: 0.5px solid #eee;
         order: -1;
       }
@@ -1374,6 +1374,7 @@
     window.addEventListener('touchstart', e => { ty = e.touches[0].clientY; });
     window.addEventListener('touchmove', e => {
       if (window._introActive) return;
+      if (document.querySelector('.inner-page.visible')) return;
       e.preventDefault();
       const dy = ty - e.touches[0].clientY;
       target += dy * 2;
