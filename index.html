@@ -1367,6 +1367,11 @@
     const cursor = document.getElementById('cursor');
     const isMobile = window.matchMedia('(hover:none)').matches;
 
+    // Kick muted autoplay videos on first touch (iOS requires user gesture)
+    document.addEventListener('touchstart', function kickAutoplay() {
+      document.querySelectorAll('video[autoplay]').forEach(v => v.play().catch(() => {}));
+    }, { once: true, passive: true });
+
     /* ── Horizontal scroll ── */
     let current = 0, target = 0, maxScroll = 0;
 
@@ -1402,7 +1407,7 @@
       if (window._stripBlockUntilNextTouch) return;
       if (document.querySelector('.inner-page.visible')) return;
       e.preventDefault();
-      const dx = tx - e.touches[0].clientX;
+      const dx = e.touches[0].clientX - tx;
       const dy = ty - e.touches[0].clientY;
       target += (dx + dy) * 2;
       target = Math.max(0, Math.min(target, maxScroll));
