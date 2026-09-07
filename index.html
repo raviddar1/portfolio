@@ -633,6 +633,8 @@
       .bloom-vid-controls { opacity: 1 !important; pointer-events: all !important; }
       /* Hide controls for autoplay+muted videos — they play automatically */
       #torahNigunWrap .bloom-vid-controls { display: none !important; }
+      /* Hide play/pause btn — user taps video directly on touch */
+      .bloom-vid-controls > .bloom-vid-btn:first-child { display: none !important; }
       /* Hide native iOS video controls */
       video::-webkit-media-controls { display: none !important; }
       video::-webkit-media-controls-panel { display: none !important; }
@@ -1622,7 +1624,7 @@
         }
 
         bloomVid.muted = true;
-        bloomVid.currentTime = 2;
+        bloomVid.currentTime = isMobile ? 1 : 2;
         bloomVid.addEventListener('seeked', () => {
           if (!isMobile) { capturePoster(); bloomVid.currentTime = 0; bloomVid.muted = false; bloomWave.style.display = ''; }
           else { bloomVid.play().catch(() => {}); bloomVid.addEventListener('timeupdate', () => { bloomVid.pause(); bloomVid.muted = false; bloomWave.style.display = ''; }, { once: true }); }
@@ -1751,6 +1753,7 @@
         bloomPoster2.style.display = 'none';
         bloomVid2.muted = false;
         bloomWave2.style.display = '';
+        if (isMobile && bloomVid2.currentTime <= 1.5) bloomVid2.currentTime = 0;
         bloomVid2.play();
         bloomBtn2.textContent = '⏸';
       } else {
@@ -1870,7 +1873,7 @@
         bloomPoster.style.display = 'block';
       } else {
         bloomVid.muted = true;
-        bloomVid.currentTime = 2;
+        bloomVid.currentTime = isMobile ? 1 : 2;
         bloomVid.addEventListener('seeked', () => {
           if (!isMobile) { capturePoster(); bloomVid.currentTime = 0; bloomVid.muted = false; }
           else { bloomVid.play().catch(() => {}); bloomVid.addEventListener('timeupdate', () => { bloomVid.pause(); bloomVid.muted = false; }, { once: true }); }
@@ -2206,7 +2209,7 @@
     }
 
     torahIntroVid.addEventListener('loadedmetadata', () => {
-      torahIntroVid.currentTime = 10;
+      torahIntroVid.currentTime = isMobile ? 1 : 10;
       torahIntroVid.addEventListener('seeked', () => {
         if (!isMobile) { captureTorahIntroPoster(); torahIntroVid.currentTime = 0; }
         else { torahIntroVid.play().catch(() => {}); torahIntroVid.addEventListener('timeupdate', () => { torahIntroVid.pause(); }, { once: true }); }
@@ -2338,7 +2341,7 @@
         kreativPoster.style.display = 'block';
       } else {
         kreativVid.muted = true;
-        kreativVid.currentTime = 2;
+        kreativVid.currentTime = isMobile ? 1 : 2;
         kreativVid.addEventListener('seeked', () => {
           if (!isMobile) { captureKreativPoster(); kreativVid.currentTime = 0; kreativVid.muted = false; }
           else { kreativVid.play().catch(() => {}); kreativVid.addEventListener('timeupdate', () => { kreativVid.pause(); kreativVid.muted = false; }, { once: true }); }
@@ -2350,7 +2353,7 @@
         } else {
           vid.muted = true;
           const doSeek = () => {
-            vid.currentTime = 2;
+            vid.currentTime = isMobile ? 1 : 2;
             vid.addEventListener('seeked', () => {
               if (!isMobile) {
                 const c = document.createElement('canvas');
@@ -2417,7 +2420,7 @@
         proj03el.classList.remove('clicking');
         setTimeout(() => fly.remove(), 200);
         kreativVid.muted = true;
-        kreativVid.currentTime = 2;
+        kreativVid.currentTime = isMobile ? 1 : 2;
         kreativVid.addEventListener('seeked', () => {
           if (!isMobile) { captureKreativPoster(); kreativVid.currentTime = 0; kreativVid.muted = false; }
           else { kreativVid.play().catch(() => {}); kreativVid.addEventListener('timeupdate', () => { kreativVid.pause(); kreativVid.muted = false; }, { once: true }); }
@@ -2487,7 +2490,7 @@
 
     function toggleKreativ() {
       if (kreativVid.paused) {
-        const fromStart = kreativPoster.style.display !== 'none';
+        const fromStart = isMobile ? kreativVid.currentTime <= 1.5 : kreativPoster.style.display !== 'none';
         kreativPoster.style.display = 'none';
         kreativVid.muted = false;
         kreativWave.style.display = '';
@@ -2533,7 +2536,7 @@
 
     function toggleKreativ2() {
       if (kreativVid2.paused) {
-        const fromStart2 = kreativPoster2.style.display !== 'none';
+        const fromStart2 = isMobile ? kreativVid2.currentTime <= 1.5 : kreativPoster2.style.display !== 'none';
         kreativPoster2.style.display = 'none';
         kreativVid2.muted = false;
         kreativWave2.style.display = '';
@@ -2602,7 +2605,7 @@
 
     function toggleKreativ3() {
       if (kreativVid3.paused) {
-        const fromStart3 = kreativPoster3.style.display !== 'none';
+        const fromStart3 = isMobile ? kreativVid3.currentTime <= 1.5 : kreativPoster3.style.display !== 'none';
         kreativPoster3.style.display = 'none';
         kreativVid3.muted = false;
         kreativWave3.style.display = '';
