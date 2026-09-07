@@ -611,6 +611,11 @@
       .inner-track { padding: 1.5rem 4vw 6rem 4vw; }
       .inner-track > div { width: 100% !important; max-width: 100% !important; }
       .inner-track video { max-width: 100% !important; }
+      /* No custom cursor on touch — fixes iOS double-tap-to-click */
+      * { cursor: auto !important; }
+      #cursor { display: none !important; }
+      /* Always show video controls (no hover on touch) */
+      .bloom-vid-controls { opacity: 1 !important; pointer-events: all !important; }
     }
     @media (max-width: 480px) {
       :root { --img-w: 62vw; --img-h: 75vw; --gap: 14px; --label-h: 50px; }
