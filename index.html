@@ -59,7 +59,7 @@
       align-items: center;
       padding: 28px calc(2rem + 20px);
       z-index: 200;
-      font-size: 0.78rem;
+      font-size: 0.89rem;
       letter-spacing: 0.04em;
       direction: ltr;
       background: transparent;
@@ -607,11 +607,11 @@
       .inner-left { width: 100%; height: auto; }
       .inner-right {
         flex: none; width: 100%; position: relative;
-        padding: 4rem calc(2rem + 20px) 1.5rem;
+        padding: 4rem 1rem 1.5rem;
         border-bottom: 0.5px solid #eee;
         order: -1;
       }
-      .inner-back { top: 1rem; }
+      .inner-back { top: 1rem; right: 1rem; }
       .inner-tools { position: static; }
       .inner-title { font-size: 1.2rem; }
       .inner-img-wrap { width: 100% !important; }
@@ -629,6 +629,8 @@
       video::-webkit-media-controls { display: none !important; }
       video::-webkit-media-controls-panel { display: none !important; }
       video::-webkit-media-controls-overlay-play-button { display: none !important; }
+      /* Remove negative crop margins — they're sized for desktop width */
+      .inner-track video { margin-top: 0 !important; margin-bottom: 0 !important; }
     }
     @media (max-width: 480px) {
       :root { --img-w: 62vw; --img-h: 75vw; --gap: 14px; --label-h: 50px; }
@@ -1389,8 +1391,9 @@
       target = Math.max(0, Math.min(target, maxScroll));
     }, { passive: false });
 
-    let ty = 0;
+    let tx = 0, ty = 0;
     window.addEventListener('touchstart', e => {
+      tx = e.touches[0].clientX;
       ty = e.touches[0].clientY;
       window._stripBlockUntilNextTouch = false;
     });
@@ -1399,9 +1402,11 @@
       if (window._stripBlockUntilNextTouch) return;
       if (document.querySelector('.inner-page.visible')) return;
       e.preventDefault();
+      const dx = tx - e.touches[0].clientX;
       const dy = ty - e.touches[0].clientY;
-      target += dy * 2;
+      target += (dx + dy) * 2;
       target = Math.max(0, Math.min(target, maxScroll));
+      tx = e.touches[0].clientX;
       ty = e.touches[0].clientY;
     }, { passive: false });
 
