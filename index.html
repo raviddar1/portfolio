@@ -625,6 +625,8 @@
       #cursor { display: none !important; }
       /* Always show video controls (no hover on touch) */
       .bloom-vid-controls { opacity: 1 !important; pointer-events: all !important; }
+      /* Hide controls for autoplay+muted videos — they play automatically */
+      #torahNigunWrap .bloom-vid-controls { display: none !important; }
       /* Hide native iOS video controls */
       video::-webkit-media-controls { display: none !important; }
       video::-webkit-media-controls-panel { display: none !important; }
@@ -706,7 +708,7 @@
   <header>
     <div style="display:flex;gap:1.5rem;align-items:center;">
       <a class="nav-link" href="about.html">[ עליי ]</a>
-      <a class="nav-link nav-active" href="index.html">[ פרויקטים ]</a>
+      <a class="nav-link nav-active" href="index.html?skip">[ פרויקטים ]</a>
     </div>
     <a href="index.html" class="nav-title" style="font-size:20px;color:#ff00a4;text-decoration:none;">רבידר</a>
   </header>
@@ -3197,6 +3199,19 @@
         introSq.style.cssText = `position:fixed;z-index:501;width:16px;height:16px;background:#EAFF09;left:${r.right + 2}px;top:${r.top - 16}px;`;
         document.body.appendChild(introSq);
       }
+      // Skip intro when arriving from "פרויקטים" link
+      if (window.location.search.includes('skip')) {
+        history.replaceState(null, '', window.location.pathname);
+        window._introActive = false;
+        intro.style.display = 'none';
+        if (stripWrap) stripWrap.style.opacity = '1';
+        if (textRightSpan) textRightSpan.style.opacity = '1';
+        typed.style.opacity = '0';
+        if (introSq) introSq.style.display = 'none';
+        cursor.style.display = '';
+        return;
+      }
+
       // Hide strip until intro exits
       if (stripWrap) stripWrap.style.opacity = '0';
 
