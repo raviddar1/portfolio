@@ -587,6 +587,14 @@
     .lightbox-next { right: 1.5rem; }
     .lightbox-hidden { display: none !important; }
     /* ── Responsive ── */
+    /* Disable hover effects on touch devices — first tap goes straight to click */
+    @media (hover: none) {
+      .proj-img:hover video,
+      .proj-img:hover .hover-img { opacity: 0; }
+      .proj-img:hover > img:not(.hover-img) { opacity: 1; }
+      .proj-img:hover .finlan-border { opacity: 1; }
+    }
+
     @media (max-width: 1100px) {
       :root { --img-w: 18vw; --img-h: 22vw; --gap: 36px; }
     }
