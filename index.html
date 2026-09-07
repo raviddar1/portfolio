@@ -1373,6 +1373,7 @@
     let ty = 0;
     window.addEventListener('touchstart', e => { ty = e.touches[0].clientY; });
     window.addEventListener('touchmove', e => {
+      if (window._introActive) return;
       e.preventDefault();
       const dy = ty - e.touches[0].clientY;
       target += dy * 2;
@@ -3136,6 +3137,7 @@
 
     /* ── Intro screen ── */
     (function() {
+      window._introActive = true;
       const intro = document.getElementById('intro-screen');
       const canvas = document.getElementById('intro-canvas');
       const typed = document.getElementById('intro-text');
@@ -3244,7 +3246,7 @@
         drawingDone = true;
         cue.style.opacity = '0';
         doneCue.style.opacity = '1';
-        typeEl(doneCue, '!לא רע\nגללו למטה כדי לראות את שלי', 35);
+        typeEl(doneCue, 'לא רע!\nגללו למטה כדי לראות את שלי', 35);
       }, { passive: true });
 
       // Exit: intro stays and blocks wheel during fade → then releases to strip
@@ -3252,6 +3254,7 @@
       function exitIntro() {
         if (exited) return;
         exited = true;
+        window._introActive = false;
         cursor.style.display = '';
 
         // Block strip scroll immediately — release only after user's gesture ends
