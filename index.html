@@ -1371,9 +1371,13 @@
     }, { passive: false });
 
     let ty = 0;
-    window.addEventListener('touchstart', e => { ty = e.touches[0].clientY; });
+    window.addEventListener('touchstart', e => {
+      ty = e.touches[0].clientY;
+      window._stripBlockUntilNextTouch = false;
+    });
     window.addEventListener('touchmove', e => {
       if (window._introActive) return;
+      if (window._stripBlockUntilNextTouch) return;
       if (document.querySelector('.inner-page.visible')) return;
       e.preventDefault();
       const dy = ty - e.touches[0].clientY;
@@ -3256,6 +3260,8 @@
         if (exited) return;
         exited = true;
         window._introActive = false;
+        window._stripBlockUntilNextTouch = true;
+        target = 0; current = 0;
         cursor.style.display = '';
 
         // Block strip scroll immediately — release only after user's gesture ends
