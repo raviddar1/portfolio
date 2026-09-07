@@ -591,7 +591,7 @@
       :root { --img-w: 18vw; --img-h: 22vw; --gap: 36px; }
     }
     @media (max-width: 768px) {
-      :root { --img-w: 38vw; --img-h: 48vw; --gap: 18px; --label-h: 60px; }
+      :root { --img-w: 38vw; --img-h: 48vw; --gap: 18px; --label-h: 60px; --header-h: 56px; }
       html { font-size: 16px; }
       .text-right { max-width: 280px; }
       .inner-page { flex-direction: column; overflow-y: auto; }
@@ -599,11 +599,18 @@
       .inner-right {
         flex: none; width: 100%; position: relative;
         padding: 1.5rem calc(2rem + 20px);
-        border-top: 0.5px solid #eee;
+        border-bottom: 0.5px solid #eee;
+        order: -1;
       }
+      .inner-back { top: 1rem; }
+      .inner-tools { position: static; }
       .inner-title { font-size: 1.2rem; }
-      .inner-img-wrap { width: 80vw; }
+      .inner-img-wrap { width: 100% !important; }
       .inner-img-peek { display: none; }
+      .bloom-vid-2 { width: 100% !important; }
+      .inner-track { padding: 1.5rem 4vw 6rem 4vw; }
+      .inner-track > div { width: 100% !important; max-width: 100% !important; }
+      .inner-track video { max-width: 100% !important; }
     }
     @media (max-width: 480px) {
       :root { --img-w: 62vw; --img-h: 75vw; --gap: 14px; --label-h: 50px; }
@@ -3179,9 +3186,10 @@
       }
 
       // Type main text → then type cue
+      const isTouchDevice = ('ontouchstart' in window) || navigator.maxTouchPoints > 0;
       typeEl(typed, 'היי! אני רביד דר, או בקיצור רבידר.\nסיימתי את לימודיי לתקשורת חזותית ועכשיו אני מחפשת ליצור פרויקטים שמשלבים קריאייטיב, מיתוג ותנועה.', 15, () => {
         cue.style.opacity = '1';
-        typeEl(cue, 'ציירו משהו מגניב, לחצו על העכבר כשסיימתם', 30);
+        typeEl(cue, isTouchDevice ? 'ציירו משהו מגניב' : 'ציירו משהו מגניב, לחצו על העכבר כשסיימתם', 30);
       });
 
       // Drawing
@@ -3189,13 +3197,14 @@
       ctx.lineWidth = 1.5;
       ctx.lineCap = 'round';
       ctx.lineJoin = 'round';
-      let lx = -1, ly = -1, drawingDone = false;
+      let lx = -1, ly = -1, drawingDone = false, hasDrawn = false;
 
       intro.addEventListener('mousemove', (e) => {
         if (drawingDone) return;
         if (lx < 0) { lx = e.clientX; ly = e.clientY; return; }
         ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(e.clientX, e.clientY); ctx.stroke();
         lx = e.clientX; ly = e.clientY;
+        hasDrawn = true;
       });
       intro.addEventListener('mouseleave', () => { lx = -1; ly = -1; });
 
@@ -3210,6 +3219,33 @@
         doneCue.style.opacity = '1';
         typeEl(doneCue, 'לא רע!\nגללו למטה כדי לראות את שלי', 35);
       });
+
+      // Touch drawing
+      intro.addEventListener('touchstart', (e) => {
+        if (drawingDone) return;
+        const t = e.touches[0];
+        lx = t.clientX; ly = t.clientY;
+      }, { passive: true });
+
+      intro.addEventListener('touchmove', (e) => {
+        if (drawingDone) return;
+        e.preventDefault();
+        const t = e.touches[0];
+        if (lx >= 0) {
+          ctx.beginPath(); ctx.moveTo(lx, ly); ctx.lineTo(t.clientX, t.clientY); ctx.stroke();
+        }
+        lx = t.clientX; ly = t.clientY;
+        hasDrawn = true;
+      }, { passive: false });
+
+      intro.addEventListener('touchend', () => {
+        lx = -1; ly = -1;
+        if (drawingDone || !hasDrawn) return;
+        drawingDone = true;
+        cue.style.opacity = '0';
+        doneCue.style.opacity = '1';
+        typeEl(doneCue, '!לא רע\nגללו למטה כדי לראות את שלי', 35);
+      }, { passive: true });
 
       // Exit: intro stays and blocks wheel during fade → then releases to strip
       let exited = false;
@@ -3265,7 +3301,7 @@
       intro.addEventListener('wheel', (e) => { e.preventDefault(); exitIntro(); }, { passive: false });
       let ty = 0;
       intro.addEventListener('touchstart', (e) => { ty = e.touches[0].clientY; }, { passive: true });
-      intro.addEventListener('touchmove', (e) => { if (ty - e.touches[0].clientY > 40) exitIntro(); }, { passive: true });
+      intro.addEventListener('touchmove', (e) => { if (drawingDone && ty - e.touches[0].clientY > 40) exitIntro(); }, { passive: true });
     })();
 
     /* ── Nav: adapt color to background beneath ── */
