@@ -74,6 +74,7 @@
     header a, header span { pointer-events: all; }
     .nav-title {
       letter-spacing: -0.08em;
+      font-size: 0.78rem;
     }
 
     .nav-link {
@@ -82,6 +83,7 @@
       text-decoration: none;
       color: var(--ink);
       letter-spacing: -0.08em;
+      font-size: 0.78rem;
     }
     .nav-link:hover {
       color: #ff00a4;
@@ -607,7 +609,6 @@
     @media (max-width: 768px) {
       :root { --img-w: 38vw; --img-h: 48vw; --gap: 18px; --label-h: 60px; --header-h: 56px; }
       html { font-size: 18px; }
-      .nav-title { font-size: 22px !important; }
       .text-right { max-width: 280px; }
       .inner-page { flex-direction: column; overflow-y: auto; }
       .inner-left { width: 100%; height: auto; }
@@ -652,17 +653,88 @@
       header { padding: 18px 1rem; }
       .upper { padding: 0 1rem !important; }
     }
+
+    /* ── New home layout ── */
+    @font-face {
+      font-family: 'HaimLight';
+      src: url('haim-classic-regular-fm.otf') format('opentype');
+      font-display: block;
+    }
+    .strip-wrapper { display: none !important; }
+    .upper { display: none !important; }
+    .nav-title { display: none !important; }
+
+    #big-ravid {
+      position: fixed;
+      bottom: -0.08em;
+      right: calc(2rem + 20px);
+      font-family: 'HaimLight', sans-serif;
+      font-size: 22vw;
+      line-height: 0.85;
+      color: #FF00AA;
+      letter-spacing: -0.05em;
+      direction: rtl;
+      white-space: nowrap;
+      pointer-events: none;
+      z-index: 5;
+    }
+
+    #proj-list-new {
+      position: fixed;
+      right: calc(2rem + 20px);
+      top: 28px;
+      direction: rtl;
+      text-align: right;
+      font-size: 0.78rem;
+      letter-spacing: -0.04em;
+      z-index: 200;
+      pointer-events: all;
+    }
+    #proj-list-new .list-header { display: block; margin-bottom: 0.4rem; }
+    #proj-list-new a {
+      display: block;
+      color: var(--ink);
+      text-decoration: none;
+      line-height: 1.7;
+      cursor: pointer;
+    }
+    #proj-list-new a:hover { color: #ff00a4; }
+
+    #alai-link {
+      position: fixed;
+      left: calc(2rem + 20px);
+      top: 50%;
+      transform: translateY(-50%);
+      color: #ff00a4;
+      font-size: 0.78rem;
+      text-decoration: none;
+      letter-spacing: -0.04em;
+      z-index: 200;
+      cursor: pointer;
+    }
   /* ── Intro screen ── */
   </style>
 </head>
 <body>
 
-  <header>
-    <div style="display:flex;gap:1.5rem;align-items:center;">
-      <a class="nav-link" href="about.html">[ עליי ]</a>
-    </div>
-    <a href="index.html" class="nav-title" style="font-size:20px;color:#ff00a4;text-decoration:underline;text-decoration-color:#ff00a4;text-underline-offset:4px;">רבידר</a>
-  </header>
+  <header></header>
+
+  <!-- [ עליי ] mid-left -->
+  <a id="alai-link" href="about.html">[ עליי ]</a>
+
+  <!-- Project list top-right -->
+  <div id="proj-list-new">
+    <span class="list-header">[ עבודות ]</span>
+    <a href="#" data-inner="inner-torah">01</a>
+    <a href="#" data-inner="inner-finlan">02</a>
+    <a href="#" data-inner="inner-kreativ">03</a>
+    <a href="#" data-inner="inner-kodesh">04</a>
+    <a href="#" data-inner="inner-mah">05</a>
+    <a href="#" data-inner="inner-bloom">06</a>
+  </div>
+
+  <!-- Big רבידר -->
+  <div id="big-ravid">רבידר</div>
 
   <!-- Custom cursor -->
   <div class="cursor" id="cursor">
@@ -3080,6 +3152,18 @@
       });
     });
 
+
+    /* ── Project list click handlers ── */
+    document.querySelectorAll('#proj-list-new a[data-inner]').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const page = document.getElementById(link.dataset.inner);
+        if (!page) return;
+        savedScroll = current;
+        page.classList.add('visible');
+        cursor.classList.remove('visible');
+      });
+    });
 
     /* ── Nav: adapt color to background beneath ── */
     (function() {
