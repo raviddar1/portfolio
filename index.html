@@ -3442,7 +3442,8 @@
           firstChild.style.margin   = '0';
           targetTrack.style.paddingTop  = (previewRect.top + previewRect.height) + 'px';
           targetTrack.style.paddingLeft = '3vw';
-          page.addEventListener('wheel', function releaseFixed() {
+          // Release after 2 frames — seamless open, then normal flow (no overlap on scroll)
+          requestAnimationFrame(() => requestAnimationFrame(() => {
             firstChild.style.position = '';
             firstChild.style.top = ''; firstChild.style.left = '';
             firstChild.style.width = ''; firstChild.style.height = '';
@@ -3450,8 +3451,7 @@
             firstChild.style.margin = '';
             targetTrack.style.paddingTop  = previewRect.top + 'px';
             targetTrack.style.paddingLeft = previewRect.left + 'px';
-            page.removeEventListener('wheel', releaseFixed);
-          }, { passive: true });
+          }));
         } else if (targetTrack) {
           targetTrack.style.paddingTop  = previewRect ? previewRect.top  + 'px' : linkBottom + 'px';
           targetTrack.style.paddingLeft = previewRect ? previewRect.left + 'px' : '3vw';
