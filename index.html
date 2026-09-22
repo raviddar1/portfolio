@@ -3367,6 +3367,17 @@
         if (alaiLinkEl) alaiLinkEl.style.display = 'none';
         const linkBottom = link.getBoundingClientRect().bottom + 16;
         document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = linkBottom + 'px');
+        if (link.dataset.inner === 'inner-kreativ' && !isMobile && !kreativPosterCaptured) {
+          kreativVid.muted = true;
+          kreativVid.currentTime = 2;
+          kreativVid.addEventListener('seeked', () => {
+            captureKreativPoster();
+            kreativVid.currentTime = 0;
+            kreativVid.muted = false;
+          }, { once: true });
+        } else if (link.dataset.inner === 'inner-kreativ' && kreativPosterCaptured) {
+          kreativPoster.style.display = 'block';
+        }
       });
     });
 
