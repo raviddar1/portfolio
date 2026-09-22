@@ -763,13 +763,12 @@
       position: fixed;
       right: calc(2rem + 20px);
       top: 6rem;
-      width: 22vw;
+      width: 14vw;
       display: none;
       z-index: 100;
       pointer-events: none;
-      overflow: hidden;
     }
-    #alai-preview img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
+    #alai-preview img { width: 100%; height: auto; display: block; }
 
     #about-panel {
       position: fixed;
@@ -1973,10 +1972,9 @@
       bloomScrollY = 0; bloomScrollTarget = 0;
       innerTrackBloom.style.transform = '';
       pauseAllAudioVideos();
-      innerBitgalim.classList.add('visible');
-      resumeAutoplay(innerBitgalim);
-      bitgalimScrollY = 0; bitgalimScrollTarget = 0;
-      requestAnimationFrame(applyBitgalimCrop);
+      innerPage.classList.add('visible');
+      resumeAutoplay(innerPage);
+      innerScrollY = 0; innerScrollTarget = 0;
     });
 
     document.getElementById('inner-next-bitgalim').addEventListener('click', () => {
@@ -1984,9 +1982,9 @@
       bitgalimScrollY = 0; bitgalimScrollTarget = 0;
       innerTrackBitgalim.style.transform = '';
       pauseAllAudioVideos();
-      innerShimur.classList.add('visible');
-      shimurVid.currentTime = 0; shimurVid.play();
-      shimurScrollY = 0; shimurScrollTarget = 0;
+      innerTorah.classList.add('visible');
+      resumeAutoplay(innerTorah);
+      torahScrollY = 0; torahScrollTarget = 0;
     });
 
     document.getElementById('inner-next-mah').addEventListener('click', () => {
@@ -1994,19 +1992,9 @@
       innerScrollY = 0; innerScrollTarget = 0;
       innerTrack.style.transform = '';
       pauseAllAudioVideos();
-      innerBloom.classList.add('visible');
-      resumeAutoplay(innerBloom);
-      bloomScrollY = 0; bloomScrollTarget = 0;
-      if (bloomPosterCaptured) {
-        bloomPoster.style.display = 'block';
-      } else {
-        bloomVid.muted = true;
-        bloomVid.currentTime = isMobile ? 1 : 2;
-        bloomVid.addEventListener('seeked', () => {
-          if (!isMobile) { capturePoster(); bloomVid.currentTime = 0; bloomVid.muted = false; }
-          else { bloomVid.play().catch(() => {}); bloomVid.addEventListener('timeupdate', () => { bloomVid.pause(); bloomVid.muted = false; }, { once: true }); }
-        }, { once: true });
-      }
+      innerKodesh.classList.add('visible');
+      resumeAutoplay(innerKodesh);
+      kodeshScrollY = 0; kodeshScrollTarget = 0;
     });
 
     /* ── בין קודש לחול ── */
@@ -2103,9 +2091,10 @@
       kodeshScrollY = 0; kodeshScrollTarget = 0;
       innerTrackKodesh.style.transform = '';
       pauseAllAudioVideos();
-      innerPage.classList.add('visible');
-      resumeAutoplay(innerPage);
-      innerScrollY = 0; innerScrollTarget = 0;
+      innerBitgalim.classList.add('visible');
+      resumeAutoplay(innerBitgalim);
+      bitgalimScrollY = 0; bitgalimScrollTarget = 0;
+      requestAnimationFrame(applyBitgalimCrop);
     });
 
     const innerTrackKodesh = document.getElementById('innerTrackKodesh');
@@ -2785,10 +2774,19 @@
       innerTrackKreativ.style.transform = '';
       pauseAllAudioVideos();
       kreativPoster.style.display = 'none'; kreativPoster2.style.display = 'none'; kreativPoster3.style.display = 'none';
-      innerKodesh.classList.add('visible');
-      resumeAutoplay(innerKodesh);
-      kodeshScrollY = 0; kodeshScrollTarget = 0;
-      requestAnimationFrame(applyBitgalimCrop);
+      innerBloom.classList.add('visible');
+      resumeAutoplay(innerBloom);
+      bloomScrollY = 0; bloomScrollTarget = 0;
+      if (bloomPosterCaptured) {
+        bloomPoster.style.display = 'block';
+      } else {
+        bloomVid.muted = true;
+        bloomVid.currentTime = isMobile ? 1 : 2;
+        bloomVid.addEventListener('seeked', () => {
+          if (!isMobile) { capturePoster(); bloomVid.currentTime = 0; bloomVid.muted = false; }
+          else { bloomVid.play().catch(() => {}); bloomVid.addEventListener('timeupdate', () => { bloomVid.pause(); bloomVid.muted = false; }, { once: true }); }
+        }, { once: true });
+      }
     });
 
     /* ── שימור תרבות ── */
@@ -3283,12 +3281,7 @@
       if (!alaiEl) return;
 
       alaiEl.addEventListener('mouseenter', () => {
-        if (alaiPrev) {
-          alaiPrev.style.display = 'block';
-          requestAnimationFrame(() => {
-            if (aboutPanel) alaiPrev.style.height = aboutPanel.offsetHeight + 'px';
-          });
-        }
+        if (alaiPrev) alaiPrev.style.display = 'block';
       });
       alaiEl.addEventListener('mouseleave', () => { if (alaiPrev && !aboutPanel.classList.contains('visible')) alaiPrev.style.display = 'none'; });
 
