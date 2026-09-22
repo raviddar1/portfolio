@@ -737,6 +737,20 @@
       z-index: 200;
       cursor: pointer;
     }
+    /* ── First media in inner pages matches hover preview ── */
+    .inner-track > *:first-child { width: 35vw !important; }
+    .inner-track > *:first-child img,
+    .inner-track > *:first-child video {
+      width: 100% !important;
+      max-height: 65vh;
+      object-fit: cover !important;
+      object-position: center !important;
+      display: block !important;
+    }
+    /* kreativ keeps its original layout */
+    #innerTrackKreativ > *:first-child { width: 44vw !important; }
+    #innerTrackKreativ > *:first-child video { max-height: none !important; object-fit: initial !important; }
+
     /* ── Project hover preview ── */
     #proj-preview {
       position: fixed;
@@ -794,10 +808,12 @@
       text-underline-offset: 3px;
       letter-spacing: -0.04em;
       cursor: pointer;
+      transition: color 0.2s;
     }
-    #link-linkedin  { bottom: 27vh; left: 25vw; }
-    #link-instagram { bottom: 16vh; left: calc(2rem + 20px); }
-    #link-cv        { bottom: 16vh; left: 30vw; }
+    #about-links-scattered a:hover { color: #ff00a4; }
+    #link-linkedin  { top: calc(50% + 1rem);   left: calc(2rem + 20px + 4rem); }
+    #link-instagram { top: calc(50% + 3rem);   left: calc(2rem + 20px); }
+    #link-cv        { top: calc(50% + 3rem);   left: calc(2rem + 20px + 8rem); }
   /* ── Intro screen ── */
   </style>
 </head>
@@ -837,9 +853,9 @@
 
   <!-- Scattered about links -->
   <div id="about-links-scattered">
-    <a id="link-linkedin"  href="https://www.linkedin.com/in/ravid-dar-07190138a" target="_blank">linkedin</a>
-    <a id="link-instagram" href="https://www.instagram.com/ra.dar__?stkn=Y2oxeXhkanh5NGto&utm_source=qr" target="_blank">instagram</a>
-    <a id="link-cv"        href="קורות חיים עברית.pdf" target="_blank">cv</a>
+    <a id="link-linkedin"  href="https://www.linkedin.com/in/ravid-dar-07190138a" target="_blank">LINKEDIN</a>
+    <a id="link-instagram" href="https://www.instagram.com/ra.dar__?stkn=Y2oxeXhkanh5NGto&utm_source=qr" target="_blank">INSTAGRAM</a>
+    <a id="link-cv"        href="קורות חיים עברית.pdf" target="_blank">CV</a>
   </div>
 
   <!-- Project hover preview (left side) -->
@@ -3379,6 +3395,7 @@
       strip.style.transform = `translateX(${current}px)`;
       if (alaiLinkEl) alaiLinkEl.style.display = '';
       document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = '');
+      document.querySelectorAll('.inner-track').forEach(it => it.style.paddingTop = '');
       const aboutPanelEl = document.getElementById('about-panel');
       const alaiPrevEl = document.getElementById('alai-preview');
       if (aboutPanelEl) aboutPanelEl.classList.remove('visible');
@@ -3405,6 +3422,9 @@
         if (alaiLinkEl) alaiLinkEl.style.display = 'none';
         const linkBottom = link.getBoundingClientRect().bottom + 16;
         document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = linkBottom + 'px');
+        const previewItem = document.querySelector(`#proj-preview .preview-item[data-for="${link.dataset.inner}"]`);
+        const trackTop = previewItem ? previewItem.getBoundingClientRect().top : linkBottom;
+        document.querySelectorAll('.inner-track').forEach(it => it.style.paddingTop = trackTop + 'px');
         if (link.dataset.inner === 'inner-kreativ' && !isMobile && !kreativPosterCaptured) {
           kreativVid.muted = true;
           kreativVid.currentTime = 2;
