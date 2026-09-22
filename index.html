@@ -737,19 +737,24 @@
       z-index: 200;
       cursor: pointer;
     }
-    /* ── First media in inner pages matches hover preview ── */
-    .inner-track > *:first-child { width: 35vw !important; }
+    /* ── First media in inner pages matches hover preview exactly ── */
+    .inner-track > *:first-child {
+      width: 35vw !important;
+      height: auto !important;
+      aspect-ratio: unset !important;
+    }
     .inner-track > *:first-child img,
     .inner-track > *:first-child video {
       width: 100% !important;
-      max-height: 65vh;
+      height: auto !important;
+      max-height: 65vh !important;
       object-fit: cover !important;
       object-position: center !important;
       display: block !important;
     }
     /* kreativ keeps its original layout */
-    #innerTrackKreativ > *:first-child { width: 44vw !important; }
-    #innerTrackKreativ > *:first-child video { max-height: none !important; object-fit: initial !important; }
+    #innerTrackKreativ > *:first-child { width: 44vw !important; height: auto !important; }
+    #innerTrackKreativ > *:first-child video { max-height: none !important; object-fit: initial !important; height: auto !important; }
 
     /* ── Project hover preview ── */
     #proj-preview {
@@ -3419,13 +3424,15 @@
         projList.classList.add('has-active');
         const linkBottom = link.getBoundingClientRect().bottom + 16;
         const previewItem = document.querySelector(`#proj-preview .preview-item[data-for="${link.dataset.inner}"]`);
-        const previewRect = previewItem ? previewItem.getBoundingClientRect() : null;
-        const trackTop = previewRect ? previewRect.top : linkBottom;
+        const previewMedia = previewItem && previewItem.querySelector('img, video');
+        const previewRect = previewMedia ? previewMedia.getBoundingClientRect() : (previewItem ? previewItem.getBoundingClientRect() : null);
         document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = linkBottom + 'px');
         const targetTrack = page.querySelector('.inner-track');
-        if (targetTrack) {
-          targetTrack.style.paddingTop = trackTop + 'px';
-          if (previewRect) targetTrack.style.paddingLeft = previewRect.left + 'px';
+        if (targetTrack && previewRect) {
+          targetTrack.style.paddingTop = previewRect.top + 'px';
+          targetTrack.style.paddingLeft = previewRect.left + 'px';
+        } else if (targetTrack) {
+          targetTrack.style.paddingTop = linkBottom + 'px';
         }
         page.classList.add('visible');
         cursor.classList.remove('visible');
