@@ -3417,14 +3417,14 @@
         projLinks.forEach(a => a.classList.remove('proj-active'));
         link.classList.add('proj-active');
         projList.classList.add('has-active');
+        const linkBottom = link.getBoundingClientRect().bottom + 16;
+        const previewItem = document.querySelector(`#proj-preview .preview-item[data-for="${link.dataset.inner}"]`);
+        const trackTop = previewItem ? previewItem.getBoundingClientRect().top : linkBottom;
+        document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = linkBottom + 'px');
+        document.querySelectorAll('.inner-track').forEach(it => it.style.paddingTop = trackTop + 'px');
         page.classList.add('visible');
         cursor.classList.remove('visible');
         if (alaiLinkEl) alaiLinkEl.style.display = 'none';
-        const linkBottom = link.getBoundingClientRect().bottom + 16;
-        document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = linkBottom + 'px');
-        const previewItem = document.querySelector(`#proj-preview .preview-item[data-for="${link.dataset.inner}"]`);
-        const trackTop = previewItem ? previewItem.getBoundingClientRect().top : linkBottom;
-        document.querySelectorAll('.inner-track').forEach(it => it.style.paddingTop = trackTop + 'px');
         if (link.dataset.inner === 'inner-kreativ' && !isMobile && !kreativPosterCaptured) {
           kreativVid.muted = true;
           kreativVid.currentTime = 2;
