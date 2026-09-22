@@ -130,7 +130,8 @@
     /* ─── Custom cursor ─── */
     * { cursor: none !important; }
     a, button, [role="button"],
-    .nav-link, .inner-back, .inner-next, .bloom-vid-btn, .bloom-progress-wrap, .bloom-progress-wrap * { cursor: pointer !important; }
+    .nav-link, .inner-back, .inner-next, .bloom-vid-btn, .bloom-progress-wrap, .bloom-progress-wrap *,
+    #proj-list-new a, #proj-list-new a * { cursor: pointer !important; }
     .proj-img, .proj-img *,
     .bloom-vid-2, .bloom-vid-2 video, .bloom-vid-2 img { cursor: default !important; }
 
@@ -477,6 +478,12 @@
       direction: rtl;
     }
 
+    .inner-back { display: none !important; }
+    .inner-title { display: none !important; }
+    .inner-right { padding-top: 7rem; }
+    .list-header { cursor: pointer !important; }
+    .list-header:hover { color: #ff00a4; }
+
     .inner-title {
       font-size: 1.6rem;
       font-weight: 300;
@@ -666,39 +673,56 @@
 
     #big-ravid {
       position: fixed;
-      bottom: -0.08em;
-      right: calc(2rem + 20px);
-      font-family: 'HaimLight', sans-serif;
-      font-size: 22vw;
-      line-height: 0.85;
-      color: #FF00AA;
-      letter-spacing: -2px;
-      direction: rtl;
-      white-space: nowrap;
+      bottom: -2vw;
+      right: 0;
+      width: 50vw;
       pointer-events: none;
       z-index: 5;
+    }
+    #big-ravid img {
+      width: 100%;
+      height: auto;
+      display: block;
     }
 
     #proj-list-new {
       position: fixed;
       right: calc(2rem + 20px);
-      top: 28px;
+      top: 55px;
       direction: rtl;
       text-align: right;
-      font-size: 0.78rem;
+      font-size: 0.89rem;
       letter-spacing: -0.04em;
       z-index: 200;
       pointer-events: all;
+      width: 5rem;
     }
-    #proj-list-new .list-header { display: block; margin-bottom: 0.4rem; }
+    #proj-list-new .list-header { display: block; margin-bottom: 0.8rem; }
     #proj-list-new a {
       display: block;
       color: var(--ink);
       text-decoration: none;
-      line-height: 1.7;
+      line-height: 1;
+      margin-bottom: 0.65rem;
       cursor: pointer;
     }
     #proj-list-new a:hover { color: #ff00a4; }
+    #proj-list-new.has-active a:not(.proj-active) { visibility: hidden; pointer-events: none; }
+    #proj-list-new a.proj-active { color: #ff00a4; }
+    #proj-list-new a.proj-active .proj-hover-name { display: block; }
+    .num-wrap {
+      position: relative;
+      display: inline-block;
+    }
+    .proj-hover-name {
+      display: none;
+      position: absolute;
+      right: 100%;
+      top: 0;
+      white-space: nowrap;
+      padding-right: 1rem;
+    }
+    #proj-list-new a:hover .proj-hover-name { display: block; }
 
     #alai-link {
       position: fixed;
@@ -712,6 +736,54 @@
       z-index: 200;
       cursor: pointer;
     }
+    /* ── Project hover preview ── */
+    #proj-preview {
+      position: fixed;
+      left: calc(2rem + 20px);
+      top: 50%;
+      transform: translateY(-50%);
+      width: 35vw;
+      pointer-events: none;
+      z-index: 50;
+      display: none;
+    }
+    #proj-preview.visible { display: block; }
+    .preview-item { display: none; }
+    .preview-item.active { display: block; }
+    .preview-item img, .preview-item video {
+      width: 100%;
+      height: auto;
+      display: block;
+      max-height: 65vh;
+      object-fit: cover;
+    }
+    #alai-link { transition: opacity 0.2s; }
+    #alai-preview {
+      position: fixed;
+      right: calc(2rem + 20px);
+      top: 85px;
+      width: 14vw;
+      display: none;
+      z-index: 100;
+      pointer-events: none;
+    }
+    #alai-preview img { width: 100%; height: auto; display: block; }
+
+    #about-panel {
+      position: fixed;
+      left: calc(2rem + 20px);
+      top: 6rem;
+      max-width: 400px;
+      font-size: 0.78rem;
+      line-height: 1.25;
+      direction: rtl;
+      text-align: right;
+      z-index: 200;
+      display: none;
+    }
+    #about-panel.visible { display: block; }
+    #about-panel a { color: #ff00a4; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
+    #about-panel .about-links { display: flex; align-items: center; gap: 1rem; direction: rtl; margin-top: 1rem; }
   /* ── Intro screen ── */
   </style>
 </head>
@@ -725,16 +797,63 @@
   <!-- Project list top-right -->
   <div id="proj-list-new">
     <span class="list-header">[ עבודות ]</span>
-    <a href="#" data-inner="inner-torah">01</a>
-    <a href="#" data-inner="inner-finlan">02</a>
-    <a href="#" data-inner="inner-kreativ">03</a>
-    <a href="#" data-inner="inner-kodesh">04</a>
-    <a href="#" data-inner="inner-mah">05</a>
-    <a href="#" data-inner="inner-bloom">06</a>
+    <a href="#" data-inner="inner-torah"    style="text-align:right"><span class="num-wrap">01<span class="proj-hover-name">תורה שבמרחב | פרויקט גמר</span></span></a>
+    <a href="#" data-inner="inner-finlan"   style="text-align:left"><span class="num-wrap">02<span class="proj-hover-name">פינלן</span></span></a>
+    <a href="#" data-inner="inner-kreativ"  style="text-align:left"><span class="num-wrap">03<span class="proj-hover-name">קריאייטיב</span></span></a>
+    <a href="#" data-inner="inner-bloom"    style="text-align:center"><span class="num-wrap">04<span class="proj-hover-name">בלומינג ריוט</span></span></a>
+    <a href="#" data-inner="inner-mah"      style="text-align:left"><span class="num-wrap">05<span class="proj-hover-name">מה שנשאר מאחור</span></span></a>
+    <a href="#" data-inner="inner-kodesh"   style="text-align:right"><span class="num-wrap">06<span class="proj-hover-name">בין קודש לחול</span></span></a>
+    <a href="#" data-inner="inner-bitgalim" style="text-align:right"><span class="num-wrap">07<span class="proj-hover-name">בית גלים</span></span></a>
   </div>
 
   <!-- Big רבידר -->
-  <div id="big-ravid">רבידר</div>
+  <div id="big-ravid"><img src="Group 39.png" alt="רבידר"></div>
+
+  <!-- עליי hover preview (top right) -->
+  <div id="alai-preview">
+    <img src="אני .jpg" alt="רביד דר">
+  </div>
+
+  <!-- About panel (shown on click of עליי) -->
+  <div id="about-panel">
+    <p>אני רביד דר, בוגרת טרייה של המחלקה לתקשורת חזותית באוניברסיטת חיפה (ויצו).</p>
+    <br>
+    <p>בזמני הפנוי אני אוהבת לטייל, לנגן על תופים ולחפש השראה במקומות לא צפויים. אני נמשכת לכל מה שקשור לצבע, טיפוגרפיה וקריאייטיב, ואוהבת להפוך רעיונות מורכבים לחוויות פשוטות, מדויקות ומהנות. חוץ מזה, מבחינתי כל שעה היא שעה טובה לקפה ומאפה, ואם יש כלבים במשרד - כנראה שכבר ארגיש בבית.</p>
+    <div class="about-links">
+      <a href="קורות חיים עברית.pdf" target="_blank">[ קורות חיים ]</a>
+      <a href="https://www.instagram.com/ra.dar__?stkn=Y2oxeXhkanh5NGto&utm_source=qr" target="_blank">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ff00a4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#ff00a4"/></svg>
+      </a>
+      <a href="https://www.linkedin.com/in/ravid-dar-07190138a" target="_blank">
+        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ff00a4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="4" ry="4"/><line x1="8" y1="11" x2="8" y2="16"/><line x1="8" y1="8" x2="8" y2="8.5"/><line x1="12" y1="16" x2="12" y2="13"/><path d="M12 13a2 2 0 0 1 4 0v3"/><line x1="16" y1="16" x2="16" y2="13"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <!-- Project hover preview (left side) -->
+  <div id="proj-preview">
+    <div class="preview-item" data-for="inner-torah">
+      <video src="תורה שבמרחב/סרטון 1.mp4" muted loop playsinline></video>
+    </div>
+    <div class="preview-item" data-for="inner-finlan">
+      <img src="פינלן/פינלן ראשית.png" alt="פינלן">
+    </div>
+    <div class="preview-item" data-for="inner-kreativ">
+      <img src="קריאייטיב/תמונה פרה.png" alt="קריאייטיב">
+    </div>
+    <div class="preview-item" data-for="inner-bloom">
+      <img src="בלומינג ריוט/u7589337271_httpss.mj.runqBDvOm2qWnc_httpss.mj.runDuUjlZZpkOI_ed558678-3959-4ca3-9c66-a615eeb38662_1.png" alt="blooming riot">
+    </div>
+    <div class="preview-item" data-for="inner-mah">
+      <img src="מה שנשאר מאחור/42039B12-26FD-4060-9F85-BAADA14EEE14.JPG" alt="מה שנשאר מאחור" style="object-position: center 60%;">
+    </div>
+    <div class="preview-item" data-for="inner-kodesh">
+      <video src="בין קודש לחול/ערימת גלויות לבן.mp4" muted loop playsinline></video>
+    </div>
+    <div class="preview-item" data-for="inner-bitgalim">
+      <img src="בית גלים/תמונה לפורטפוליו 2_web.jpg" alt="בית גלים">
+    </div>
+  </div>
 
   <!-- Custom cursor -->
   <div class="cursor" id="cursor">
@@ -3153,15 +3272,102 @@
     });
 
 
+    /* ── עליי hover + click ── */
+    (function() {
+      const alaiEl = document.getElementById('alai-link');
+      const alaiPrev = document.getElementById('alai-preview');
+      const aboutPanel = document.getElementById('about-panel');
+      const projListEl = document.getElementById('proj-list-new');
+      if (!alaiEl) return;
+
+      alaiEl.addEventListener('mouseenter', () => { if (alaiPrev) alaiPrev.style.display = 'block'; });
+      alaiEl.addEventListener('mouseleave', () => { if (alaiPrev && !aboutPanel.classList.contains('visible')) alaiPrev.style.display = 'none'; });
+
+      alaiEl.addEventListener('click', e => {
+        e.preventDefault();
+        const isOpen = aboutPanel.classList.contains('visible');
+        if (isOpen) {
+          aboutPanel.classList.remove('visible');
+          if (alaiPrev) alaiPrev.style.display = 'none';
+        } else {
+          aboutPanel.classList.add('visible');
+        }
+      });
+    })();
+
+    /* ── Project hover preview ── */
+    (function() {
+      const preview = document.getElementById('proj-preview');
+      const alaiLink = document.getElementById('alai-link');
+      const items = preview.querySelectorAll('.preview-item');
+
+      document.querySelectorAll('#proj-list-new a[data-inner]').forEach(link => {
+        link.addEventListener('mouseenter', () => {
+          const innerId = link.dataset.inner;
+          items.forEach(item => {
+            const match = item.dataset.for === innerId;
+            item.classList.toggle('active', match);
+            const vid = item.querySelector('video');
+            if (vid) { if (match) { vid.currentTime = 0; vid.play(); } else vid.pause(); }
+          });
+          preview.classList.add('visible');
+          if (alaiLink) alaiLink.style.opacity = '0';
+        });
+        link.addEventListener('mouseleave', () => {
+          items.forEach(item => {
+            item.classList.remove('active');
+            const vid = item.querySelector('video');
+            if (vid) vid.pause();
+          });
+          preview.classList.remove('visible');
+          if (alaiLink) alaiLink.style.opacity = '1';
+        });
+      });
+    })();
+
     /* ── Project list click handlers ── */
-    document.querySelectorAll('#proj-list-new a[data-inner]').forEach(link => {
+    const projList = document.getElementById('proj-list-new');
+    const projLinks = Array.from(document.querySelectorAll('#proj-list-new a[data-inner]'));
+
+    const alaiLinkEl = document.getElementById('alai-link');
+
+    function deactivateProj() {
+      projList.classList.remove('has-active');
+      projLinks.forEach(a => a.classList.remove('proj-active'));
+      document.querySelectorAll('.inner-page.visible').forEach(p => p.classList.remove('visible'));
+      pauseAllAudioVideos();
+      current = savedScroll; target = savedScroll;
+      strip.style.transform = `translateX(${current}px)`;
+      if (alaiLinkEl) alaiLinkEl.style.display = '';
+      document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = '');
+      const aboutPanelEl = document.getElementById('about-panel');
+      const alaiPrevEl = document.getElementById('alai-preview');
+      if (aboutPanelEl) aboutPanelEl.classList.remove('visible');
+      if (alaiPrevEl) alaiPrevEl.style.display = 'none';
+    }
+
+    document.querySelector('#proj-list-new .list-header').addEventListener('click', deactivateProj);
+
+    projLinks.forEach(link => {
       link.addEventListener('click', e => {
         e.preventDefault();
         const page = document.getElementById(link.dataset.inner);
         if (!page) return;
         savedScroll = current;
+        projLinks.forEach(a => a.classList.remove('proj-active'));
+        link.classList.add('proj-active');
+        projList.classList.add('has-active');
         page.classList.add('visible');
         cursor.classList.remove('visible');
+        if (alaiLinkEl) alaiLinkEl.style.display = 'none';
+        const linkBottom = link.getBoundingClientRect().bottom + 16;
+        document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = linkBottom + 'px');
+      });
+    });
+
+    document.querySelectorAll('.inner-back').forEach(btn => {
+      btn.addEventListener('click', () => {
+        deactivateProj();
       });
     });
 
