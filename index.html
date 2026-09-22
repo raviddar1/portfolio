@@ -3425,14 +3425,38 @@
         const linkBottom = link.getBoundingClientRect().bottom + 16;
         const previewItem = document.querySelector(`#proj-preview .preview-item[data-for="${link.dataset.inner}"]`);
         const previewMedia = previewItem && previewItem.querySelector('img, video');
-        const previewRect = previewMedia ? previewMedia.getBoundingClientRect() : (previewItem ? previewItem.getBoundingClientRect() : null);
+        const previewRect = previewMedia ? previewMedia.getBoundingClientRect() : null;
         document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = linkBottom + 'px');
         const targetTrack = page.querySelector('.inner-track');
-        if (targetTrack && previewRect) {
-          targetTrack.style.paddingTop = previewRect.top + 'px';
-          targetTrack.style.paddingLeft = previewRect.left + 'px';
+        const firstChild = targetTrack && link.dataset.inner !== 'inner-kreativ'
+          ? targetTrack.querySelector(':scope > *:first-child') : null;
+
+        if (firstChild && previewRect) {
+          // Pin first element exactly on preview position — zero jump
+          firstChild.style.position = 'fixed';
+          firstChild.style.top    = previewRect.top    + 'px';
+          firstChild.style.left   = previewRect.left   + 'px';
+          firstChild.style.width  = previewRect.width  + 'px';
+          firstChild.style.height = previewRect.height + 'px';
+          firstChild.style.zIndex = '160';
+          firstChild.style.overflow = 'hidden';
+          firstChild.style.margin = '0';
+          targetTrack.style.paddingTop  = (previewRect.top + previewRect.height + 60) + 'px';
+          targetTrack.style.paddingLeft = '3vw';
+          // Release on first scroll
+          page.addEventListener('wheel', function releaseFixed() {
+            firstChild.style.position = '';
+            firstChild.style.top = ''; firstChild.style.left = '';
+            firstChild.style.width = ''; firstChild.style.height = '';
+            firstChild.style.zIndex = ''; firstChild.style.overflow = '';
+            firstChild.style.margin = '';
+            targetTrack.style.paddingTop  = previewRect.top + 'px';
+            targetTrack.style.paddingLeft = previewRect.left + 'px';
+            page.removeEventListener('wheel', releaseFixed);
+          }, { passive: true });
         } else if (targetTrack) {
-          targetTrack.style.paddingTop = linkBottom + 'px';
+          targetTrack.style.paddingTop  = linkBottom + 'px';
+          targetTrack.style.paddingLeft = previewRect ? previewRect.left + 'px' : '3vw';
         }
         page.classList.add('visible');
         cursor.classList.remove('visible');
