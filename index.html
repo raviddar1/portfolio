@@ -3340,6 +3340,27 @@
     const projList = document.getElementById('proj-list-new');
     const projLinks = Array.from(document.querySelectorAll('#proj-list-new a[data-inner]'));
 
+    function activateProjByInnerId(innerId) {
+      const link = projLinks.find(a => a.dataset.inner === innerId);
+      projLinks.forEach(a => a.classList.remove('proj-active'));
+      if (link) {
+        link.classList.add('proj-active');
+        projList.classList.add('has-active');
+        requestAnimationFrame(() => {
+          const bottom = link.getBoundingClientRect().bottom + 16;
+          document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = bottom + 'px');
+        });
+      } else {
+        projList.classList.remove('has-active');
+      }
+    }
+
+    document.querySelectorAll('.inner-page').forEach(page => {
+      new MutationObserver(() => {
+        if (page.classList.contains('visible')) activateProjByInnerId(page.id);
+      }).observe(page, { attributes: true, attributeFilter: ['class'] });
+    });
+
     const alaiLinkEl = document.getElementById('alai-link');
 
     function deactivateProj() {
