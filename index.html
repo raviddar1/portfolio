@@ -774,7 +774,7 @@
       position: fixed;
       left: calc(2rem + 20px);
       top: 6rem;
-      max-width: 400px;
+      max-width: 520px;
       font-size: 0.78rem;
       line-height: 1.25;
       direction: rtl;
@@ -784,7 +784,20 @@
     }
     #about-panel.visible { display: block; }
     #about-panel a { color: #ff00a4; text-decoration: underline; text-underline-offset: 3px; cursor: pointer; }
-    #about-panel .about-links { display: flex; align-items: center; gap: 1rem; direction: rtl; margin-top: 1rem; }
+    #about-links-scattered { display: none; }
+    #about-links-scattered.visible { display: block; }
+    #about-links-scattered a {
+      position: fixed;
+      font-size: 0.78rem;
+      color: var(--ink);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      letter-spacing: -0.04em;
+      cursor: pointer;
+    }
+    #link-linkedin  { bottom: 27vh; left: 25vw; }
+    #link-instagram { bottom: 16vh; left: calc(2rem + 20px); }
+    #link-cv        { bottom: 16vh; left: 30vw; }
   /* ── Intro screen ── */
   </style>
 </head>
@@ -820,15 +833,13 @@
     <p>אני רביד דר, בוגרת טרייה של המחלקה לתקשורת חזותית באוניברסיטת חיפה (ויצו).</p>
     <br>
     <p>בזמני הפנוי אני אוהבת לטייל, לנגן על תופים ולחפש השראה במקומות לא צפויים. אני נמשכת לכל מה שקשור לצבע, טיפוגרפיה וקריאייטיב, ואוהבת להפוך רעיונות מורכבים לחוויות פשוטות, מדויקות ומהנות. חוץ מזה, מבחינתי כל שעה היא שעה טובה לקפה ומאפה, ואם יש כלבים במשרד - כנראה שכבר ארגיש בבית.</p>
-    <div class="about-links">
-      <a href="קורות חיים עברית.pdf" target="_blank">[ קורות חיים ]</a>
-      <a href="https://www.instagram.com/ra.dar__?stkn=Y2oxeXhkanh5NGto&utm_source=qr" target="_blank">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ff00a4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#ff00a4"/></svg>
-      </a>
-      <a href="https://www.linkedin.com/in/ravid-dar-07190138a" target="_blank">
-        <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="#ff00a4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="4" ry="4"/><line x1="8" y1="11" x2="8" y2="16"/><line x1="8" y1="8" x2="8" y2="8.5"/><line x1="12" y1="16" x2="12" y2="13"/><path d="M12 13a2 2 0 0 1 4 0v3"/><line x1="16" y1="16" x2="16" y2="13"/></svg>
-      </a>
-    </div>
+  </div>
+
+  <!-- Scattered about links -->
+  <div id="about-links-scattered">
+    <a id="link-linkedin"  href="https://www.linkedin.com/in/ravid-dar-07190138a" target="_blank">linkedin</a>
+    <a id="link-instagram" href="https://www.instagram.com/ra.dar__?stkn=Y2oxeXhkanh5NGto&utm_source=qr" target="_blank">instagram</a>
+    <a id="link-cv"        href="קורות חיים עברית.pdf" target="_blank">cv</a>
   </div>
 
   <!-- Project hover preview (left side) -->
@@ -3278,6 +3289,7 @@
       const alaiPrev = document.getElementById('alai-preview');
       const aboutPanel = document.getElementById('about-panel');
       const projListEl = document.getElementById('proj-list-new');
+      const aboutLinks = document.getElementById('about-links-scattered');
       if (!alaiEl) return;
 
       alaiEl.addEventListener('mouseenter', () => {
@@ -3290,10 +3302,12 @@
         const isOpen = aboutPanel.classList.contains('visible');
         if (isOpen) {
           aboutPanel.classList.remove('visible');
+          if (aboutLinks) aboutLinks.classList.remove('visible');
           if (alaiPrev) alaiPrev.style.display = 'none';
           if (projListEl) projListEl.classList.remove('about-open');
         } else {
           aboutPanel.classList.add('visible');
+          if (aboutLinks) aboutLinks.classList.add('visible');
           if (projListEl) projListEl.classList.add('about-open');
         }
       });
@@ -3368,6 +3382,8 @@
       const aboutPanelEl = document.getElementById('about-panel');
       const alaiPrevEl = document.getElementById('alai-preview');
       if (aboutPanelEl) aboutPanelEl.classList.remove('visible');
+      const aboutLinksEl = document.getElementById('about-links-scattered');
+      if (aboutLinksEl) aboutLinksEl.classList.remove('visible');
       if (alaiPrevEl) alaiPrevEl.style.display = 'none';
       const projListEl2 = document.getElementById('proj-list-new');
       if (projListEl2) projListEl2.classList.remove('about-open');
