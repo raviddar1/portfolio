@@ -708,6 +708,7 @@
     }
     #proj-list-new a:hover { color: #ff00a4; }
     #proj-list-new.has-active a:not(.proj-active) { visibility: hidden; pointer-events: none; }
+    #proj-list-new.about-open a { display: none; }
     #proj-list-new a.proj-active { color: #ff00a4; }
     #proj-list-new a.proj-active .proj-hover-name { display: block; }
     .num-wrap {
@@ -3289,8 +3290,10 @@
         if (isOpen) {
           aboutPanel.classList.remove('visible');
           if (alaiPrev) alaiPrev.style.display = 'none';
+          if (projListEl) projListEl.classList.remove('about-open');
         } else {
           aboutPanel.classList.add('visible');
+          if (projListEl) projListEl.classList.add('about-open');
         }
       });
     })();
@@ -3344,6 +3347,8 @@
       const alaiPrevEl = document.getElementById('alai-preview');
       if (aboutPanelEl) aboutPanelEl.classList.remove('visible');
       if (alaiPrevEl) alaiPrevEl.style.display = 'none';
+      const projListEl2 = document.getElementById('proj-list-new');
+      if (projListEl2) projListEl2.classList.remove('about-open');
     }
 
     document.querySelector('#proj-list-new .list-header').addEventListener('click', deactivateProj);
