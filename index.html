@@ -3432,6 +3432,26 @@
           targetTrack.style.paddingTop  = previewRect ? previewRect.top  + 'px' : linkBottom + 'px';
           targetTrack.style.paddingLeft = previewRect ? previewRect.left + 'px' : '3vw';
         }
+
+        // Clone preview image onto inner-page (no transform context) for zero-jump open
+        if (previewRect && previewMedia && link.dataset.inner !== 'inner-kreativ') {
+          const clone = previewMedia.cloneNode(true);
+          Object.assign(clone.style, {
+            position: 'absolute',
+            top:    previewRect.top    + 'px',
+            left:   previewRect.left   + 'px',
+            width:  previewRect.width  + 'px',
+            height: previewRect.height + 'px',
+            objectFit: 'cover',
+            objectPosition: 'center',
+            zIndex: '170',
+            pointerEvents: 'none',
+            margin: '0',
+          });
+          page.appendChild(clone);
+          // Remove clone once real image has rendered at same position
+          requestAnimationFrame(() => requestAnimationFrame(() => clone.remove()));
+        }
         page.classList.add('visible');
         cursor.classList.remove('visible');
         if (alaiLinkEl) alaiLinkEl.style.display = 'none';
