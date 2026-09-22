@@ -762,13 +762,14 @@
     #alai-preview {
       position: fixed;
       right: calc(2rem + 20px);
-      top: 85px;
-      width: 14vw;
+      top: 6rem;
+      width: 22vw;
       display: none;
       z-index: 100;
       pointer-events: none;
+      overflow: hidden;
     }
-    #alai-preview img { width: 100%; height: auto; display: block; }
+    #alai-preview img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; }
 
     #about-panel {
       position: fixed;
@@ -3281,7 +3282,14 @@
       const projListEl = document.getElementById('proj-list-new');
       if (!alaiEl) return;
 
-      alaiEl.addEventListener('mouseenter', () => { if (alaiPrev) alaiPrev.style.display = 'block'; });
+      alaiEl.addEventListener('mouseenter', () => {
+        if (alaiPrev) {
+          alaiPrev.style.display = 'block';
+          requestAnimationFrame(() => {
+            if (aboutPanel) alaiPrev.style.height = aboutPanel.offsetHeight + 'px';
+          });
+        }
+      });
       alaiEl.addEventListener('mouseleave', () => { if (alaiPrev && !aboutPanel.classList.contains('visible')) alaiPrev.style.display = 'none'; });
 
       alaiEl.addEventListener('click', e => {
