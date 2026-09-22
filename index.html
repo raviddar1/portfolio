@@ -3428,29 +3428,33 @@
         const previewRect = previewMedia ? previewMedia.getBoundingClientRect() : null;
         document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = linkBottom + 'px');
         const targetTrack = page.querySelector('.inner-track');
-        if (targetTrack) {
+        const firstChild = targetTrack && link.dataset.inner !== 'inner-kreativ'
+          ? targetTrack.querySelector(':scope > *:first-child') : null;
+
+        if (firstChild && previewRect) {
+          firstChild.style.position = 'fixed';
+          firstChild.style.top      = previewRect.top    + 'px';
+          firstChild.style.left     = previewRect.left   + 'px';
+          firstChild.style.width    = previewRect.width  + 'px';
+          firstChild.style.height   = previewRect.height + 'px';
+          firstChild.style.zIndex   = '160';
+          firstChild.style.overflow = 'hidden';
+          firstChild.style.margin   = '0';
+          targetTrack.style.paddingTop  = (previewRect.top + previewRect.height) + 'px';
+          targetTrack.style.paddingLeft = '3vw';
+          page.addEventListener('wheel', function releaseFixed() {
+            firstChild.style.position = '';
+            firstChild.style.top = ''; firstChild.style.left = '';
+            firstChild.style.width = ''; firstChild.style.height = '';
+            firstChild.style.zIndex = ''; firstChild.style.overflow = '';
+            firstChild.style.margin = '';
+            targetTrack.style.paddingTop  = previewRect.top + 'px';
+            targetTrack.style.paddingLeft = previewRect.left + 'px';
+            page.removeEventListener('wheel', releaseFixed);
+          }, { passive: true });
+        } else if (targetTrack) {
           targetTrack.style.paddingTop  = previewRect ? previewRect.top  + 'px' : linkBottom + 'px';
           targetTrack.style.paddingLeft = previewRect ? previewRect.left + 'px' : '3vw';
-        }
-
-        // Clone preview image onto inner-page (no transform context) for zero-jump open
-        if (previewRect && previewMedia && link.dataset.inner !== 'inner-kreativ') {
-          const clone = previewMedia.cloneNode(true);
-          Object.assign(clone.style, {
-            position: 'absolute',
-            top:    previewRect.top    + 'px',
-            left:   previewRect.left   + 'px',
-            width:  previewRect.width  + 'px',
-            height: previewRect.height + 'px',
-            objectFit: 'cover',
-            objectPosition: 'center',
-            zIndex: '170',
-            pointerEvents: 'none',
-            margin: '0',
-          });
-          page.appendChild(clone);
-          // Remove clone once real image has rendered at same position
-          requestAnimationFrame(() => requestAnimationFrame(() => clone.remove()));
         }
         page.classList.add('visible');
         cursor.classList.remove('visible');
