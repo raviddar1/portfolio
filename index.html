@@ -481,7 +481,7 @@
     .inner-back { display: none !important; }
     .inner-title { display: none !important; }
     .inner-right { padding-top: 7rem; }
-    .list-header { cursor: pointer !important; }
+    .list-header { cursor: pointer !important; color: #ff00a4; }
     .list-header:hover { color: #ff00a4; }
 
     .inner-title {
@@ -691,19 +691,19 @@
       top: 55px;
       direction: rtl;
       text-align: right;
-      font-size: 0.89rem;
+      font-size: 1rem;
       letter-spacing: -0.04em;
       z-index: 200;
       pointer-events: all;
       width: 5rem;
     }
-    #proj-list-new .list-header { display: block; margin-bottom: 0.8rem; }
+    #proj-list-new .list-header { display: block; margin-bottom: 0.9rem; }
     #proj-list-new a {
       display: block;
       color: var(--ink);
       text-decoration: none;
       line-height: 1;
-      margin-bottom: 0.65rem;
+      margin-bottom: 0.73rem;
       cursor: pointer;
     }
     #proj-list-new a:hover { color: #ff00a4; }
@@ -730,13 +730,14 @@
       left: calc(2rem + 20px);
       top: 50%;
       transform: translateY(-50%);
-      color: #ff00a4;
-      font-size: 0.78rem;
+      color: var(--ink);
+      font-size: 0.944rem;
       text-decoration: none;
       letter-spacing: -0.04em;
       z-index: 200;
       cursor: pointer;
     }
+    #alai-link:hover, #alai-link.about-active { color: #ff00a4; }
     /* ── First media in inner pages matches hover preview exactly ── */
     .inner-track > *:first-child {
       width: 35vw !important;
@@ -799,7 +800,7 @@
       position: fixed;
       right: calc(2rem + 20px);
       top: 6rem;
-      width: 14vw;
+      width: 18vw;
       display: none;
       z-index: 100;
       pointer-events: none;
@@ -3343,10 +3344,12 @@
           if (aboutLinks) aboutLinks.classList.remove('visible');
           if (alaiPrev) alaiPrev.style.display = 'none';
           if (projListEl) projListEl.classList.remove('about-open');
+          alaiEl.classList.remove('about-active');
         } else {
           aboutPanel.classList.add('visible');
           if (aboutLinks) aboutLinks.classList.add('visible');
           if (projListEl) projListEl.classList.add('about-open');
+          alaiEl.classList.add('about-active');
         }
       });
     })();
