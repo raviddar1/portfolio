@@ -752,6 +752,23 @@
       object-position: center !important;
       display: block !important;
     }
+    /* מה שנשאר מאחור — match preview crop */
+    #innerTrack > *:first-child img { object-position: center 60% !important; margin: 0 !important; }
+    /* בית גלים — smaller preview + inner first image, identical size, no-jump */
+    #proj-preview .preview-item[data-for="inner-bitgalim"] { max-width: 27vw; margin-right: auto !important; margin-left: 0 !important; }
+    #innerTrackBitgalim > *:first-child { width: 27vw !important; }
+    #proj-preview .preview-item[data-for="inner-bitgalim"] img,
+    #innerTrackBitgalim > *:first-child img {
+      object-fit: contain !important;
+      max-height: 85vh !important;
+      height: auto !important;
+      width: 100% !important;
+    }
+    /* בית גלים strip — show full portrait image, no crop */
+    #bitgalimProjImg img {
+      object-fit: contain !important;
+      object-position: center center !important;
+    }
     /* kreativ keeps its original layout */
     #innerTrackKreativ > *:first-child { width: 44vw !important; height: auto !important; }
     #innerTrackKreativ > *:first-child video { max-height: none !important; object-fit: initial !important; height: auto !important; }
@@ -993,9 +1010,9 @@
       </div>
 
       <div class="proj-col">
-        <div class="proj-img">
-          <img src="בית גלים/תמונה לפורטפוליו 1_web.jpg" alt="פסטיבל ביתגלים" style="object-position: center 70%;">
-          <img src="בית גלים/תמונה לפורטפוליו 2_web.jpg" alt="פסטיבל ביתגלים 2" class="hover-img" style="object-position: center 70%;">
+        <div class="proj-img" id="bitgalimProjImg">
+          <img src="בית גלים/תמונה לפורטפוליו 1_web.jpg" alt="פסטיבל ביתגלים">
+          <img src="בית גלים/תמונה לפורטפוליו 2_web.jpg" alt="פסטיבל ביתגלים 2" class="hover-img">
         </div>
         <div class="proj-label">
           <div style="display:flex;flex-direction:column;gap:0.2em;">
