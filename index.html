@@ -212,8 +212,6 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-    }
-    .proj-img img {
       will-change: opacity;
       transform: translateZ(0);
     }
@@ -783,10 +781,6 @@
       object-fit: contain !important;
       object-position: center center !important;
     }
-    /* תורה שבמרחב — restore video dimensions (Safari: height:auto on video = 0) */
-    #proj-preview .preview-item[data-for="inner-torah"] video { aspect-ratio: 16/9; height: auto !important; }
-    #innerTrackTorah > *:first-child { width: 44vw !important; height: 55vh !important; }
-    #innerTrackTorah > *:first-child video { height: 100% !important; max-height: none !important; }
     /* kreativ keeps its original layout */
     #innerTrackKreativ > *:first-child { width: 44vw !important; height: auto !important; }
     #innerTrackKreativ > *:first-child video { max-height: none !important; object-fit: initial !important; height: auto !important; }
@@ -993,7 +987,7 @@
       <div class="proj-col">
         <div class="proj-img">
           <img src="בין קודש לחול/נעליים1.png" alt="בין קודש לחול" style="object-position: bottom;">
-          <video src="בין קודש לחול/ערימת גלויות לבן.mp4" muted loop playsinline preload="none" poster="בין קודש לחול/kodesh_poster.jpg" style="transform:scale(1.15);"></video>
+          <video src="בין קודש לחול/ערימת גלויות לבן.mp4" muted loop playsinline preload="none" poster="בין קודש לחול/kodesh_poster.jpg" style="transform:scale(1.15) translateZ(0);"></video>
         </div>
         <div class="proj-label">
           <div style="display:flex;flex-direction:column;gap:0.2em;">
