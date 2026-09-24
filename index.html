@@ -3232,11 +3232,6 @@
         current += diff * 0.1;
         strip.style.transform = `translateX(${current}px)`;
       }
-      if (current >= maxScroll - 5) {
-        cursor.classList.add('reversed');
-      } else {
-        cursor.classList.remove('reversed');
-      }
       requestAnimationFrame(tick);
     })();
 
