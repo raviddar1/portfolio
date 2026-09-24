@@ -781,6 +781,10 @@
       object-fit: contain !important;
       object-position: center center !important;
     }
+    /* תורה שבמרחב — restore video dimensions (Safari: height:auto on video = 0) */
+    #proj-preview .preview-item[data-for="inner-torah"] video { aspect-ratio: 16/9; height: auto !important; }
+    #innerTrackTorah > *:first-child { width: 44vw !important; height: 55vh !important; }
+    #innerTrackTorah > *:first-child video { height: 100% !important; max-height: none !important; }
     /* kreativ keeps its original layout */
     #innerTrackKreativ > *:first-child { width: 44vw !important; height: auto !important; }
     #innerTrackKreativ > *:first-child video { max-height: none !important; object-fit: initial !important; height: auto !important; }
