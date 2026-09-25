@@ -1464,7 +1464,7 @@
     <div class="inner-left">
       <div class="inner-track" id="innerTrackKreativ" style="padding-bottom:3rem;">
         <div id="kreativVidWrap" style="width:44vw;position:relative;cursor:default;">
-          <video src="קריאייטיב/tnuva_final.mp4" playsinline preload="auto" id="kreativVid" style="width:100%;height:auto;display:block;"></video>
+          <video src="קריאייטיב/tnuva_final.mp4" playsinline preload="auto" poster="קריאייטיב/kreativ_poster.jpg" id="kreativVid" style="width:100%;height:auto;display:block;"></video>
           <img id="kreativPoster" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:1;">
 
           <div class="bloom-vid-controls">
@@ -3497,7 +3497,12 @@
         if (link.dataset.inner === 'inner-kreativ' && !isMobile && !kreativPosterCaptured) {
           kreativVid.muted = true;
           kreativVid.currentTime = 2;
+          const seekTimeout = setTimeout(() => {
+            kreativVid.currentTime = 0;
+            kreativVid.muted = false;
+          }, 1000);
           kreativVid.addEventListener('seeked', () => {
+            clearTimeout(seekTimeout);
             captureKreativPoster();
             kreativVid.currentTime = 0;
             kreativVid.muted = false;
