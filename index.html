@@ -3271,6 +3271,7 @@
           '.inner-track img:not(.hover-img):not([id*="oster"]), .inner-track video'
         ));
         const vid = wrap.querySelector('video');
+        vid.pause();
         const idx = els.indexOf(vid);
         const items = els.map(el => ({ type: el.tagName === 'VIDEO' ? 'video' : 'img', src: el.src, el }));
         if (idx !== -1) openLightbox(items, idx);
@@ -3388,9 +3389,9 @@
   <!-- Lightbox -->
   <div class="lightbox" id="lightbox">
     <span class="lightbox-close" id="lightboxClose">✕</span>
-    <span class="lightbox-arrow lightbox-prev" id="lightboxPrev"><</span>
+    <span class="lightbox-arrow lightbox-prev" id="lightboxPrev">></span>
     <div id="lightboxContent" style="max-width:78vw;max-height:86vh;display:flex;align-items:center;justify-content:center;"></div>
-    <span class="lightbox-arrow lightbox-next" id="lightboxNext">></span>
+    <span class="lightbox-arrow lightbox-next" id="lightboxNext"><</span>
   </div>
 
   <script>
