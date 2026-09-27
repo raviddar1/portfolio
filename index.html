@@ -2826,11 +2826,7 @@
         kreativVid.muted = false;
         kreativWave.style.display = '';
         if (isMobile && kreativVid.currentTime <= 1.5) kreativVid.currentTime = 0;
-        kreativVid.play().catch(() => {
-          kreativVid.muted = true;
-          kreativWave.style.display = 'none';
-          kreativVid.play().catch(() => {});
-        });
+        kreativVid.play().catch(() => {});
         kreativBtn.textContent = '⏸';
       } else {
         kreativVid.pause();
@@ -2875,8 +2871,8 @@
         kreativPoster2.style.display = 'none';
         kreativVid2.muted = false;
         kreativWave2.style.display = '';
-        if (fromStart2) kreativVid2.currentTime = 0;
-        kreativVid2.play();
+        if (fromStart2 && !isMobile) kreativVid2.currentTime = 0;
+        kreativVid2.play().catch(() => {});
         kreativBtn2.textContent = '⏸';
       } else {
         kreativVid2.pause();
@@ -2901,8 +2897,8 @@
 
     /* capture poster2 when inner page opens */
     const origProj03Click = proj03el.addEventListener;
-    kreativVid2.muted = true;
-    kreativVid2.addEventListener('loadedmetadata', () => {
+    if (!isMobile) { kreativVid2.muted = true; }
+    if (!isMobile) kreativVid2.addEventListener('loadedmetadata', () => {
       kreativVid2.currentTime = 2;
       kreativVid2.addEventListener('seeked', () => {
         if (kreativPoster2Captured) return;
@@ -2944,8 +2940,8 @@
         kreativPoster3.style.display = 'none';
         kreativVid3.muted = false;
         kreativWave3.style.display = '';
-        if (fromStart3) kreativVid3.currentTime = 0;
-        kreativVid3.play();
+        if (fromStart3 && !isMobile) kreativVid3.currentTime = 0;
+        kreativVid3.play().catch(() => {});
         kreativBtn3.textContent = '⏸';
       } else {
         kreativVid3.pause();
@@ -2966,8 +2962,8 @@
     });
 
 
-    kreativVid3.muted = true;
-    kreativVid3.addEventListener('loadedmetadata', () => {
+    if (!isMobile) { kreativVid3.muted = true; }
+    if (!isMobile) kreativVid3.addEventListener('loadedmetadata', () => {
       kreativVid3.currentTime = 2;
       kreativVid3.addEventListener('seeked', () => {
         if (kreativPoster3Captured) return;
