@@ -850,6 +850,44 @@
     #link-linkedin  { top: calc(50% + 1rem);   left: calc(2rem + 20px + 4rem); }
     #link-instagram { top: calc(50% + 3rem);   left: calc(2rem + 20px); }
     #link-cv        { top: calc(50% + 3rem);   left: calc(2rem + 20px + 8rem); }
+    #kolminim-link {
+      position: fixed;
+      left: calc(2rem + 20px + 11rem);
+      top: calc(50% + 10rem);
+      color: var(--ink);
+      font-size: 0.944rem;
+      letter-spacing: -0.04em;
+      z-index: 200;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    #kolminim-link:hover { color: #ff00a4; }
+    #kolminim-show {
+      position: fixed;
+      top: 38%;
+      left: 50%;
+      z-index: 500;
+      pointer-events: none;
+      display: none;
+      width: 0;
+      height: 0;
+    }
+    #kolminim-show.visible { display: block; }
+    .km-item {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;
+    }
+    .km-item.active { display: block; }
+    .km-item img, .km-item video {
+      max-width: 28vw;
+      max-height: 50vh;
+      width: auto;
+      height: auto;
+      display: block;
+      transform-origin: center center;
+    }
   /* ── Intro screen ── */
   </style>
 </head>
@@ -859,6 +897,34 @@
 
   <!-- [ עליי ] mid-left -->
   <a id="alai-link" href="about.html">[ עליי ]</a>
+
+  <!-- [ כל מיני ] -->
+  <span id="kolminim-link">[ כל מיני ]</span>
+
+  <!-- כל מיני slideshow -->
+  <div id="kolminim-show">
+    <div class="km-item" style="transform:translate(-50%,-50%) rotate(0deg);">
+      <img src="כל מיני/1.jpg" alt="">
+    </div>
+    <div class="km-item" style="transform:translate(-50%,-50%) rotate(3deg);">
+      <img src="כל מיני/2.jpg" alt="">
+    </div>
+    <div class="km-item" style="transform:translate(-50%,-50%) rotate(-4deg);">
+      <video src="כל מיני/3.mov" muted loop playsinline></video>
+    </div>
+    <div class="km-item" style="transform:translate(-50%,-50%) rotate(2deg);">
+      <img src="כל מיני/4.png" alt="">
+    </div>
+    <div class="km-item" style="transform:translate(-50%,-50%) rotate(-5deg);">
+      <video src="כל מיני/5.mov" muted loop playsinline></video>
+    </div>
+    <div class="km-item" style="transform:translate(-50%,-50%) rotate(4deg);">
+      <img src="כל מיני/6.png" alt="">
+    </div>
+    <div class="km-item" style="transform:translate(-50%,-50%) rotate(-2deg);">
+      <img src="כל מיני/7.png" alt="">
+    </div>
+  </div>
 
   <!-- Project list top-right -->
   <div id="proj-list-new">
@@ -3421,6 +3487,8 @@
       current = savedScroll; target = savedScroll;
       strip.style.transform = `translateX(${current}px)`;
       if (alaiLinkEl) alaiLinkEl.style.display = '';
+      const kmLinkEl2 = document.getElementById('kolminim-link');
+      if (kmLinkEl2) kmLinkEl2.style.display = '';
       document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = '');
       document.querySelectorAll('.inner-track').forEach(it => { it.style.paddingTop = ''; it.style.paddingLeft = ''; });
       const aboutPanelEl = document.getElementById('about-panel');
@@ -3482,6 +3550,8 @@
         cursor.classList.remove('visible');
         cursor.classList.remove('cursor--dot');
         if (alaiLinkEl) alaiLinkEl.style.display = 'none';
+        const kmLinkEl = document.getElementById('kolminim-link');
+        if (kmLinkEl) kmLinkEl.style.display = 'none';
         if (link.dataset.inner === 'inner-kreativ' && kreativPosterCaptured) {
           kreativPoster.style.display = 'block';
         }
@@ -3543,6 +3613,57 @@
         navAbt.style.color = '';
       }
       setInterval(updateNavColor, 80);
+    })();
+  </script>
+
+  <script>
+    (function() {
+      const kmLink = document.getElementById('kolminim-link');
+      const kmShow = document.getElementById('kolminim-show');
+      const kmItems = Array.from(kmShow.querySelectorAll('.km-item'));
+      let kmStack = 0;
+      let kmTimer = null;
+
+      function kmStep() {
+        if (kmStack >= kmItems.length) {
+          kmItems.forEach(el => {
+            el.classList.remove('active');
+            const v = el.querySelector('video');
+            if (v) v.pause();
+          });
+          kmStack = 0;
+        }
+        const item = kmItems[kmStack];
+        item.classList.add('active');
+        item.style.zIndex = kmStack + 1;
+        const vid = item.querySelector('video');
+        if (vid) { vid.currentTime = 0; vid.play(); }
+        kmStack++;
+      }
+
+      kmLink.addEventListener('mouseenter', () => {
+        kmShow.classList.add('visible');
+        kmItems.forEach(el => {
+          el.classList.remove('active');
+          const v = el.querySelector('video');
+          if (v) v.pause();
+        });
+        kmStack = 0;
+        kmStep();
+        kmTimer = setInterval(kmStep, 1000);
+      });
+
+      kmLink.addEventListener('mouseleave', () => {
+        clearInterval(kmTimer);
+        kmTimer = null;
+        kmShow.classList.remove('visible');
+        kmItems.forEach(el => {
+          el.classList.remove('active');
+          const v = el.querySelector('video');
+          if (v) v.pause();
+        });
+        kmStack = 0;
+      });
     })();
   </script>
 </body>
