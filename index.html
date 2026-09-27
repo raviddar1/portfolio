@@ -963,8 +963,8 @@
       .inner-right { padding-bottom: 0.25rem !important; }
       .inner-track { padding-top: 0.25rem !important; padding-bottom: 2rem !important; }
       /* מה שנשאר מאחור — reduce large bottom gap */
-      #innerTrackMah { padding-bottom: 0.5rem !important; }
-      #innerTrackMah > div { margin-top: 20px !important; }
+      #innerTrack { padding-bottom: 0.5rem !important; }
+      #innerTrack > div { margin-top: 20px !important; }
       /* "עבודות" — tight background only on the word itself, no rectangle */
       #proj-list-new { background: none !important; padding-bottom: 0 !important; }
       #proj-list-new .list-header { background: #fff; padding: 2px 4px; margin: -2px -4px; display: inline-block; }
@@ -2052,7 +2052,7 @@
         bloomPoster.style.display = 'none';
         bloomVid.muted = false;
         bloomWave.style.display = '';
-        bloomVid.play().catch(() => { bloomVid.muted = true; bloomVid.play().catch(() => {}); });
+        bloomVid.play().catch(() => {});
         bloomBtn.textContent = '⏸';
       } else {
         bloomVid.pause();
@@ -2109,7 +2109,7 @@
         bloomPoster2.style.display = 'none';
         bloomVid2.muted = false;
         bloomWave2.style.display = '';
-        bloomVid2.play().catch(() => { bloomVid2.muted = true; bloomVid2.play().catch(() => {}); });
+        bloomVid2.play().catch(() => {});
         bloomBtn2.textContent = '⏸';
       } else {
         bloomVid2.pause();
@@ -2278,7 +2278,7 @@
       wrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
       wrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
       function toggle() {
-        if (vid.paused) { if (isMobile && vid.currentTime <= 1.5) vid.currentTime = 0; vid.muted = false; wave.style.display = ''; vid.play().catch(() => { vid.muted = true; vid.play().catch(() => {}); }); btn.textContent = '⏸'; }
+        if (vid.paused) { if (isMobile && vid.currentTime <= 1.5) vid.currentTime = 0; vid.muted = false; wave.style.display = ''; vid.play().catch(() => {}); btn.textContent = '⏸'; }
         else { vid.pause(); btn.textContent = '▶'; }
       }
       vid.addEventListener('click', toggle);
@@ -2504,7 +2504,7 @@
         if (isMobile && torahZakafVid.currentTime <= 1.5) torahZakafVid.currentTime = 0;
         torahZakafVid.muted = false;
         torahZakafWave.style.display = '';
-        torahZakafVid.play().catch(() => { torahZakafVid.muted = true; torahZakafVid.play().catch(() => {}); });
+        torahZakafVid.play().catch(() => {});
         torahZakafBtn.textContent = '⏸';
       } else {
         torahZakafVid.pause();
@@ -2574,7 +2574,7 @@
         torahIntroPoster.style.display = 'none';
         torahIntroVid.muted = false;
         torahIntroWave.style.display = '';
-        torahIntroVid.play().catch(() => { torahIntroVid.muted = true; torahIntroVid.play().catch(() => {}); });
+        torahIntroVid.play().catch(() => {});
         torahIntroBtn.textContent = '⏸';
       } else {
         torahIntroVid.pause();
