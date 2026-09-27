@@ -1728,18 +1728,7 @@
     const isMobile = window.matchMedia('(hover:none)').matches;
     cursor.classList.add('cursor--dot');
 
-    function mobilePreview(vid) {
-      if (!isMobile || vid.dataset.mprev) return;
-      vid.dataset.mprev = '1';
-      if (!vid.paused) return; // user already playing — don't interfere
-      vid.muted = true;
-      vid.play().catch(() => {});
-      vid.addEventListener('timeupdate', function onPrev() {
-        if (vid.currentTime < 1) return;
-        vid.removeEventListener('timeupdate', onPrev);
-        if (vid.muted) vid.pause(); // only pause if still in silent preview mode
-      });
-    }
+    function mobilePreview(vid) { /* disabled on mobile — causes playback issues */ }
 
     // Kick muted autoplay videos on first touch (iOS requires user gesture)
     document.addEventListener('touchstart', function kickAutoplay() {
@@ -1898,7 +1887,7 @@
 
     function toggleMoshan() {
       if (moshanVid.paused) {
-        if (isMobile && moshanVid.currentTime <= 1.5) moshanVid.currentTime = 0;
+        if (!isMobile && moshanVid.currentTime <= 1.5) moshanVid.currentTime = 0;
         moshanVid.muted = false;
         moshanWave.style.display = '';
         moshanVid.play();
@@ -2279,7 +2268,7 @@
       wrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
       wrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
       function toggle() {
-        if (vid.paused) { if (isMobile && vid.currentTime <= 1.5) vid.currentTime = 0; vid.muted = false; wave.style.display = ''; vid.play().catch(() => {}); btn.textContent = '⏸'; }
+        if (vid.paused) { if (!isMobile && vid.currentTime <= 1.5) vid.currentTime = 0; vid.muted = false; wave.style.display = ''; vid.play().catch(() => {}); btn.textContent = '⏸'; }
         else { vid.pause(); btn.textContent = '▶'; }
       }
       vid.addEventListener('click', toggle);
@@ -2502,7 +2491,7 @@
 
     function toggleTorahZakaf() {
       if (torahZakafVid.paused) {
-        if (isMobile && torahZakafVid.currentTime <= 1.5) torahZakafVid.currentTime = 0;
+        if (!isMobile && torahZakafVid.currentTime <= 1.5) torahZakafVid.currentTime = 0;
         torahZakafVid.muted = false;
         torahZakafWave.style.display = '';
         torahZakafVid.play().catch(() => {});
@@ -2828,7 +2817,7 @@
         kreativPoster.style.display = 'none';
         kreativVid.muted = false;
         kreativWave.style.display = '';
-        if (isMobile && kreativVid.currentTime <= 1.5) kreativVid.currentTime = 0;
+        if (!isMobile && kreativVid.currentTime <= 1.5) kreativVid.currentTime = 0;
         kreativVid.play().catch(() => {});
         kreativBtn.textContent = '⏸';
       } else {
@@ -3144,7 +3133,7 @@
 
     function toggleNigunAud() {
       if (nigunAudVid.paused) {
-        if (isMobile && nigunAudVid.currentTime <= 1.5) nigunAudVid.currentTime = 0;
+        if (!isMobile && nigunAudVid.currentTime <= 1.5) nigunAudVid.currentTime = 0;
         nigunAudVid.muted = false;
         nigunAudWave.style.display = '';
         nigunAudVid.play();
