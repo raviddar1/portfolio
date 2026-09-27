@@ -1731,12 +1731,13 @@
     function mobilePreview(vid) {
       if (!isMobile || vid.dataset.mprev) return;
       vid.dataset.mprev = '1';
+      if (!vid.paused) return; // user already playing — don't interfere
       vid.muted = true;
       vid.play().catch(() => {});
       vid.addEventListener('timeupdate', function onPrev() {
         if (vid.currentTime < 1) return;
         vid.removeEventListener('timeupdate', onPrev);
-        vid.pause();
+        if (vid.muted) vid.pause(); // only pause if still in silent preview mode
       });
     }
 
