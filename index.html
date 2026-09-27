@@ -947,11 +947,18 @@
       }
       #innerTrackKreativ > *:first-child { width: 100% !important; }
       #innerTrackKreativ > *:first-child video { max-height: none !important; }
-      /* Reduce gap between inner-right (tools) and first image */
+      /* בית גלים — override ID-specific rule */
+      #innerTrackBitgalim > *:first-child { width: 100% !important; }
+      #innerTrackBitgalim > *:first-child img { object-fit: contain !important; max-height: 80vh !important; width: 100% !important; }
+      /* פינלן — fix icon overflow and video size */
+      #innerTrackFinlan video { width: 100% !important; }
+      #innerTrackFinlan img { margin-left: 0 !important; }
+      /* Reduce gap between inner-right and first image */
       .inner-right { padding-bottom: 0.25rem !important; }
-      .inner-track { padding-top: 0.25rem !important; }
-      /* Proj-list background prevents scroll overlap */
-      #proj-list-new { background: var(--bg); padding-bottom: 0.5rem; }
+      .inner-track { padding-top: 0.25rem !important; padding-bottom: 2rem !important; }
+      /* "עבודות" — tight background only on the word itself, no rectangle */
+      #proj-list-new { background: none !important; padding-bottom: 0 !important; }
+      #proj-list-new .list-header { background: #fff; padding: 2px 4px; margin: -2px -4px; display: inline-block; }
     }
   /* ── Intro screen ── */
   </style>
