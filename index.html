@@ -1857,7 +1857,7 @@
       if (innerBitgalim.classList.contains('visible')) {
         bitgalimScrollY += (bitgalimScrollTarget - bitgalimScrollY) * 0.1;
         innerTrackBitgalim.style.transform = `translateY(-${bitgalimScrollY}px)`;
-        if (!moshanVid.paused && !isInView(moshanVid, innerBitgalim)) { moshanVid.pause(); moshanBtn.textContent = '▶'; }
+        if (!isMobile && !moshanVid.paused && !isInView(moshanVid, innerBitgalim)) { moshanVid.pause(); moshanBtn.textContent = '▶'; }
       }
       requestAnimationFrame(bitgalimTick);
     })();
@@ -2079,8 +2079,8 @@
       if (innerBloom.classList.contains('visible')) {
         bloomScrollY += (bloomScrollTarget - bloomScrollY) * 0.1;
         innerTrackBloom.style.transform = `translateY(-${bloomScrollY}px)`;
-        if (!bloomVid.paused && !isInView(bloomVid, innerBloom)) bloomVid.pause();
-        if (!bloomVid2.paused && !isInView(bloomVid2, innerBloom)) bloomVid2.pause();
+        if (!isMobile && !bloomVid.paused && !isInView(bloomVid, innerBloom)) bloomVid.pause();
+        if (!isMobile && !bloomVid2.paused && !isInView(bloomVid2, innerBloom)) bloomVid2.pause();
       }
       requestAnimationFrame(bloomTick);
     })();
@@ -2340,7 +2340,7 @@
         kodeshScrollY += (kodeshScrollTarget - kodeshScrollY) * 0.1;
         innerTrackKodesh.style.transform = `translateY(-${kodeshScrollY}px)`;
         [kodeshVid1, kodeshVid2, kodeshVid3].forEach((v, i) => {
-          if (!v.paused && !isInView(v, innerKodesh)) { v.pause(); document.getElementById('kodeshBtn'+(i+1)).textContent = '▶'; }
+          if (!isMobile && !v.paused && !isInView(v, innerKodesh)) { v.pause(); document.getElementById('kodeshBtn'+(i+1)).textContent = '▶'; }
         });
       }
       requestAnimationFrame(kodeshTick);
@@ -2478,8 +2478,8 @@
         torahScrollTarget = Math.min(torahScrollTarget, torahMaxScroll);
         torahScrollY += (torahScrollTarget - torahScrollY) * 0.1;
         innerTrackTorah.style.transform = `translateY(-${torahScrollY}px)`;
-        if (!torahZakafVid.paused && !isInView(torahZakafVid, innerTorah)) { pauseReset(torahZakafVid, torahZakafBtn); }
-        if (!torahIntroVid.paused && !isInView(torahIntroVid, innerTorah)) { pauseReset(torahIntroVid, torahIntroBtn); }
+        if (!isMobile && !torahZakafVid.paused && !isInView(torahZakafVid, innerTorah)) { pauseReset(torahZakafVid, torahZakafBtn); }
+        if (!isMobile && !torahIntroVid.paused && !isInView(torahIntroVid, innerTorah)) { pauseReset(torahIntroVid, torahIntroBtn); }
       }
       requestAnimationFrame(torahTick);
     })();
@@ -2778,9 +2778,11 @@
       if (innerKreativ.classList.contains('visible')) {
         kreativScrollY += (kreativScrollTarget - kreativScrollY) * 0.1;
         innerTrackKreativ.style.transform = `translateY(-${kreativScrollY}px)`;
-        if (!kreativVid.paused && !isInView(kreativVid, innerKreativ)) { kreativVid.pause(); kreativBtn.textContent = '▶'; }
-        if (!kreativVid2.paused && !isInView(kreativVid2, innerKreativ)) { kreativVid2.pause(); kreativBtn2.textContent = '▶'; }
-        if (!kreativVid3.paused && !isInView(kreativVid3, innerKreativ)) { kreativVid3.pause(); kreativBtn3.textContent = '▶'; }
+        if (!isMobile) {
+          if (!kreativVid.paused && !isInView(kreativVid, innerKreativ)) { kreativVid.pause(); kreativBtn.textContent = '▶'; }
+          if (!kreativVid2.paused && !isInView(kreativVid2, innerKreativ)) { kreativVid2.pause(); kreativBtn2.textContent = '▶'; }
+          if (!kreativVid3.paused && !isInView(kreativVid3, innerKreativ)) { kreativVid3.pause(); kreativBtn3.textContent = '▶'; }
+        }
       }
       requestAnimationFrame(kreativTick);
     })();
