@@ -852,8 +852,8 @@
     #link-cv        { top: calc(50% + 3rem);   left: calc(2rem + 20px + 8rem); }
     #kolminim-link {
       position: fixed;
-      left: calc(2rem + 20px + 11rem);
-      top: calc(50% + 10rem);
+      left: calc(2rem + 20px);
+      bottom: 2rem;
       color: var(--ink);
       font-size: 0.944rem;
       letter-spacing: -0.04em;
@@ -887,6 +887,41 @@
       height: auto;
       display: block;
       transform-origin: center center;
+    }
+    #inner-kolminim {
+      position: fixed;
+      inset: 0;
+      top: var(--header-h);
+      background: var(--bg);
+      z-index: 150;
+      overflow: hidden;
+      display: none;
+    }
+    #inner-kolminim.visible { display: block; }
+    #innerTrackKolminim {
+      position: absolute;
+      left: 0; right: 0;
+      top: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 60px;
+      padding-top: 30vh;
+      padding-bottom: 8rem;
+    }
+    .km-page-item {
+      width: 28vw;
+      height: auto;
+      display: block;
+    }
+    #kolminim-page-title {
+      position: fixed;
+      left: calc(2rem + 20px);
+      bottom: 2rem;
+      font-size: 0.944rem;
+      letter-spacing: -0.04em;
+      color: #ff00a4;
+      pointer-events: none;
     }
   /* ── Intro screen ── */
   </style>
@@ -1625,6 +1660,22 @@
     </div>
   </div>
 
+  <!-- Inner page: כל מיני -->
+  <div id="inner-kolminim">
+    <div id="innerTrackKolminim">
+      <img src="כל מיני/1.jpg" class="km-page-item">
+      <img src="כל מיני/2.jpg" class="km-page-item">
+      <div class="km-page-item" style="overflow:hidden;">
+        <video src="כל מיני/3.mov" muted loop playsinline autoplay style="width:102%;margin-left:-1%;height:auto;display:block;"></video>
+      </div>
+      <img src="כל מיני/4.png" class="km-page-item">
+      <video src="כל מיני/5.mov" class="km-page-item" muted loop playsinline autoplay></video>
+      <img src="כל מיני/6.png" class="km-page-item">
+      <img src="כל מיני/7.png" class="km-page-item">
+    </div>
+    <div id="kolminim-page-title">[ כל מיני ]</div>
+  </div>
+
   <script>
     const strip  = document.getElementById('strip');
     const cursor = document.getElementById('cursor');
@@ -1947,6 +1998,7 @@
     bloomVidWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
 
     bloomVid.addEventListener('click', toggleBloom);
+    bloomPoster.addEventListener('click', toggleBloom);
     bloomBtn.addEventListener('click', (e) => { e.stopPropagation(); toggleBloom(); });
 
     function toggleBloom() {
@@ -3482,6 +3534,8 @@
       projList.classList.remove('has-active');
       projLinks.forEach(a => a.classList.remove('proj-active'));
       document.querySelectorAll('.inner-page.visible').forEach(p => p.classList.remove('visible'));
+      const innerKolminimEl = document.getElementById('inner-kolminim');
+      if (innerKolminimEl) innerKolminimEl.classList.remove('visible');
       cursor.classList.add('cursor--dot');
       pauseAllAudioVideos();
       current = savedScroll; target = savedScroll;
@@ -3552,6 +3606,8 @@
         if (alaiLinkEl) alaiLinkEl.style.display = 'none';
         const kmLinkEl = document.getElementById('kolminim-link');
         if (kmLinkEl) kmLinkEl.style.display = 'none';
+        const innerKolminimEl2 = document.getElementById('inner-kolminim');
+        if (innerKolminimEl2) innerKolminimEl2.classList.remove('visible');
         if (link.dataset.inner === 'inner-kreativ' && kreativPosterCaptured) {
           kreativPoster.style.display = 'block';
         }
@@ -3617,6 +3673,54 @@
   </script>
 
   <script>
+    /* ── כל מיני inner page ── */
+    (function() {
+      const innerKolminim = document.getElementById('inner-kolminim');
+      const innerTrackKolminim = document.getElementById('innerTrackKolminim');
+      const kmLink = document.getElementById('kolminim-link');
+      const projListEl = document.getElementById('proj-list-new');
+      const alaiEl = document.getElementById('alai-link');
+      let kolminimScrollY = 0, kolminimScrollTarget = 0, kolminimMaxScroll = 0;
+
+      kmLink.addEventListener('click', (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        kmLink.dispatchEvent(new Event('mouseleave'));
+        kolminimScrollY = 0; kolminimScrollTarget = 0;
+        innerTrackKolminim.style.transform = '';
+        innerTrackKolminim.style.paddingTop = '25vh'; // fallback
+        innerKolminim.classList.add('visible');
+        // position first image at hover center (38vh)
+        requestAnimationFrame(() => {
+          const first = innerTrackKolminim.querySelector('.km-page-item');
+          if (first && first.offsetHeight > 0) {
+            const pt = Math.max(0, window.innerHeight * 0.38 - first.offsetHeight / 2);
+            innerTrackKolminim.style.paddingTop = pt + 'px';
+          }
+        });
+        if (projListEl) projListEl.classList.add('has-active');
+        if (alaiEl) alaiEl.style.display = 'none';
+        kmLink.style.display = 'none';
+        innerKolminim.querySelectorAll('video').forEach(v => v.play().catch(()=>{}));
+      });
+
+      innerKolminim.addEventListener('wheel', (e) => {
+        e.preventDefault();
+        kolminimScrollTarget += e.deltaY;
+        kolminimScrollTarget = Math.max(0, Math.min(kolminimScrollTarget, kolminimMaxScroll));
+      }, { passive: false });
+
+      (function kolminimTick() {
+        if (innerKolminim.classList.contains('visible')) {
+          kolminimMaxScroll = Math.max(0, innerTrackKolminim.offsetHeight - innerKolminim.offsetHeight);
+          kolminimScrollTarget = Math.min(kolminimScrollTarget, kolminimMaxScroll);
+          kolminimScrollY += (kolminimScrollTarget - kolminimScrollY) * 0.1;
+          innerTrackKolminim.style.transform = `translateY(-${kolminimScrollY}px)`;
+        }
+        requestAnimationFrame(kolminimTick);
+      })();
+    })();
+
     (function() {
       const kmLink = document.getElementById('kolminim-link');
       const kmShow = document.getElementById('kolminim-show');
