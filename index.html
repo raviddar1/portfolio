@@ -935,6 +935,19 @@
       color: #ff00a4;
       pointer-events: none;
     }
+    /* ── Mobile: override first-child size (must come after global rule) ── */
+    @media (max-width: 768px) {
+      .inner-track > *:first-child { width: 100% !important; height: auto !important; }
+      .inner-track > *:first-child img,
+      .inner-track > *:first-child video {
+        width: 100% !important;
+        max-height: none !important;
+        height: auto !important;
+        object-fit: initial !important;
+      }
+      #innerTrackKreativ > *:first-child { width: 100% !important; }
+      #innerTrackKreativ > *:first-child video { max-height: none !important; }
+    }
   /* ── Intro screen ── */
   </style>
 </head>
