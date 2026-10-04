@@ -3568,6 +3568,7 @@
     const alaiLinkEl = document.getElementById('alai-link');
 
     function deactivateProj() {
+      if (location.hash === '#torah') history.replaceState(null, '', location.pathname + location.search);
       projList.classList.remove('has-active');
       projLinks.forEach(a => a.classList.remove('proj-active'));
       document.querySelectorAll('.inner-page.visible').forEach(p => p.classList.remove('visible'));
@@ -3638,6 +3639,7 @@
           targetTrack.style.paddingLeft = previewRect ? previewRect.left + 'px' : '3vw';
         }
         page.classList.add('visible');
+        if (link.dataset.inner === 'inner-torah') history.replaceState(null, '', '#torah');
         cursor.classList.remove('visible');
         cursor.classList.remove('cursor--dot');
         if (alaiLinkEl) alaiLinkEl.style.display = 'none';
@@ -3806,6 +3808,14 @@
         kmStack = 0;
       });
     })();
+  </script>
+
+  <script>
+    /* ── Deep link: /#torah opens Torah BaMerhav directly ── */
+    if (location.hash === '#torah') {
+      const torahLink = document.querySelector('#proj-list-new a[data-inner="inner-torah"]');
+      if (torahLink) torahLink.click();
+    }
   </script>
 </body>
 </html>
