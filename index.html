@@ -3738,6 +3738,7 @@
         vid.addEventListener('play', () => { poster.style.display = 'none'; });
 
         function doCapture() {
+          if (!vid.muted) return; // user played before capture finished — abort cleanly
           vid.pause();
           const c = document.createElement('canvas');
           c.width = vid.videoWidth || 1; c.height = vid.videoHeight || 1;
@@ -3753,13 +3754,11 @@
 
         vid.muted = true;
         if (captureTime) {
-          // Play to unlock seeking, seek to captureTime, capture there, reset to 0
           vid.play().then(() => {
             vid.currentTime = captureTime;
             vid.addEventListener('seeked', doCapture, { once: true });
           }).catch(() => { vid.muted = false; });
         } else {
-          // Capture at first timeupdate (first decoded frame)
           const onFirstFrame = () => { doCapture(); };
           vid.addEventListener('timeupdate', onFirstFrame, { once: true });
           vid.play().catch(() => {
@@ -3769,17 +3768,35 @@
         }
       }
 
-      mobileVidInit(bloomVidWrap,   bloomVid,   bloomPoster);
-      mobileVidInit(bloomVidWrap2,  bloomVid2,  bloomPoster2);
-      mobileVidInit(torahZakafWrap, torahZakafVid, null);
-      mobileVidInit(torahIntroWrap, torahIntroVid, torahIntroPoster);
-      mobileVidInit(document.getElementById('kodeshVidWrap1'), kodeshVid1, null);
-      mobileVidInit(document.getElementById('kodeshVidWrap2'), kodeshVid2, null);
-      mobileVidInit(document.getElementById('kodeshVidWrap3'), kodeshVid3, null);
-      mobileVidInit(moshanVidWrap,  moshanVid,  null);
-      mobileVidInit(kreativVidWrap,  kreativVid,  kreativPoster,  2);
-      mobileVidInit(kreativVidWrap2, kreativVid2, kreativPoster2, 2);
-      mobileVidInit(kreativVidWrap3, kreativVid3, kreativPoster3, 2);
+      // Init each page's videos when that page first opens (iOS needs visible element to play)
+      function initOnOpen(page, initFn) {
+        let done = false;
+        new MutationObserver(() => {
+          if (page.classList.contains('visible') && !done) { done = true; initFn(); }
+        }).observe(page, { attributes: true, attributeFilter: ['class'] });
+      }
+
+      initOnOpen(innerBloom, () => {
+        mobileVidInit(bloomVidWrap,  bloomVid,  bloomPoster);
+        mobileVidInit(bloomVidWrap2, bloomVid2, bloomPoster2);
+      });
+      initOnOpen(innerTorah, () => {
+        mobileVidInit(torahZakafWrap, torahZakafVid, null);
+        mobileVidInit(torahIntroWrap, torahIntroVid, torahIntroPoster);
+      });
+      initOnOpen(innerKodesh, () => {
+        mobileVidInit(document.getElementById('kodeshVidWrap1'), kodeshVid1, null);
+        mobileVidInit(document.getElementById('kodeshVidWrap2'), kodeshVid2, null);
+        mobileVidInit(document.getElementById('kodeshVidWrap3'), kodeshVid3, null);
+      });
+      initOnOpen(innerBitgalim, () => {
+        mobileVidInit(moshanVidWrap, moshanVid, null);
+      });
+      initOnOpen(innerKreativ, () => {
+        mobileVidInit(kreativVidWrap,  kreativVid,  kreativPoster,  2);
+        mobileVidInit(kreativVidWrap2, kreativVid2, kreativPoster2, 2);
+        mobileVidInit(kreativVidWrap3, kreativVid3, kreativPoster3, 2);
+      });
     }
   </script>
 
