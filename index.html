@@ -962,7 +962,8 @@
       #innerTrackKreativ > *:first-child { width: 100% !important; }
       #innerTrackKreativ > *:first-child video { max-height: none !important; }
       /* כל מיני — mobile layout */
-      #innerTrackKolminim { gap: 6vw !important; }
+      #inner-kolminim { overflow-y: auto !important; }
+      #innerTrackKolminim { position: relative !important; padding-top: 2rem !important; padding-bottom: 4rem !important; gap: 6vw !important; }
       .km-page-item { width: 88vw !important; }
       #kolminim-page-title { bottom: auto !important; left: 5vw !important; top: calc(60% + 1.8rem) !important; }
       /* בית גלים — override ID-specific rule */
@@ -3869,32 +3870,24 @@
         kmLink.dispatchEvent(new Event('mouseleave'));
         kolminimScrollY = 0; kolminimScrollTarget = 0;
         innerTrackKolminim.style.transform = '';
-        innerTrackKolminim.style.paddingTop = '25vh'; // fallback
         innerKolminim.classList.add('visible');
-        requestAnimationFrame(() => {
-          const first = innerTrackKolminim.querySelector('.km-page-item');
-          if (first && first.offsetHeight > 0) {
-            const pt = Math.max(0, window.innerHeight * 0.38 - first.offsetHeight / 2);
-            innerTrackKolminim.style.paddingTop = pt + 'px';
-          }
-        });
+        if (isMobile) {
+          innerKolminim.scrollTop = 0;
+        } else {
+          innerTrackKolminim.style.paddingTop = '25vh';
+          requestAnimationFrame(() => {
+            const first = innerTrackKolminim.querySelector('.km-page-item');
+            if (first && first.offsetHeight > 0) {
+              const pt = Math.max(0, window.innerHeight * 0.38 - first.offsetHeight / 2);
+              innerTrackKolminim.style.paddingTop = pt + 'px';
+            }
+          });
+        }
         if (projListEl) projListEl.classList.add('has-active');
         if (alaiEl) alaiEl.style.display = 'none';
         kmLink.style.display = 'none';
         innerKolminim.querySelectorAll('video').forEach(v => v.play().catch(()=>{}));
       });
-
-      let kmTouchY = 0;
-      innerKolminim.addEventListener('touchstart', (e) => {
-        kmTouchY = e.touches[0].clientY;
-      }, { passive: true });
-      innerKolminim.addEventListener('touchmove', (e) => {
-        const dy = kmTouchY - e.touches[0].clientY;
-        kmTouchY = e.touches[0].clientY;
-        kolminimScrollTarget += dy;
-        const max = Math.max(0, innerTrackKolminim.offsetHeight - innerKolminim.offsetHeight);
-        kolminimScrollTarget = Math.max(0, Math.min(kolminimScrollTarget, max));
-      }, { passive: true });
 
       innerKolminim.addEventListener('wheel', (e) => {
         e.preventDefault();
@@ -3903,7 +3896,7 @@
       }, { passive: false });
 
       (function kolminimTick() {
-        if (innerKolminim.classList.contains('visible')) {
+        if (!isMobile && innerKolminim.classList.contains('visible')) {
           kolminimMaxScroll = Math.max(0, innerTrackKolminim.offsetHeight - innerKolminim.offsetHeight);
           kolminimScrollTarget = Math.min(kolminimScrollTarget, kolminimMaxScroll);
           kolminimScrollY += (kolminimScrollTarget - kolminimScrollY) * 0.1;
