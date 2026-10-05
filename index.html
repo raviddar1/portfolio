@@ -680,9 +680,12 @@
       /* עליי and כל מיני at left edge of centered image (5vw) */
       #alai-link { top: 60% !important; left: 5vw !important; }
       #kolminim-link { bottom: auto !important; top: calc(60% + 1.8rem) !important; left: 5vw !important; }
-      /* עליי panel: closer to left edge; image: lower on screen */
-      #about-panel { left: 1rem !important; max-width: calc(100vw - 2rem) !important; }
+      /* עליי panel: closer to left edge, higher up; image: lower on screen */
+      #about-panel { left: 1rem !important; top: 4.5rem !important; max-width: calc(100vw - 2rem) !important; }
       #alai-preview { top: 48% !important; right: 1rem !important; width: 28vw !important; }
+      /* Hide עליי and כל מיני links on mobile */
+      #alai-link { display: none !important; }
+      #kolminim-link { display: none !important; }
       /* עבודות group — more right and up */
       #proj-list-new { right: 1rem !important; top: 20px !important; }
       /* Project title scrolls with content — show in inner-right, hide fixed label */
