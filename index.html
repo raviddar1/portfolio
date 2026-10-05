@@ -973,6 +973,12 @@
       /* "עבודות" — tight background only on the word itself, no rectangle */
       #proj-list-new { background: none !important; padding-bottom: 0 !important; }
       #proj-list-new .list-header { background: #fff; padding: 2px 4px; margin: -2px -4px; display: inline-block; }
+      /* Auto-hide control bar: fade out while playing, restore on pause */
+      .bloom-vid-controls.controls-playing {
+        opacity: 0 !important;
+        pointer-events: none !important;
+        transition: opacity 0.5s !important;
+      }
     }
   /* ── Intro screen ── */
   </style>
@@ -2883,7 +2889,7 @@
         kreativPoster2.style.display = 'none';
         kreativVid2.muted = false;
         kreativWave2.style.display = '';
-        if (fromStart2) kreativVid2.currentTime = 0;
+        if (fromStart2 && kreativVid2.currentTime > 0) kreativVid2.currentTime = 0;
         kreativVid2.play().catch(() => {});
         kreativBtn2.innerHTML = BTN_PAUSE;
       } else {
@@ -2952,7 +2958,7 @@
         kreativPoster3.style.display = 'none';
         kreativVid3.muted = false;
         kreativWave3.style.display = '';
-        if (fromStart3) kreativVid3.currentTime = 0;
+        if (fromStart3 && kreativVid3.currentTime > 0) kreativVid3.currentTime = 0;
         kreativVid3.play().catch(() => {});
         kreativBtn3.innerHTML = BTN_PAUSE;
       } else {
@@ -3739,6 +3745,20 @@
         vid.addEventListener('play',  () => { tri.style.opacity = '0'; });
         vid.addEventListener('pause', () => { tri.style.opacity = '1'; });
 
+        // Auto-hide controls bar 1s after play; restore on pause
+        const controls = wrap.querySelector('.bloom-vid-controls');
+        if (controls) {
+          let hideTimer = null;
+          vid.addEventListener('play', () => {
+            clearTimeout(hideTimer);
+            hideTimer = setTimeout(() => controls.classList.add('controls-playing'), 1000);
+          });
+          vid.addEventListener('pause', () => {
+            clearTimeout(hideTimer);
+            controls.classList.remove('controls-playing');
+          });
+        }
+
         if (vid.getAttribute('poster')) { if (onComplete) onComplete(); return; }
 
         const poster = existingPoster || (() => {
@@ -3790,18 +3810,24 @@
       }
 
       initOnOpen(innerBloom, () => {
-        mobileVidInit(bloomVidWrap,  bloomVid,  bloomPoster);
-        mobileVidInit(bloomVidWrap2, bloomVid2, bloomPoster2);
+        // Sequential: iOS plays one video at a time — chain captures to avoid interruption
+        mobileVidInit(bloomVidWrap, bloomVid, bloomPoster, null, () => {
+          mobileVidInit(bloomVidWrap2, bloomVid2, bloomPoster2);
+        });
       });
       initOnOpen(innerTorah, () => {
-        mobileVidInit(torahZakafWrap, torahZakafVid, null);
-        mobileVidInit(torahIntroWrap, torahIntroVid, torahIntroPoster);
-        mobileVidInit(document.getElementById('nigunAudWrap'), nigunAudVid, null);
+        mobileVidInit(torahZakafWrap, torahZakafVid, null, null, () => {
+          mobileVidInit(torahIntroWrap, torahIntroVid, torahIntroPoster, null, () => {
+            mobileVidInit(document.getElementById('nigunAudWrap'), nigunAudVid, null);
+          });
+        });
       });
       initOnOpen(innerKodesh, () => {
-        mobileVidInit(document.getElementById('kodeshVidWrap1'), kodeshVid1, null);
-        mobileVidInit(document.getElementById('kodeshVidWrap2'), kodeshVid2, null);
-        mobileVidInit(document.getElementById('kodeshVidWrap3'), kodeshVid3, null);
+        mobileVidInit(document.getElementById('kodeshVidWrap1'), kodeshVid1, null, null, () => {
+          mobileVidInit(document.getElementById('kodeshVidWrap2'), kodeshVid2, null, null, () => {
+            mobileVidInit(document.getElementById('kodeshVidWrap3'), kodeshVid3, null);
+          });
+        });
       });
       initOnOpen(innerBitgalim, () => {
         mobileVidInit(moshanVidWrap, moshanVid, null);
