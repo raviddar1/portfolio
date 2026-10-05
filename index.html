@@ -2670,6 +2670,12 @@
       finlanScrollTarget = Math.max(0, Math.min(finlanScrollTarget, finlanMaxScroll));
     }, { passive: false });
 
+    /* resume autoplay video whenever finlan page opens */
+    new MutationObserver(() => {
+      if (innerFinlan.classList.contains('visible'))
+        innerFinlan.querySelectorAll('video[autoplay]').forEach(v => v.play().catch(() => {}));
+    }).observe(innerFinlan, { attributes: true, attributeFilter: ['class'] });
+
     (function finlanTick() {
       if (innerFinlan.classList.contains('visible')) {
         finlanMaxScroll = Math.max(0, innerTrackFinlan.offsetHeight - innerFinlan.offsetHeight);
@@ -3147,10 +3153,10 @@
 
     function toggleNigunAud() {
       if (nigunAudVid.paused) {
-        if (!isMobile && nigunAudVid.currentTime <= 1.5) nigunAudVid.currentTime = 0;
+        if (nigunAudVid.currentTime <= 1.5) nigunAudVid.currentTime = 0;
         nigunAudVid.muted = false;
         nigunAudWave.style.display = '';
-        nigunAudVid.play();
+        nigunAudVid.play().catch(() => {});
         nigunAudBtn.innerHTML = BTN_PAUSE;
       } else {
         nigunAudVid.pause();
@@ -3722,8 +3728,9 @@
 
     /* ── Mobile: capture frame + play triangle on click-to-play videos ── */
     if (isMobile) {
-      // captureTime: omit/falsy = first decoded frame; number = seek there first (thumbnail), play from 0
-      function mobileVidInit(wrap, vid, existingPoster, captureTime) {
+      // captureTime: omit = first decoded frame; number = seek there first, play from 0
+      // onComplete: called when capture finishes or is aborted (use to chain sequential inits)
+      function mobileVidInit(wrap, vid, existingPoster, captureTime, onComplete) {
         const tri = document.createElement('div');
         tri.className = 'play-overlay';
         tri.style.zIndex = '2';
@@ -3732,7 +3739,7 @@
         vid.addEventListener('play',  () => { tri.style.opacity = '0'; });
         vid.addEventListener('pause', () => { tri.style.opacity = '1'; });
 
-        if (vid.getAttribute('poster')) return;
+        if (vid.getAttribute('poster')) { if (onComplete) onComplete(); return; }
 
         const poster = existingPoster || (() => {
           const img = document.createElement('img');
@@ -3743,15 +3750,14 @@
         vid.addEventListener('play', () => { poster.style.display = 'none'; });
 
         function doCapture() {
-          if (!vid.muted) return; // user played before capture finished — abort cleanly
+          if (!vid.muted) { if (onComplete) onComplete(); return; }
           vid.pause();
           const c = document.createElement('canvas');
           c.width = vid.videoWidth || 1; c.height = vid.videoHeight || 1;
           c.getContext('2d').drawImage(vid, 0, 0);
           c.toBlob(blob => {
-            if (!blob) return;
-            poster.src = URL.createObjectURL(blob);
-            poster.style.display = 'block';
+            if (blob) { poster.src = URL.createObjectURL(blob); poster.style.display = 'block'; }
+            if (onComplete) onComplete();
           }, 'image/jpeg', 0.85);
           vid.currentTime = 0;
           vid.muted = false;
@@ -3760,16 +3766,17 @@
         vid.muted = true;
         if (captureTime) {
           vid.play().then(() => {
-            if (!vid.muted) return; // user played before seek — abort
+            if (!vid.muted) { if (onComplete) onComplete(); return; }
             vid.currentTime = captureTime;
             vid.addEventListener('seeked', doCapture, { once: true });
-          }).catch(() => { vid.muted = false; });
+          }).catch(() => { vid.muted = false; if (onComplete) onComplete(); });
         } else {
           const onFirstFrame = () => { doCapture(); };
           vid.addEventListener('timeupdate', onFirstFrame, { once: true });
           vid.play().catch(() => {
             vid.removeEventListener('timeupdate', onFirstFrame);
             vid.muted = false;
+            if (onComplete) onComplete();
           });
         }
       }
@@ -3800,9 +3807,11 @@
         mobileVidInit(moshanVidWrap, moshanVid, null);
       });
       initOnOpen(innerKreativ, () => {
-        mobileVidInit(kreativVidWrap,  kreativVid,  kreativPoster,  2);
-        mobileVidInit(kreativVidWrap2, kreativVid2, kreativPoster2, 2);
-        mobileVidInit(kreativVidWrap3, kreativVid3, kreativPoster3, 2);
+        mobileVidInit(kreativVidWrap, kreativVid, kreativPoster, 2);
+        // Sequential: vid3 starts only after vid2 finishes (iOS plays one video at a time)
+        mobileVidInit(kreativVidWrap2, kreativVid2, kreativPoster2, 2, () => {
+          mobileVidInit(kreativVidWrap3, kreativVid3, kreativPoster3, 2);
+        });
       });
     }
   </script>
