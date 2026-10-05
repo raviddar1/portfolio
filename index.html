@@ -1643,7 +1643,7 @@
         <div style="width:44vw;font-family:'NarkissBlock',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:24px;direction:rtl;text-align:right;">פרויקט עצמאי שנוצר כתגובה לשיח הציבורי שעורר סערה בעקבות התבטאותה של יעל פוליאקוב, שטענה כי נשים שמנות "מנצלות את השומן של עצמן כדי לקבל אהבה" והשוותה אותן לפרות.<br><br>הפרויקט כולל סרטון פרסומת קונספטואלי (Spec Ad) עבור תנובה, שנוצר באמצעות כלי בינה מלאכותית ותוכנות עריכה. הפרסומת אינה הופקה מטעם תנובה ואינה קשורה למותג.<br><br>תאהבו את עצמכן בכל מידה. 🩷</div>
 
         <div id="kreativVidWrap2" style="margin-top:60px;width:44vw;position:relative;cursor:default;">
-          <video src="קריאייטיב/סרטון דוקי סופי.mp4" playsinline preload="auto" id="kreativVid2" style="width:100%;height:auto;display:block;"></video>
+          <video src="קריאייטיב/דוקי סרטון מלא.mp4" playsinline preload="auto" id="kreativVid2" style="width:100%;height:auto;display:block;"></video>
           <img id="kreativPoster2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:1;">
           <div class="bloom-vid-controls">
             <span class="bloom-vid-btn" id="kreativBtn2">▶</span>
@@ -1906,10 +1906,10 @@
 
     function toggleMoshan() {
       if (moshanVid.paused) {
-        if (!isMobile && moshanVid.currentTime <= 1.5) moshanVid.currentTime = 0;
+        if (moshanVid.currentTime <= 1.5 && moshanVid.currentTime > 0) moshanVid.currentTime = 0;
         moshanVid.muted = false;
         moshanWave.style.display = '';
-        moshanVid.play();
+        moshanVid.play().catch(() => {});
         moshanBtn.innerHTML = BTN_PAUSE;
       } else {
         moshanVid.pause();
@@ -3763,7 +3763,7 @@
 
         const poster = existingPoster || (() => {
           const img = document.createElement('img');
-          img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;';
+          img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;pointer-events:none;';
           wrap.insertBefore(img, tri);
           return img;
         })();
