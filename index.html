@@ -683,9 +683,9 @@
       /* עליי panel: closer to left edge, higher up; image: lower on screen */
       #about-panel { left: 1rem !important; top: 4.5rem !important; max-width: calc(100vw - 2rem) !important; }
       #alai-preview { top: 48% !important; right: 1rem !important; width: 28vw !important; }
-      /* Hide עליי and כל מיני links on mobile */
-      #alai-link { display: none !important; }
-      #kolminim-link { display: none !important; }
+      /* Hide עליי and כל מיני when about panel is open on mobile */
+      #alai-link.about-active { display: none !important; }
+      #kolminim-link.about-hidden { display: none !important; }
       /* עבודות group — more right and up */
       #proj-list-new { right: 1rem !important; top: 20px !important; }
       /* Project title scrolls with content — show in inner-right, hide fixed label */
@@ -3512,6 +3512,7 @@
       const aboutPanel = document.getElementById('about-panel');
       const projListEl = document.getElementById('proj-list-new');
       const aboutLinks = document.getElementById('about-links-scattered');
+      const kolminimLinkEl = document.getElementById('kolminim-link');
       if (!alaiEl) return;
 
       alaiEl.addEventListener('mouseenter', () => {
@@ -3528,11 +3529,13 @@
           if (alaiPrev) alaiPrev.style.display = 'none';
           if (projListEl) projListEl.classList.remove('about-open');
           alaiEl.classList.remove('about-active');
+          if (kolminimLinkEl) kolminimLinkEl.classList.remove('about-hidden');
         } else {
           aboutPanel.classList.add('visible');
           if (aboutLinks) aboutLinks.classList.add('visible');
           if (projListEl) projListEl.classList.add('about-open');
           alaiEl.classList.add('about-active');
+          if (kolminimLinkEl) kolminimLinkEl.classList.add('about-hidden');
         }
       });
     })();
@@ -3605,9 +3608,9 @@
       pauseAllAudioVideos();
       current = savedScroll; target = savedScroll;
       strip.style.transform = `translateX(${current}px)`;
-      if (alaiLinkEl) alaiLinkEl.style.display = '';
+      if (alaiLinkEl) { alaiLinkEl.style.display = ''; alaiLinkEl.classList.remove('about-active'); }
       const kmLinkEl2 = document.getElementById('kolminim-link');
-      if (kmLinkEl2) kmLinkEl2.style.display = '';
+      if (kmLinkEl2) { kmLinkEl2.style.display = ''; kmLinkEl2.classList.remove('about-hidden'); }
       document.querySelectorAll('.inner-right').forEach(ir => ir.style.paddingTop = '');
       document.querySelectorAll('.inner-track').forEach(it => { it.style.paddingTop = ''; it.style.paddingLeft = ''; });
       const aboutPanelEl = document.getElementById('about-panel');
