@@ -970,15 +970,6 @@
       /* "עבודות" — tight background only on the word itself, no rectangle */
       #proj-list-new { background: none !important; padding-bottom: 0 !important; }
       #proj-list-new .list-header { background: #fff; padding: 2px 4px; margin: -2px -4px; display: inline-block; }
-      /* Click-to-play videos: prevent white/collapsed display before load */
-      .bloom-vid-2 video,
-      #torahZakafWrap video,
-      #torahIntroWrap video,
-      #kodeshVidWrap1 video,
-      #kodeshVidWrap2 video,
-      #kodeshVidWrap3 video,
-      #kreativVidWrap2 video,
-      #kreativVidWrap3 video { aspect-ratio: 16 / 9; background: #ebebeb; }
     }
   /* ── Intro screen ── */
   </style>
@@ -3718,6 +3709,64 @@
       }
       setInterval(updateNavColor, 80);
     })();
+
+    /* ── Mobile: capture first frame + play triangle on click-to-play videos ── */
+    if (isMobile) {
+      function mobileVidInit(wrap, vid, existingPoster) {
+        // Play triangle (circle + arrow, centered)
+        const tri = document.createElement('div');
+        tri.className = 'play-overlay';
+        tri.style.zIndex = '2';
+        tri.innerHTML = '<svg viewBox="0 0 24 24" width="20" height="20"><polygon points="6,4 20,12 6,20" fill="#fff"/></svg>';
+        wrap.appendChild(tri);
+        vid.addEventListener('play',  () => { tri.style.opacity = '0'; });
+        vid.addEventListener('pause', () => { tri.style.opacity = '1'; });
+
+        // Videos with a native HTML poster attribute are already handled by the browser
+        if (vid.getAttribute('poster')) return;
+
+        // Use existing poster <img> or create one
+        const poster = existingPoster || (() => {
+          const img = document.createElement('img');
+          img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;';
+          wrap.insertBefore(img, tri);
+          return img;
+        })();
+        vid.addEventListener('play', () => { poster.style.display = 'none'; });
+
+        // Play muted for one rAF to get a rendered frame, then capture and reset
+        vid.muted = true;
+        vid.play().then(() => {
+          requestAnimationFrame(() => {
+            vid.pause();
+            if (vid.videoWidth > 0) {
+              const c = document.createElement('canvas');
+              c.width = vid.videoWidth; c.height = vid.videoHeight;
+              c.getContext('2d').drawImage(vid, 0, 0);
+              c.toBlob(blob => {
+                if (!blob) return;
+                poster.src = URL.createObjectURL(blob);
+                poster.style.display = 'block';
+              }, 'image/jpeg', 0.85);
+            }
+            vid.currentTime = 0;
+            vid.muted = false;
+          });
+        }).catch(() => {});
+      }
+
+      mobileVidInit(bloomVidWrap,   bloomVid,   bloomPoster);
+      mobileVidInit(bloomVidWrap2,  bloomVid2,  bloomPoster2);
+      mobileVidInit(torahZakafWrap, torahZakafVid, null);
+      mobileVidInit(torahIntroWrap, torahIntroVid, torahIntroPoster);
+      mobileVidInit(document.getElementById('kodeshVidWrap1'), kodeshVid1, null);
+      mobileVidInit(document.getElementById('kodeshVidWrap2'), kodeshVid2, null);
+      mobileVidInit(document.getElementById('kodeshVidWrap3'), kodeshVid3, null);
+      mobileVidInit(moshanVidWrap,  moshanVid,  null);
+      mobileVidInit(kreativVidWrap,  kreativVid,  kreativPoster);
+      mobileVidInit(kreativVidWrap2, kreativVid2, kreativPoster2);
+      mobileVidInit(kreativVidWrap3, kreativVid3, kreativPoster3);
+    }
   </script>
 
   <script>
