@@ -3715,10 +3715,10 @@
       setInterval(updateNavColor, 80);
     })();
 
-    /* ── Mobile: capture first frame + play triangle on click-to-play videos ── */
+    /* ── Mobile: capture frame + play triangle on click-to-play videos ── */
     if (isMobile) {
-      function mobileVidInit(wrap, vid, existingPoster) {
-        // Play triangle (circle + arrow, centered)
+      // captureTime: omit/falsy = first decoded frame; number = seek there first (thumbnail), play from 0
+      function mobileVidInit(wrap, vid, existingPoster, captureTime) {
         const tri = document.createElement('div');
         tri.className = 'play-overlay';
         tri.style.zIndex = '2';
@@ -3727,10 +3727,8 @@
         vid.addEventListener('play',  () => { tri.style.opacity = '0'; });
         vid.addEventListener('pause', () => { tri.style.opacity = '1'; });
 
-        // Videos with a native HTML poster attribute are already handled by the browser
         if (vid.getAttribute('poster')) return;
 
-        // Use existing poster <img> or create one
         const poster = existingPoster || (() => {
           const img = document.createElement('img');
           img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;display:none;';
@@ -3739,9 +3737,7 @@
         })();
         vid.addEventListener('play', () => { poster.style.display = 'none'; });
 
-        // Play muted; capture on first timeupdate (guarantees decoded pixels, not black)
-        vid.muted = true;
-        const captureFrame = () => {
+        function doCapture() {
           vid.pause();
           const c = document.createElement('canvas');
           c.width = vid.videoWidth || 1; c.height = vid.videoHeight || 1;
@@ -3753,12 +3749,24 @@
           }, 'image/jpeg', 0.85);
           vid.currentTime = 0;
           vid.muted = false;
-        };
-        vid.addEventListener('timeupdate', captureFrame, { once: true });
-        vid.play().catch(() => {
-          vid.removeEventListener('timeupdate', captureFrame);
-          vid.muted = false;
-        });
+        }
+
+        vid.muted = true;
+        if (captureTime) {
+          // Play to unlock seeking, seek to captureTime, capture there, reset to 0
+          vid.play().then(() => {
+            vid.currentTime = captureTime;
+            vid.addEventListener('seeked', doCapture, { once: true });
+          }).catch(() => { vid.muted = false; });
+        } else {
+          // Capture at first timeupdate (first decoded frame)
+          const onFirstFrame = () => { doCapture(); };
+          vid.addEventListener('timeupdate', onFirstFrame, { once: true });
+          vid.play().catch(() => {
+            vid.removeEventListener('timeupdate', onFirstFrame);
+            vid.muted = false;
+          });
+        }
       }
 
       mobileVidInit(bloomVidWrap,   bloomVid,   bloomPoster);
@@ -3769,9 +3777,9 @@
       mobileVidInit(document.getElementById('kodeshVidWrap2'), kodeshVid2, null);
       mobileVidInit(document.getElementById('kodeshVidWrap3'), kodeshVid3, null);
       mobileVidInit(moshanVidWrap,  moshanVid,  null);
-      mobileVidInit(kreativVidWrap,  kreativVid,  kreativPoster);
-      mobileVidInit(kreativVidWrap2, kreativVid2, kreativPoster2);
-      mobileVidInit(kreativVidWrap3, kreativVid3, kreativPoster3);
+      mobileVidInit(kreativVidWrap,  kreativVid,  kreativPoster,  2);
+      mobileVidInit(kreativVidWrap2, kreativVid2, kreativPoster2, 2);
+      mobileVidInit(kreativVidWrap3, kreativVid3, kreativPoster3, 2);
     }
   </script>
 
