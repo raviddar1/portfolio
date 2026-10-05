@@ -408,6 +408,9 @@
       cursor: pointer;
       flex-shrink: 0;
       width: 30px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
     }
     .bloom-progress-wrap {
       flex: 1;
@@ -2603,6 +2606,7 @@
       innerTorah.classList.remove('visible');
       torahScrollY = 0; torahScrollTarget = 0;
       innerTrackTorah.style.transform = '';
+      if (location.hash === '#torah') history.replaceState(null, '', location.pathname + location.search);
       pauseAllAudioVideos();
       innerFinlan.classList.add('visible');
       finlanScrollY = 0; finlanScrollTarget = 0;
@@ -2827,7 +2831,7 @@
         kreativPoster.style.display = 'none';
         kreativVid.muted = false;
         kreativWave.style.display = '';
-        if (!isMobile && kreativVid.currentTime <= 1.5) kreativVid.currentTime = 0;
+        if (kreativVid.currentTime <= 1.5) kreativVid.currentTime = 0;
         kreativVid.play().catch(() => {});
         kreativBtn.innerHTML = BTN_PAUSE;
       } else {
@@ -2873,7 +2877,7 @@
         kreativPoster2.style.display = 'none';
         kreativVid2.muted = false;
         kreativWave2.style.display = '';
-        if (fromStart2 && !isMobile) kreativVid2.currentTime = 0;
+        if (fromStart2) kreativVid2.currentTime = 0;
         kreativVid2.play().catch(() => {});
         kreativBtn2.innerHTML = BTN_PAUSE;
       } else {
@@ -2942,7 +2946,7 @@
         kreativPoster3.style.display = 'none';
         kreativVid3.muted = false;
         kreativWave3.style.display = '';
-        if (fromStart3 && !isMobile) kreativVid3.currentTime = 0;
+        if (fromStart3) kreativVid3.currentTime = 0;
         kreativVid3.play().catch(() => {});
         kreativBtn3.innerHTML = BTN_PAUSE;
       } else {
@@ -3645,6 +3649,7 @@
         }
         page.classList.add('visible');
         if (link.dataset.inner === 'inner-torah') history.replaceState(null, '', '#torah');
+        else if (location.hash === '#torah') history.replaceState(null, '', location.pathname + location.search);
         cursor.classList.remove('visible');
         cursor.classList.remove('cursor--dot');
         if (alaiLinkEl) alaiLinkEl.style.display = 'none';
@@ -3755,6 +3760,7 @@
         vid.muted = true;
         if (captureTime) {
           vid.play().then(() => {
+            if (!vid.muted) return; // user played before seek — abort
             vid.currentTime = captureTime;
             vid.addEventListener('seeked', doCapture, { once: true });
           }).catch(() => { vid.muted = false; });
@@ -3783,6 +3789,7 @@
       initOnOpen(innerTorah, () => {
         mobileVidInit(torahZakafWrap, torahZakafVid, null);
         mobileVidInit(torahIntroWrap, torahIntroVid, torahIntroPoster);
+        mobileVidInit(document.getElementById('nigunAudWrap'), nigunAudVid, null);
       });
       initOnOpen(innerKodesh, () => {
         mobileVidInit(document.getElementById('kodeshVidWrap1'), kodeshVid1, null);
