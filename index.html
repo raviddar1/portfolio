@@ -1797,7 +1797,7 @@
       ty = e.touches[0].clientY;
     });
     window.addEventListener('touchmove', e => {
-      if (document.querySelector('.inner-page.visible')) return;
+      if (document.querySelector('.inner-page.visible, #inner-kolminim.visible')) return;
       e.preventDefault();
       const dx = e.touches[0].clientX - tx;
       const dy = ty - e.touches[0].clientY;
