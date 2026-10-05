@@ -652,8 +652,8 @@
       .bloom-vid-controls { opacity: 1 !important; pointer-events: all !important; }
       /* Hide controls for autoplay+muted videos — they play automatically */
       #torahNigunWrap .bloom-vid-controls { display: none !important; }
-      /* Hide play/pause btn — user taps video directly on touch */
-      .bloom-vid-controls > .bloom-vid-btn:first-child { display: none !important; }
+      /* Show play/pause btn — needed when video area is blank before load */
+      .bloom-vid-controls > .bloom-vid-btn:first-child { display: inline-block !important; }
       /* Hide native iOS video controls */
       video::-webkit-media-controls { display: none !important; }
       video::-webkit-media-controls-panel { display: none !important; }
@@ -970,6 +970,15 @@
       /* "עבודות" — tight background only on the word itself, no rectangle */
       #proj-list-new { background: none !important; padding-bottom: 0 !important; }
       #proj-list-new .list-header { background: #fff; padding: 2px 4px; margin: -2px -4px; display: inline-block; }
+      /* Click-to-play videos: prevent white/collapsed display before load */
+      .bloom-vid-2 video,
+      #torahZakafWrap video,
+      #torahIntroWrap video,
+      #kodeshVidWrap1 video,
+      #kodeshVidWrap2 video,
+      #kodeshVidWrap3 video,
+      #kreativVidWrap2 video,
+      #kreativVidWrap3 video { aspect-ratio: 16 / 9; background: #ebebeb; }
     }
   /* ── Intro screen ── */
   </style>
