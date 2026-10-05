@@ -1643,7 +1643,7 @@
         <div style="width:44vw;font-family:'NarkissBlock',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:24px;direction:rtl;text-align:right;">פרויקט עצמאי שנוצר כתגובה לשיח הציבורי שעורר סערה בעקבות התבטאותה של יעל פוליאקוב, שטענה כי נשים שמנות "מנצלות את השומן של עצמן כדי לקבל אהבה" והשוותה אותן לפרות.<br><br>הפרויקט כולל סרטון פרסומת קונספטואלי (Spec Ad) עבור תנובה, שנוצר באמצעות כלי בינה מלאכותית ותוכנות עריכה. הפרסומת אינה הופקה מטעם תנובה ואינה קשורה למותג.<br><br>תאהבו את עצמכן בכל מידה. 🩷</div>
 
         <div id="kreativVidWrap2" style="margin-top:60px;width:44vw;position:relative;cursor:default;">
-          <video src="קריאייטיב/דוקי סרטון מלא.mp4" playsinline preload="auto" id="kreativVid2" style="width:100%;height:auto;display:block;"></video>
+          <video src="קריאייטיב/דוקי סרטון מלא.mp4" playsinline preload="auto" poster="קריאייטיב/doki_poster.jpg" id="kreativVid2" style="width:100%;height:auto;display:block;"></video>
           <img id="kreativPoster2" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:1;">
           <div class="bloom-vid-controls">
             <span class="bloom-vid-btn" id="kreativBtn2">▶</span>
@@ -1662,7 +1662,7 @@
         <div style="width:44vw;font-family:'NarkissBlock',sans-serif;font-size:0.78rem;font-weight:400;line-height:1.4;margin-top:24px;direction:rtl;text-align:right;">פרויקט שנוצר במסגרת הלימודים בקורס מיתוג.<br><br>במסגרת הפרויקט פיתחתי את DUCHI - מותג בירות קונספטואלי בהשראת משפחת מדיצ'י האיטלקית. מתוך מחשבה על חיבור בין עולמות מנוגדים, לקחתי את הבירה - מוצר המזוהה עם ברים וחיי לילה - והעברתי אותה אל עולם הארמונות, האצולה והיוקרה. כחלק מהפרויקט יצרתי סרטון תדמית המדמה קמפיין פרסום למותג, באמצעות כלי בינה מלאכותית ותהליך עריכה.</div>
 
         <div id="kreativVidWrap3" style="margin-top:60px;width:44vw;position:relative;cursor:default;">
-          <video src="קריאייטיב/סרטון סופי יחסמ.mp4" playsinline preload="auto" id="kreativVid3" style="width:100%;height:auto;display:block;"></video>
+          <video src="קריאייטיב/סרטון סופי יחסמ.mp4" playsinline preload="auto" poster="קריאייטיב/tzanchanim_poster.jpg" id="kreativVid3" style="width:100%;height:auto;display:block;"></video>
           <img id="kreativPoster3" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;z-index:1;">
           <div class="bloom-vid-controls">
             <span class="bloom-vid-btn" id="kreativBtn3">▶</span>
@@ -3834,10 +3834,8 @@
       });
       initOnOpen(innerKreativ, () => {
         mobileVidInit(kreativVidWrap, kreativVid, kreativPoster, 2);
-        // Sequential: vid3 starts only after vid2 finishes (iOS plays one video at a time)
-        mobileVidInit(kreativVidWrap2, kreativVid2, kreativPoster2, 2, () => {
-          mobileVidInit(kreativVidWrap3, kreativVid3, kreativPoster3, 2);
-        });
+        mobileVidInit(kreativVidWrap2, kreativVid2, kreativPoster2, 2);
+        mobileVidInit(kreativVidWrap3, kreativVid3, kreativPoster3, 2);
       });
     }
   </script>
