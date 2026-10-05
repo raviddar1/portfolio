@@ -963,8 +963,8 @@
       #innerTrackKreativ > *:first-child { width: 100% !important; }
       #innerTrackKreativ > *:first-child video { max-height: none !important; }
       /* כל מיני — mobile layout */
-      #inner-kolminim { overflow-y: auto !important; -webkit-overflow-scrolling: touch; }
-      #innerTrackKolminim { position: relative !important; width: 100% !important; padding-top: 2rem !important; padding-bottom: 4rem !important; gap: 6vw !important; }
+      #inner-kolminim.visible { display: flex !important; flex-direction: column; overflow-y: auto !important; -webkit-overflow-scrolling: touch; }
+      #innerTrackKolminim { position: relative !important; width: 100% !important; flex-shrink: 0; padding-top: 2rem !important; padding-bottom: 4rem !important; gap: 6vw !important; }
       .km-page-item { width: 88vw !important; }
       #kolminim-page-title { display: none !important; }
       #kolminim-mobile-header { display: block; width: 100%; padding: 4rem 1rem 1.5rem; border-bottom: 0.5px solid #eee; flex-shrink: 0; }
