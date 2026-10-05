@@ -1733,6 +1733,11 @@
     const isMobile = window.matchMedia('(hover:none)').matches;
     cursor.classList.add('cursor--dot');
 
+    /* SVG icons for play/pause buttons — avoids emoji rendering on iOS */
+    const BTN_PLAY  = '<svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor"><polygon points="0,0 10,6 0,12"/></svg>';
+    const BTN_PAUSE = '<svg width="10" height="12" viewBox="0 0 10 12" fill="currentColor"><rect x="0" y="0" width="3.5" height="12"/><rect x="6.5" y="0" width="3.5" height="12"/></svg>';
+    document.querySelectorAll('.bloom-vid-controls > .bloom-vid-btn:first-child').forEach(b => { b.innerHTML = BTN_PLAY; });
+
     function mobilePreview(vid) { /* disabled on mobile — causes playback issues */ }
 
     // Kick muted autoplay videos on first touch (iOS requires user gesture)
@@ -1852,7 +1857,7 @@
       if (innerBitgalim.classList.contains('visible')) {
         bitgalimScrollY += (bitgalimScrollTarget - bitgalimScrollY) * 0.1;
         innerTrackBitgalim.style.transform = `translateY(-${bitgalimScrollY}px)`;
-        if (!isMobile && !moshanVid.paused && !isInView(moshanVid, innerBitgalim)) { moshanVid.pause(); moshanBtn.textContent = '▶'; }
+        if (!isMobile && !moshanVid.paused && !isInView(moshanVid, innerBitgalim)) { moshanVid.pause(); moshanBtn.innerHTML = BTN_PLAY; }
       }
       requestAnimationFrame(bitgalimTick);
     })();
@@ -1873,7 +1878,7 @@
     bitgalimVidWrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
     bitgalimVidWrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
 
-    innerBackBitgalim.addEventListener('click', () => { bitgalimVid.pause(); moshanVid.pause(); moshanBtn.textContent = '▶'; });
+    innerBackBitgalim.addEventListener('click', () => { bitgalimVid.pause(); moshanVid.pause(); moshanBtn.innerHTML = BTN_PLAY; });
 
     /* ── Moshan video player ── */
     const moshanVid = document.getElementById('moshanVid');
@@ -1896,10 +1901,10 @@
         moshanVid.muted = false;
         moshanWave.style.display = '';
         moshanVid.play();
-        moshanBtn.textContent = '⏸';
+        moshanBtn.innerHTML = BTN_PAUSE;
       } else {
         moshanVid.pause();
-        moshanBtn.textContent = '▶';
+        moshanBtn.innerHTML = BTN_PLAY;
       }
     }
 
@@ -2048,10 +2053,10 @@
         bloomVid.muted = false;
         bloomWave.style.display = '';
         bloomVid.play().catch(() => {});
-        bloomBtn.textContent = '⏸';
+        bloomBtn.innerHTML = BTN_PAUSE;
       } else {
         bloomVid.pause();
-        bloomBtn.textContent = '▶';
+        bloomBtn.innerHTML = BTN_PLAY;
       }
     }
 
@@ -2105,10 +2110,10 @@
         bloomVid2.muted = false;
         bloomWave2.style.display = '';
         bloomVid2.play().catch(() => {});
-        bloomBtn2.textContent = '⏸';
+        bloomBtn2.innerHTML = BTN_PAUSE;
       } else {
         bloomVid2.pause();
-        bloomBtn2.textContent = '▶';
+        bloomBtn2.innerHTML = BTN_PLAY;
       }
     }
 
@@ -2126,7 +2131,7 @@
 
 
     innerBackBloom.addEventListener('click', () => {
-      bloomVid2.pause(); bloomBtn2.textContent = '▶';
+      bloomVid2.pause(); bloomBtn2.innerHTML = BTN_PLAY;
     });
 
     /* ── Project click: מה שנשאר מאחור ── */
@@ -2256,7 +2261,7 @@
         setTimeout(() => fly.remove(), 200);
         kodeshVid.currentTime = 0;
         kodeshVid.play();
-        kodeshBtn.textContent = '⏸';
+        kodeshBtn.innerHTML = BTN_PAUSE;
       }, 460);
     });
 
@@ -2273,8 +2278,8 @@
       wrap.addEventListener('mouseenter', () => cursor.classList.remove('visible'));
       wrap.addEventListener('mouseleave', () => cursor.classList.add('visible'));
       function toggle() {
-        if (vid.paused) { if (!isMobile && vid.currentTime <= 1.5) vid.currentTime = 0; vid.muted = false; wave.style.display = ''; vid.play().catch(() => {}); btn.textContent = '⏸'; }
-        else { vid.pause(); btn.textContent = '▶'; }
+        if (vid.paused) { if (!isMobile && vid.currentTime <= 1.5) vid.currentTime = 0; vid.muted = false; wave.style.display = ''; vid.play().catch(() => {}); btn.innerHTML = BTN_PAUSE; }
+        else { vid.pause(); btn.innerHTML = BTN_PLAY; }
       }
       vid.addEventListener('click', toggle);
       btn.addEventListener('click', (e) => { e.stopPropagation(); toggle(); });
@@ -2335,7 +2340,7 @@
         kodeshScrollY += (kodeshScrollTarget - kodeshScrollY) * 0.1;
         innerTrackKodesh.style.transform = `translateY(-${kodeshScrollY}px)`;
         [kodeshVid1, kodeshVid2, kodeshVid3].forEach((v, i) => {
-          if (!isMobile && !v.paused && !isInView(v, innerKodesh)) { v.pause(); document.getElementById('kodeshBtn'+(i+1)).textContent = '▶'; }
+          if (!isMobile && !v.paused && !isInView(v, innerKodesh)) { v.pause(); document.getElementById('kodeshBtn'+(i+1)).innerHTML = BTN_PLAY; }
         });
       }
       requestAnimationFrame(kodeshTick);
@@ -2500,10 +2505,10 @@
         torahZakafVid.muted = false;
         torahZakafWave.style.display = '';
         torahZakafVid.play().catch(() => {});
-        torahZakafBtn.textContent = '⏸';
+        torahZakafBtn.innerHTML = BTN_PAUSE;
       } else {
         torahZakafVid.pause();
-        torahZakafBtn.textContent = '▶';
+        torahZakafBtn.innerHTML = BTN_PLAY;
       }
     }
 
@@ -2570,10 +2575,10 @@
         torahIntroVid.muted = false;
         torahIntroWave.style.display = '';
         torahIntroVid.play().catch(() => {});
-        torahIntroBtn.textContent = '⏸';
+        torahIntroBtn.innerHTML = BTN_PAUSE;
       } else {
         torahIntroVid.pause();
-        torahIntroBtn.textContent = '▶';
+        torahIntroBtn.innerHTML = BTN_PLAY;
       }
     }
 
@@ -2774,9 +2779,9 @@
         kreativScrollY += (kreativScrollTarget - kreativScrollY) * 0.1;
         innerTrackKreativ.style.transform = `translateY(-${kreativScrollY}px)`;
         if (!isMobile) {
-          if (!kreativVid.paused && !isInView(kreativVid, innerKreativ)) { kreativVid.pause(); kreativBtn.textContent = '▶'; }
-          if (!kreativVid2.paused && !isInView(kreativVid2, innerKreativ)) { kreativVid2.pause(); kreativBtn2.textContent = '▶'; }
-          if (!kreativVid3.paused && !isInView(kreativVid3, innerKreativ)) { kreativVid3.pause(); kreativBtn3.textContent = '▶'; }
+          if (!kreativVid.paused && !isInView(kreativVid, innerKreativ)) { kreativVid.pause(); kreativBtn.innerHTML = BTN_PLAY; }
+          if (!kreativVid2.paused && !isInView(kreativVid2, innerKreativ)) { kreativVid2.pause(); kreativBtn2.innerHTML = BTN_PLAY; }
+          if (!kreativVid3.paused && !isInView(kreativVid3, innerKreativ)) { kreativVid3.pause(); kreativBtn3.innerHTML = BTN_PLAY; }
         }
       }
       requestAnimationFrame(kreativTick);
@@ -2824,10 +2829,10 @@
         kreativWave.style.display = '';
         if (!isMobile && kreativVid.currentTime <= 1.5) kreativVid.currentTime = 0;
         kreativVid.play().catch(() => {});
-        kreativBtn.textContent = '⏸';
+        kreativBtn.innerHTML = BTN_PAUSE;
       } else {
         kreativVid.pause();
-        kreativBtn.textContent = '▶';
+        kreativBtn.innerHTML = BTN_PLAY;
       }
     }
 
@@ -2870,10 +2875,10 @@
         kreativWave2.style.display = '';
         if (fromStart2 && !isMobile) kreativVid2.currentTime = 0;
         kreativVid2.play().catch(() => {});
-        kreativBtn2.textContent = '⏸';
+        kreativBtn2.innerHTML = BTN_PAUSE;
       } else {
         kreativVid2.pause();
-        kreativBtn2.textContent = '▶';
+        kreativBtn2.innerHTML = BTN_PLAY;
       }
     }
 
@@ -2939,10 +2944,10 @@
         kreativWave3.style.display = '';
         if (fromStart3 && !isMobile) kreativVid3.currentTime = 0;
         kreativVid3.play().catch(() => {});
-        kreativBtn3.textContent = '⏸';
+        kreativBtn3.innerHTML = BTN_PAUSE;
       } else {
         kreativVid3.pause();
-        kreativBtn3.textContent = '▶';
+        kreativBtn3.innerHTML = BTN_PLAY;
       }
     }
 
@@ -3106,10 +3111,10 @@
         torahNigunVid.muted = false;
         torahNigunWave.style.display = '';
         torahNigunVid.play();
-        torahNigunBtn.textContent = '⏸';
+        torahNigunBtn.innerHTML = BTN_PAUSE;
       } else {
         torahNigunVid.pause();
-        torahNigunBtn.textContent = '▶';
+        torahNigunBtn.innerHTML = BTN_PLAY;
       }
     }
 
@@ -3142,10 +3147,10 @@
         nigunAudVid.muted = false;
         nigunAudWave.style.display = '';
         nigunAudVid.play();
-        nigunAudBtn.textContent = '⏸';
+        nigunAudBtn.innerHTML = BTN_PAUSE;
       } else {
         nigunAudVid.pause();
-        nigunAudBtn.textContent = '▶';
+        nigunAudBtn.innerHTML = BTN_PLAY;
       }
     }
 
@@ -3194,7 +3199,7 @@
     function pauseReset(vid, btn) {
       vid.pause();
       vid.currentTime = 0;
-      if (btn) btn.textContent = '▶';
+      if (btn) btn.innerHTML = BTN_PLAY;
     }
 
     function resumeAutoplay(page) {
@@ -3354,7 +3359,7 @@
       for (const [vid, , , btn] of allPlayers) {
         if (vid !== exceptVid && !vid.paused) {
           vid.pause();
-          if (btn) btn.textContent = '▶';
+          if (btn) btn.innerHTML = BTN_PLAY;
         }
       }
     }
@@ -3734,25 +3739,26 @@
         })();
         vid.addEventListener('play', () => { poster.style.display = 'none'; });
 
-        // Play muted for one rAF to get a rendered frame, then capture and reset
+        // Play muted; capture on first timeupdate (guarantees decoded pixels, not black)
         vid.muted = true;
-        vid.play().then(() => {
-          requestAnimationFrame(() => {
-            vid.pause();
-            if (vid.videoWidth > 0) {
-              const c = document.createElement('canvas');
-              c.width = vid.videoWidth; c.height = vid.videoHeight;
-              c.getContext('2d').drawImage(vid, 0, 0);
-              c.toBlob(blob => {
-                if (!blob) return;
-                poster.src = URL.createObjectURL(blob);
-                poster.style.display = 'block';
-              }, 'image/jpeg', 0.85);
-            }
-            vid.currentTime = 0;
-            vid.muted = false;
-          });
-        }).catch(() => {});
+        const captureFrame = () => {
+          vid.pause();
+          const c = document.createElement('canvas');
+          c.width = vid.videoWidth || 1; c.height = vid.videoHeight || 1;
+          c.getContext('2d').drawImage(vid, 0, 0);
+          c.toBlob(blob => {
+            if (!blob) return;
+            poster.src = URL.createObjectURL(blob);
+            poster.style.display = 'block';
+          }, 'image/jpeg', 0.85);
+          vid.currentTime = 0;
+          vid.muted = false;
+        };
+        vid.addEventListener('timeupdate', captureFrame, { once: true });
+        vid.play().catch(() => {
+          vid.removeEventListener('timeupdate', captureFrame);
+          vid.muted = false;
+        });
       }
 
       mobileVidInit(bloomVidWrap,   bloomVid,   bloomPoster);
