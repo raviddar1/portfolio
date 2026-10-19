@@ -3871,6 +3871,17 @@
         e.preventDefault();
         e.stopPropagation();
         kmLink.dispatchEvent(new Event('mouseleave'));
+        // close about panel if open
+        const aboutPanelEl = document.getElementById('about-panel');
+        const aboutLinksEl = document.getElementById('about-links-scattered');
+        const alaiPrevEl   = document.getElementById('alai-preview');
+        const alaiLinkEl2  = document.getElementById('alai-link');
+        const kolminimLinkEl2 = document.getElementById('kolminim-link');
+        if (aboutPanelEl) aboutPanelEl.classList.remove('visible');
+        if (aboutLinksEl) aboutLinksEl.classList.remove('visible');
+        if (alaiPrevEl)   alaiPrevEl.style.display = 'none';
+        if (alaiLinkEl2)  { alaiLinkEl2.classList.remove('about-active'); }
+        if (kolminimLinkEl2) kolminimLinkEl2.classList.remove('about-hidden');
         kolminimScrollY = 0; kolminimScrollTarget = 0;
         innerTrackKolminim.style.transform = '';
         innerKolminim.classList.add('visible');
