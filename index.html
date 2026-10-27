@@ -1040,10 +1040,9 @@
     <a href="#" data-inner="inner-torah"    style="text-align:right"><span class="num-wrap">01<span class="proj-hover-name">תורה שבמרחב | פרויקט גמר</span></span></a>
     <a href="#" data-inner="inner-finlan"   style="text-align:left"><span class="num-wrap">02<span class="proj-hover-name">פינלן</span></span></a>
     <a href="#" data-inner="inner-kreativ"  style="text-align:left"><span class="num-wrap">03<span class="proj-hover-name">קריאייטיב</span></span></a>
-    <a href="#" data-inner="inner-bloom"    style="text-align:center"><span class="num-wrap">04<span class="proj-hover-name">בלומינג ריוט</span></span></a>
-    <a href="#" data-inner="inner-mah"      style="text-align:left"><span class="num-wrap">05<span class="proj-hover-name">מה שנשאר מאחור</span></span></a>
-    <a href="#" data-inner="inner-kodesh"   style="text-align:right"><span class="num-wrap">06<span class="proj-hover-name">בין קודש לחול</span></span></a>
-    <a href="#" data-inner="inner-bitgalim" style="text-align:right"><span class="num-wrap">07<span class="proj-hover-name">בית גלים</span></span></a>
+    <a href="#" data-inner="inner-mah"      style="text-align:left"><span class="num-wrap">04<span class="proj-hover-name">מה שנשאר מאחור</span></span></a>
+    <a href="#" data-inner="inner-bitgalim" style="text-align:right"><span class="num-wrap">05<span class="proj-hover-name">בית גלים</span></span></a>
+    <a href="#" data-inner="inner-bloom"    style="text-align:center"><span class="num-wrap">06<span class="proj-hover-name">בלומינג ריוט</span></span></a>
   </div>
 
   <!-- Big רבידר -->
@@ -1085,9 +1084,7 @@
     <div class="preview-item" data-for="inner-mah">
       <img src="מה שנשאר מאחור/42039B12-26FD-4060-9F85-BAADA14EEE14.JPG" alt="מה שנשאר מאחור" style="object-position: center 60%;">
     </div>
-    <div class="preview-item" data-for="inner-kodesh">
-      <video src="בין קודש לחול/ערימת גלויות לבן.mp4" muted loop playsinline></video>
-    </div>
+    <div class="preview-item" data-for="inner-kodesh" style="display:none !important;"></div>
     <div class="preview-item" data-for="inner-bitgalim">
       <img src="בית גלים/תמונה לפורטפוליו 2_web.jpg" alt="בית גלים">
     </div>
@@ -1412,7 +1409,7 @@
   </div>
 
   <!-- Inner page: בין קודש לחול -->
-  <div class="inner-page" id="inner-kodesh">
+  <div class="inner-page" id="inner-kodesh" style="display:none !important;">
     <div class="inner-left">
       <div class="inner-track" id="innerTrackKodesh" style="padding-bottom:3rem;">
         <div id="kodeshVidWrap" style="width:44vw;position:relative;cursor:default;">
@@ -2225,9 +2222,9 @@
       bloomScrollY = 0; bloomScrollTarget = 0;
       innerTrackBloom.style.transform = '';
       pauseAllAudioVideos();
-      innerPage.classList.add('visible');
-      resumeAutoplay(innerPage);
-      innerScrollY = 0; innerScrollTarget = 0;
+      innerTorah.classList.add('visible');
+      resumeAutoplay(innerTorah);
+      torahScrollY = 0; torahScrollTarget = 0;
     });
 
     document.getElementById('inner-next-bitgalim').addEventListener('click', () => {
@@ -2235,9 +2232,19 @@
       bitgalimScrollY = 0; bitgalimScrollTarget = 0;
       innerTrackBitgalim.style.transform = '';
       pauseAllAudioVideos();
-      innerTorah.classList.add('visible');
-      resumeAutoplay(innerTorah);
-      torahScrollY = 0; torahScrollTarget = 0;
+      innerBloom.classList.add('visible');
+      resumeAutoplay(innerBloom);
+      bloomScrollY = 0; bloomScrollTarget = 0;
+      if (bloomPosterCaptured) {
+        bloomPoster.style.display = 'block';
+      } else {
+        bloomVid.muted = true;
+        bloomVid.currentTime = isMobile ? 1 : 2;
+        bloomVid.addEventListener('seeked', () => {
+          if (!isMobile) { capturePoster(); bloomVid.currentTime = 0; bloomVid.muted = false; }
+          else { bloomVid.play().catch(() => {}); bloomVid.addEventListener('timeupdate', () => { bloomVid.pause(); bloomVid.muted = false; }, { once: true }); }
+        }, { once: true });
+      }
     });
 
     document.getElementById('inner-next-mah').addEventListener('click', () => {
@@ -2245,9 +2252,10 @@
       innerScrollY = 0; innerScrollTarget = 0;
       innerTrack.style.transform = '';
       pauseAllAudioVideos();
-      innerKodesh.classList.add('visible');
-      resumeAutoplay(innerKodesh);
-      kodeshScrollY = 0; kodeshScrollTarget = 0;
+      innerBitgalim.classList.add('visible');
+      resumeAutoplay(innerBitgalim);
+      bitgalimScrollY = 0; bitgalimScrollTarget = 0;
+      requestAnimationFrame(applyBitgalimCrop);
     });
 
     /* ── בין קודש לחול ── */
@@ -3022,19 +3030,9 @@
       innerTrackKreativ.style.transform = '';
       pauseAllAudioVideos();
       kreativPoster.style.display = 'none'; kreativPoster2.style.display = 'none'; kreativPoster3.style.display = 'none';
-      innerBloom.classList.add('visible');
-      resumeAutoplay(innerBloom);
-      bloomScrollY = 0; bloomScrollTarget = 0;
-      if (bloomPosterCaptured) {
-        bloomPoster.style.display = 'block';
-      } else {
-        bloomVid.muted = true;
-        bloomVid.currentTime = isMobile ? 1 : 2;
-        bloomVid.addEventListener('seeked', () => {
-          if (!isMobile) { capturePoster(); bloomVid.currentTime = 0; bloomVid.muted = false; }
-          else { bloomVid.play().catch(() => {}); bloomVid.addEventListener('timeupdate', () => { bloomVid.pause(); bloomVid.muted = false; }, { once: true }); }
-        }, { once: true });
-      }
+      innerPage.classList.add('visible');
+      resumeAutoplay(innerPage);
+      innerScrollY = 0; innerScrollTarget = 0;
     });
 
     /* ── שימור תרבות ── */
