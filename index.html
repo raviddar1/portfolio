@@ -3371,6 +3371,9 @@
       mutations.forEach(m => {
         if (m.target.classList.contains('inner-page') && m.target.classList.contains('visible')) {
           alignInnerPage(m.target);
+          m.target.scrollTop = 0;
+          const track = m.target.querySelector('.inner-track');
+          if (track) track.style.transform = '';
         }
       });
     });
